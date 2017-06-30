@@ -5,7 +5,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Config;
 
-class AddDomainCommand extends GeneratorCommand {
+class AddDomainCommand extends GeneratorCommand
+{
 
     use DomainCommandTrait;
 
@@ -16,7 +17,8 @@ class AddDomainCommand extends GeneratorCommand {
     /*
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */
-    public function fire() {
+    public function fire()
+    {
         $this->domain = $this->argument('domain');
 
         /*
@@ -31,6 +33,11 @@ class AddDomainCommand extends GeneratorCommand {
 
         $this->createDomainStorageDirs();
 
+        /*
+         * Update config file
+         */
+
+        $this->updateConfigFile();
 
         $this->line("<info>Added</info> <comment>" . $this->domain . "</comment> <info>to the application.</info>");
     }
@@ -43,9 +50,10 @@ class AddDomainCommand extends GeneratorCommand {
      */
     protected function getStub()
     {
-        if ($this->files->exists($this->getDomainEnvFilePath()))
+        if ($this->files->exists($this->getDomainEnvFilePath())) {
             return $this->getDomainEnvFilePath();
-        return base_path() . DIRECTORY_SEPARATOR . Config::get('domain.env_stub','.env');
+        }
+        return base_path() . DIRECTORY_SEPARATOR . Config::get('domain.env_stub', '.env');
     }
 
     protected function createDomainEnvFile()
@@ -64,10 +72,10 @@ class AddDomainCommand extends GeneratorCommand {
 
         $domainEnvFilePath = $this->getDomainEnvFilePath();
 
-        $domainEnvArray = array_merge($envArray,$domainValues);
+        $domainEnvArray = array_merge($envArray, $domainValues);
         $domainEnvFileContents = $this->makeDomainEnvFileContents($domainEnvArray);
 
-        $this->files->put($domainEnvFilePath,$domainEnvFileContents);
+        $this->files->put($domainEnvFilePath, $domainEnvFileContents);
     }
 
     protected function getVarsArray($path)
@@ -75,7 +83,7 @@ class AddDomainCommand extends GeneratorCommand {
         $envFileContents = $this->files->getArray($path);
         $varsArray = array();
         foreach ($envFileContents as $line) {
-            $lineArray = explode('=',$line);
+            $lineArray = explode('=', $line);
 
             if (count($lineArray) !== 2) {
                 continue;
@@ -92,18 +100,19 @@ class AddDomainCommand extends GeneratorCommand {
         $contents = '';
         $previousKeyPrefix = '';
         foreach ($domainValues as $key => $value) {
-            $keyPrefix = current(explode('_',$key));
+            $keyPrefix = current(explode('_', $key));
             if ($keyPrefix !== $previousKeyPrefix && !empty($contents)) {
                 $contents .= "\n";
             }
-            $contents .= $key.'='.$value."\n";
+            $contents .= $key . '=' . $value . "\n";
             $previousKeyPrefix = $keyPrefix;
         }
         return $contents;
     }
 
-    public function createDomainStorageDirs() {
-        $storageDirs = Config::get('domain.storage_dirs',array());
+    public function createDomainStorageDirs()
+    {
+        $storageDirs = Config::get('domain.storage_dirs', array());
         $path = $this->getDomainStoragePath($this->domain);
         $rootPath = storage_path();
         if ($this->files->exists($path) && !$this->option('force')) {
@@ -115,39 +124,64 @@ class AddDomainCommand extends GeneratorCommand {
         }
 
 
-        $this->createRecursiveDomainStorageDirs($rootPath,$path,$storageDirs);
+        $this->createRecursiveDomainStorageDirs($rootPath, $path, $storageDirs);
 
 
     }
 
     protected function createRecursiveDomainStorageDirs($rootPath, $path, $dirs)
     {
-        $this->files->makeDirectory($path,0755,true);
-        foreach (['.gitignore','.gitkeep'] as $gitFile) {
-            $rootGitPath = $rootPath.DIRECTORY_SEPARATOR.$gitFile;
+        $this->files->makeDirectory($path, 0755, true);
+        foreach (['.gitignore', '.gitkeep'] as $gitFile) {
+            $rootGitPath = $rootPath . DIRECTORY_SEPARATOR . $gitFile;
             if ($this->files->exists($rootGitPath)) {
-                $gitPath = $path.DIRECTORY_SEPARATOR.$gitFile;
-                $this->files->copy($rootGitPath,$gitPath);
+                $gitPath = $path . DIRECTORY_SEPARATOR . $gitFile;
+                $this->files->copy($rootGitPath, $gitPath);
             }
         }
         foreach ($dirs as $subdir => $subsubdirs) {
             $fullPath = $path . DIRECTORY_SEPARATOR . $subdir;
             $fullRootPath = $rootPath . DIRECTORY_SEPARATOR . $subdir;
-            $this->createRecursiveDomainStorageDirs($fullRootPath,$fullPath,$subsubdirs);
+            $this->createRecursiveDomainStorageDirs($fullRootPath, $fullPath, $subsubdirs);
         }
 
     }
 
-    protected function getArguments() {
+    protected function addDomainToConfigFile($config) {
+        $domains = array_get($config, 'domains', []);
+        if (!array_key_exists($this->domain, $domains)) {
+            $domains[$this->domain] = $this->domain;
+        }
+
+        ksort($domains);
+        $config['domains'] = $domains;
+
+        return $config;
+    }
+
+    protected function getArguments()
+    {
         return [
             ["domain", InputArgument::REQUIRED, "The name of the domain to add to the framework."],
         ];
     }
 
-    protected function getOptions() {
+    protected function getOptions()
+    {
         return [
-            ["domain_values", null, InputOption::VALUE_OPTIONAL, "The optional values for the domain variables (json object).", "{}"],
-            ["force", null, InputOption::VALUE_NONE, "Force the creation of domain storage dirs also if they already exist"],
+            [
+                "domain_values",
+                null,
+                InputOption::VALUE_OPTIONAL,
+                "The optional values for the domain variables (json object).",
+                "{}"
+            ],
+            [
+                "force",
+                null,
+                InputOption::VALUE_NONE,
+                "Force the creation of domain storage dirs also if they already exist"
+            ],
         ];
     }
 

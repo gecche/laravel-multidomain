@@ -5,6 +5,7 @@ use Gecche\Multidomain\Foundation\Console\RemoveDomainCommand;
 use Illuminate\Support\ServiceProvider;
 use Gecche\Multidomain\Foundation\Console\DomainCommand;
 use Gecche\Multidomain\Foundation\Console\AddDomainCommand;
+use Gecche\Multidomain\Foundation\Console\UpdateEnvDomainCommand;
 
 class ConsoleServiceProvider extends ServiceProvider {
 
@@ -19,7 +20,8 @@ class ConsoleServiceProvider extends ServiceProvider {
     protected $commands = [
         'Domain',
         'AddDomain',
-        'RemoveDomain'
+        'RemoveDomain',
+        'UpdateEnvDomain',
     ];
 
 
@@ -40,7 +42,8 @@ class ConsoleServiceProvider extends ServiceProvider {
         $this->commands(
             "command.domain",
             "command.domain.add",
-            "command.domain.remove"
+            "command.domain.remove",
+            "command.domain.update_env"
         );
     }
 
@@ -89,4 +92,16 @@ class ConsoleServiceProvider extends ServiceProvider {
         });
     }
 
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerUpdateEnvDomainCommand()
+    {
+        $this->app->singleton('command.domain.update_env', function($app)
+        {
+            return new UpdateEnvDomainCommand($app['files']);
+        });
+    }
 }

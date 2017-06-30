@@ -33,6 +33,12 @@ class RemoveDomainCommand extends GeneratorCommand {
             $this->deleteDomainStorageDirs();
         }
 
+        /*
+         * Update config file
+         */
+
+        $this->updateConfigFile('remove');
+
         $this->line("<info>Removed</info> <comment>" . $this->domain . "</comment> <info>from the application.</info>");
     }
 
@@ -61,6 +67,17 @@ class RemoveDomainCommand extends GeneratorCommand {
             $this->files->deleteDirectory($path);
         }
     }
+
+    protected function removeDomainToConfigFile($config) {
+        $domains = array_get($config, 'domains', []);
+        if (array_key_exists($this->domain, $domains)) {
+            unset($domains[$this->domain]);
+        }
+        $config['domains'] = $domains;
+        return $config;
+    }
+
+
 
     protected function getArguments() {
         return [
