@@ -1,41 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Auth;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-if (!function_exists('storage_temp_path')) {
-
-    /**
-     * Get the path to the storage folder of the domain.
-     *
-     * @param   string  $path
-     * @return  string
-     */
-    function storage_temp_path($path = '') {
-        $id = Auth::id();
-        if (!$id) {
-            $id = 0;
-        }
-
-        return app('path.storage') . DIRECTORY_SEPARATOR . "files" .
-                DIRECTORY_SEPARATOR . "temp/user_" . $id . ($path ? '/' . $path : $path);
-    }
-
-}
-
-
 if (!function_exists('domain_sanitized')) {
 
     /**
-     * Generate a URL to a controller action.
+     * Replace dots in a domain name with underscores
      *
-     * @param  string  $name
-     * @param  array   $parameters
+     * @param  string  $domain
      * @return string
      */
     function domain_sanitized($domain) {
@@ -47,10 +24,10 @@ if (!function_exists('domain_sanitized')) {
 if (!function_exists('domain_root_url')) {
 
     /**
-     * Generate a URL to a controller action.
+     * Get the root url of the current http(s) domain of the application.
+     * It adds the $path if passed
      *
-     * @param  string  $name
-     * @param  array   $parameters
+     * @param  string  $path
      * @return string
      */
     function domain_root_url($path = null) {

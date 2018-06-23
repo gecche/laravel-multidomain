@@ -9,7 +9,7 @@ class DomainCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'domain';
+    protected $signature = 'domain';
 
 	/**
 	 * The console command description.
@@ -23,7 +23,7 @@ class DomainCommand extends Command {
 	 *
 	 * @return void
 	 */
-	public function fire()
+	public function handle()
 	{
 		$this->line('<info>Current application domain:</info> <comment>'.$this->laravel['domain'].  "--" . $this->laravel['domain_port'] . "--" . $this->laravel['domain_scheme'].'</comment>');
 	}

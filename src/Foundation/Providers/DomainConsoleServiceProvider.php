@@ -1,4 +1,4 @@
-<?php namespace Gecche\Multidomain;
+<?php namespace Gecche\Multidomain\Foundation;
 
 use App;
 use Gecche\Multidomain\Foundation\Console\RemoveDomainCommand;
@@ -7,7 +7,7 @@ use Gecche\Multidomain\Foundation\Console\DomainCommand;
 use Gecche\Multidomain\Foundation\Console\AddDomainCommand;
 use Gecche\Multidomain\Foundation\Console\UpdateEnvDomainCommand;
 
-class ConsoleServiceProvider extends ServiceProvider {
+class DomainConsoleServiceProvider extends ServiceProvider {
 
     protected $defer = false;
 
@@ -32,7 +32,7 @@ class ConsoleServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app->alias('artisan','\Gecche\Multidomain\Console\Application');
+        $this->app->alias('artisan',\Gecche\Multidomain\Console\Application::class);
 
         foreach ($this->commands as $command)
         {
@@ -49,7 +49,9 @@ class ConsoleServiceProvider extends ServiceProvider {
 
 
     public function boot() {
-
+        $this->publishes([
+            __DIR__.'/../../config/domain.php' => config_path('domain.php'),
+        ]);
     }
 
 

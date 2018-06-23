@@ -20,5 +20,12 @@
         "files": [
             "src/Foundation/helpers.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gecche\\Multidomain\\Foundation\\DomainConsoleServiceProvider"
+            ]
+        }
     }
 }
