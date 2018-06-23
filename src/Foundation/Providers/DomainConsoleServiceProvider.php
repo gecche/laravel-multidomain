@@ -34,6 +34,7 @@ class DomainConsoleServiceProvider extends ServiceProvider {
     {
         $this->app->alias('artisan',\Gecche\Multidomain\Console\Application::class);
 
+
         foreach ($this->commands as $command)
         {
             $this->{"register{$command}Command"}();
@@ -45,6 +46,7 @@ class DomainConsoleServiceProvider extends ServiceProvider {
             "command.domain.remove",
             "command.domain.update_env"
         );
+
     }
 
 

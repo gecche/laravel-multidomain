@@ -1,16 +1,12 @@
 <?php namespace Gecche\Multidomain\Queue;
 
-use Closure;
+use Illuminate\Queue\ListenerOptions;
+use Illuminate\Support\ProcessUtils;
 use Symfony\Component\Process\Process;
 
 class Listener extends \Illuminate\Queue\Listener{
 
-	/**
-	 * The domain the workers should run under.
-	 *
-	 * @var string
-	 */
-	protected $domain;
+
 
 
 	/**
@@ -23,53 +19,45 @@ class Listener extends \Illuminate\Queue\Listener{
 	 * @param  int     $timeout
 	 * @return \Symfony\Component\Process\Process
 	 */
-	public function makeProcess($connection, $queue, $delay, $memory, $timeout)
+	public function makeProcess($connection, $queue, ListenerOptions $options)
 	{
-		$string = $this->workerCommand;
+        $command = $this->workerCommand;
 
-		// If the environment is set, we will append it to the command string so the
-		// workers will run under the specified environment. Otherwise, they will
-		// just run under the production environment which is not always right.
-		if (isset($this->environment))
-		{
-			$string .= ' --env='.$this->environment;
-		}
-                
-		if (isset($this->domain))
-		{
-			$string .= ' --domain='.$this->domain;
-		}
+        if (isset($options->domain)) {
+            $command = $this->addDomain($command, $options);
+        }
 
-		// Next, we will just format out the worker commands with all of the various
-		// options available for the command. This will produce the final command
-		// line that we will pass into a Symfony process object for processing.
-		$command = sprintf(
-			$string, $connection, $queue, $delay,
-			$memory, $this->sleep, $this->maxTries
-		);
+        // If the environment is set, we will append it to the command string so the
+        // workers will run under the specified environment. Otherwise, they will
+        // just run under the production environment which is not always right.
+        if (isset($options->environment)) {
+            $command = $this->addEnvironment($command, $options);
+        }
 
-		return new Process($command, $this->commandPath, null, null, $timeout);
+        // Next, we will just format out the worker commands with all of the various
+        // options available for the command. This will produce the final command
+        // line that we will pass into a Symfony process object for processing.
+        $command = $this->formatCommand(
+            $command, $connection, $queue, $options
+        );
+
+        return new Process(
+            $command, $this->commandPath, null, null, $options->timeout
+        );
 	}
 
-	/**
-	 * Get the current listener environment.
-	 *
-	 * @return string
-	 */
-	public function getDomain()
-	{
-		return $this->domain;
-	}
+    /**
+     * Add the domain option to the given command.
+     *
+     * @param  string  $command
+     * @param  \Gecche\Multidomain\Queue\ListenerOptions  $options
+     * @return string
+     */
+    protected function addDomain($command, ListenerOptions $options)
+    {
+        return $command.' --domain='.ProcessUtils::escapeArgument($options->domain);
+    }
 
-	/**
-	 * Set the current environment.
-	 *
-	 * @param  string  $environment
-	 * @return void
-	 */
-	public function setDomain($domain)
-	{
-		$this->domain = $domain;
-	}
+
 
 }
