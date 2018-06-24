@@ -139,12 +139,14 @@ The  `domain:update_env` command allows to update one or all the environemnt fil
  including the standard `.env` one.
  The list of domains to be updated is maintained in the `domain.php` config file. 
  The `domain:add` and the `domain:remove` add and remove respectively an entry 
- in the `domains` array in this file.
+ in the `domains` array in this file. E.g.:
   
 ```
 php artisan domain:update_env --domain_values='{"TOM_DRIVER":"TOMMY"}' 
 ```  
  
+adds the line `TOM_DRIVER=TOMMY` to all the found environment files.
+
 #### Further information
 At run-time, the current HTTP domain is maintained in the laravel container 
 and can be accessed by its `domain()` method added by this package.
@@ -154,4 +156,5 @@ and can be accessed by its `domain()` method added by this package.
 
 v1.1 requires Laravel 5.5+
 
-v1.0 requires Laravel 5.1+ (no longer maintained and not tested versus laravel 5.4)
+v1.0 requires Laravel 5.1+ (no longer maintained and not tested versus laravel 5.4, 
+however the usage of the package is the same ad for 1.1)
