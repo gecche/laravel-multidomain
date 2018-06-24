@@ -1,8 +1,6 @@
 <?php namespace Gecche\Multidomain\Foundation\Console;
 
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Support\Facades\Config;
 
 class UpdateEnvDomainCommand extends GeneratorCommand
@@ -10,7 +8,18 @@ class UpdateEnvDomainCommand extends GeneratorCommand
 
     use DomainCommandTrait;
 
-    protected $name = "domain:update_env";
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'domain:update_env 
+                            {domain? : The name of the domain to which update the env (if empty all the env domains will be updated)} 
+                            {--domain_values= : The optional values for the domain variables to be stored in the env file (json object)}';
+
+
+
+
     protected $description = "Adds a domain to the framework.";
     protected $domain;
     protected $envFiles = [];
@@ -18,7 +27,7 @@ class UpdateEnvDomainCommand extends GeneratorCommand
     /*
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */
-    public function fire()
+    public function handle()
     {
         $this->domain = $this->argument('domain');
 
@@ -63,10 +72,14 @@ class UpdateEnvDomainCommand extends GeneratorCommand
     protected function updateDomainEnvFiles()
     {
         $domainValues = json_decode($this->option("domain_values"), true);
+        $this->line("<info>".var_dump($this->option("domain_values"))."</info>");
+        $this->line("<info>".var_dump($domainValues)."</info>");
 
         if (!is_array($domainValues)) {
             $domainValues = array();
         }
+
+
 
 
 
@@ -89,28 +102,6 @@ class UpdateEnvDomainCommand extends GeneratorCommand
     protected function getStub()
     {
 
-    }
-
-    protected function getArguments()
-    {
-        return [
-            ["domain", InputArgument::OPTIONAL, "The name of the domain to which update the env (if empty all the env domains will be updated)."],
-//            ["key", InputArgument::REQUIRED, "The name of the env key to be updated."],
-//            ["value", InputArgument::REQUIRED, "The value of the env key to be updated."],
-        ];
-    }
-
-    protected function getOptions()
-    {
-        return [
-            [
-                "domain_values",
-                null,
-                InputOption::VALUE_OPTIONAL,
-                "The optional values for the domain variables (json object).",
-                "{}"
-            ]
-        ];
     }
 
 

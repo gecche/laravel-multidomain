@@ -1,23 +1,31 @@
 <?php namespace Gecche\Multidomain\Foundation\Console;
 
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Config;
+use Illuminate\Support\Facades\Config;
 
 class AddDomainCommand extends GeneratorCommand
 {
 
     use DomainCommandTrait;
 
-    protected $name = "domain:add";
-    protected $description = "Adds a domain to the framework.";
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'domain:add 
+                            {domain : The name of the domain to add to the framework} 
+                            {--domain_values= : The optional values for the domain variables to be stored in the env file (json object)} 
+                            {--force : Force the creation of domain storage dirs also if they already exist}';
+
+
+    protected $description = "Adds a domain to the framework by creating the specific .env file and storage dirs.";
     protected $domain;
 
     /*
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */
-    public function fire()
+    public function handle()
     {
         $this->domain = $this->argument('domain');
 
@@ -78,38 +86,6 @@ class AddDomainCommand extends GeneratorCommand
         $this->files->put($domainEnvFilePath, $domainEnvFileContents);
     }
 
-    protected function getVarsArray($path)
-    {
-        $envFileContents = $this->files->getArray($path);
-        $varsArray = array();
-        foreach ($envFileContents as $line) {
-            $lineArray = explode('=', $line);
-
-            if (count($lineArray) !== 2) {
-                continue;
-            }
-
-            $varsArray[$lineArray[0]] = trim($lineArray[1]);
-
-        }
-        return $varsArray;
-    }
-
-    protected function makeDomainEnvFileContents($domainValues)
-    {
-        $contents = '';
-        $previousKeyPrefix = '';
-        foreach ($domainValues as $key => $value) {
-            $keyPrefix = current(explode('_', $key));
-            if ($keyPrefix !== $previousKeyPrefix && !empty($contents)) {
-                $contents .= "\n";
-            }
-            $contents .= $key . '=' . $value . "\n";
-            $previousKeyPrefix = $keyPrefix;
-        }
-        return $contents;
-    }
-
     public function createDomainStorageDirs()
     {
         $storageDirs = Config::get('domain.storage_dirs', array());
@@ -159,31 +135,8 @@ class AddDomainCommand extends GeneratorCommand
         return $config;
     }
 
-    protected function getArguments()
-    {
-        return [
-            ["domain", InputArgument::REQUIRED, "The name of the domain to add to the framework."],
-        ];
-    }
 
-    protected function getOptions()
-    {
-        return [
-            [
-                "domain_values",
-                null,
-                InputOption::VALUE_OPTIONAL,
-                "The optional values for the domain variables (json object).",
-                "{}"
-            ],
-            [
-                "force",
-                null,
-                InputOption::VALUE_NONE,
-                "Force the creation of domain storage dirs also if they already exist"
-            ],
-        ];
-    }
+
 
 
 }

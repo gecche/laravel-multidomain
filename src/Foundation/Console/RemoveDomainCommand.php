@@ -1,22 +1,28 @@
 <?php namespace Gecche\Multidomain\Foundation\Console;
 
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Config;
 
 class RemoveDomainCommand extends GeneratorCommand {
 
     use DomainCommandTrait;
 
-    protected $name = "domain:remove";
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'domain:remove 
+                            {domain : The name of the domain to remove from the framework} 
+                            {--force : Force the deletion of domain storage dirs also if they exist and they are possibly full}';
+
     protected $description = "Removes a domain from the framework.";
     protected $domain;
 
     /*
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */
-    public function fire() {
+    public function handle() {
         $this->domain = $this->argument('domain');
 
         /*
@@ -78,18 +84,6 @@ class RemoveDomainCommand extends GeneratorCommand {
     }
 
 
-
-    protected function getArguments() {
-        return [
-            ["domain", InputArgument::REQUIRED, "The name of the domain to remove from the framework."],
-        ];
-    }
-
-    protected function getOptions() {
-        return [
-            ["force", null, InputOption::VALUE_NONE, "Force the deletion of domain storage dirs also if they exist and they are possibly full"],
-        ];
-    }
 
 
 }

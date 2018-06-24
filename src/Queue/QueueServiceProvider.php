@@ -1,6 +1,6 @@
 <?php namespace Gecche\Multidomain\Queue;
 
-use Gecche\Multidomain\Queue\Console\ListenCommand;
+use Gecche\Multidomain\Queue\Console\ListenCommand as QueueListenCommand;
 
 class QueueServiceProvider extends \Illuminate\Queue\QueueServiceProvider {
 
@@ -12,27 +12,22 @@ class QueueServiceProvider extends \Illuminate\Queue\QueueServiceProvider {
 	 */
 	protected function registerListener()
 	{
-		$this->registerListenCommand();
-
-		$this->app->singleton('queue.listener', function($app)
-		{
-			return new Listener($app['path.base']);
-		});
+        $this->app->singleton('queue.listener', function () {
+            return new Listener($this->app->basePath());
+        });
 	}
 
     /**
-     * Register the queue listener console command.
+     * Extends the queue listen command
      *
      * @return void
      */
-    protected function registerListenCommand()
+    public function boot()
     {
-        $this->app->singleton('command.queue.listen', function($app)
-        {
-            return new ListenCommand($app['queue.listener']);
-        });
 
-        $this->commands('command.queue.listen');
+        $this->app->singleton('command.queue.listen', function ($app) {
+            return new QueueListenCommand($app['queue.listener']);
+        });
     }
 
 }

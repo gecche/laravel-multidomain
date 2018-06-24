@@ -69,9 +69,10 @@ trait DomainCommandTrait {
 
     protected function getVarsArray($path)
     {
-        $envFileContents = $this->files->getArray($path);
+        $envFileContents = $this->files->get($path);
+        $envFileContentsArray = explode("\n",$envFileContents);
         $varsArray = array();
-        foreach ($envFileContents as $line) {
+        foreach ($envFileContentsArray as $line) {
             $lineArray = explode('=', $line);
 
             if (count($lineArray) !== 2) {

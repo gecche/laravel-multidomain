@@ -16,7 +16,7 @@ class DetectDomain {
         //Detect the domain
 		$app->detectDomain();
 
-        //Overrides the storage path if the domain staorge path exists
+        //Overrides the storage path if the domain stoarge path exists
         $app->useStoragePath($app->domainStoragePath());
 
 	}

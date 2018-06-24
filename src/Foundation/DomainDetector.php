@@ -1,6 +1,8 @@
 <?php namespace Gecche\Multidomain\Foundation;
 
 use Closure;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class DomainDetector {
 
@@ -13,7 +15,7 @@ class DomainDetector {
 	 */
 	public function detect($consoleArgs = null)
 	{
-		if ($consoleArgs)
+        if ($consoleArgs)
 		{
 			return $this->detectConsoleDomain($consoleArgs);
 		}
@@ -66,10 +68,9 @@ class DomainDetector {
 	 */
 	protected function getDomainArgument(array $args)
 	{
-		return array_first($args, function($k, $v)
-		{
-			return starts_with($v, '--domain');
-		});
+        return Arr::first($args, function ($value) {
+            return Str::startsWith($value, '--domain');
+        });
 	}
 
     /*
