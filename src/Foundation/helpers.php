@@ -10,13 +10,13 @@
 if (!function_exists('domain_sanitized')) {
 
     /**
-     * Replace dots in a domain name with underscores
+     * Replace dots in a domain name with another character (underscores by default)
      *
      * @param  string  $domain
      * @return string
      */
-    function domain_sanitized($domain) {
-        return str_replace('.', '_', $domain);
+    function domain_sanitized($domain,$replacing_char = '_') {
+        return str_replace('.', $replacing_char, $domain);
     }
 
 }
