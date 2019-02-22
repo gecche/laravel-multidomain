@@ -1,7 +1,7 @@
 {
     "name": "gecche/laravel-multidomain",
-    "description": "Laravel App on a multidomain setting",
-    "keywords": ["laravel", "domain", "multidomain"],
+    "description": "Laravel App on a subdomains, multi-tenancy setting",
+    "keywords": ["laravel", "subdomains", "multitenancy", "multi-tenants", "multidomain"],
     "license": "MIT",
     "authors": [
         {
