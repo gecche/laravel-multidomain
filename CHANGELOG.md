@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
+
+## 1.1.1 - 2019-03-10
 ### Added
 - This CHANGELOG.md file.
 - Added the handling of config:cache artisan command by multiple cache config files
@@ -12,5 +14,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.1.0...v1.1.1
