@@ -150,6 +150,20 @@ php artisan domain:update_env --domain_values='{"TOM_DRIVER":"TOMMY"}'
  
 adds the line `TOM_DRIVER=TOMMY` to all the found environment files.
 
+#### config:cache artisan command
+The config:cache artisan command can be used with this package in the same way as any other 
+artisan command. Be careful that in our setting the config:cache command generates 
+a file config.php file for each domain under which the command has been executed.
+I.e. the command
+ ```
+ php artisan config:cache --domain=site2.com 
+ ```
+will generate the file
+ ```
+ config-site2_com.php 
+ ```
+
+
 #### Further information
 At run-time, the current HTTP domain is maintained in the laravel container 
 and can be accessed by its `domain()` method added by this package.
