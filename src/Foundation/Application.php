@@ -80,10 +80,13 @@ class Application extends \Illuminate\Foundation\Application
      *
      * @return string
      */
-    public function environmentFileDomain()
+    public function environmentFileDomain($domain = null)
     {
+        if (is_null($domain)) {
+            $domain = $this['domain'];
+        }
         $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-        $file = '.env.' . $this['domain'];
+        $file = '.env.' . $domain;
         return file_exists($filePath . $file) ? $file : '.env';
     }
 
@@ -96,9 +99,12 @@ class Application extends \Illuminate\Foundation\Application
      *
      * @return string
      */
-    public function domainStoragePath()
+    public function domainStoragePath($domain = null)
     {
-        $domainPath = domain_sanitized($this['domain']);
+        if (is_null($domain)) {
+            $domain = $this['domain'];
+        }
+        $domainPath = domain_sanitized($domain);
         $domainStoragePath = $this->storagePath() . DIRECTORY_SEPARATOR . $domainPath;
         if (file_exists($domainStoragePath))
             return $domainStoragePath;
@@ -117,5 +123,28 @@ class Application extends \Illuminate\Foundation\Application
         if ($envFile && $envFile == '.env')
             return $this->bootstrapPath().'/cache/config.php';
         return $this->bootstrapPath().'/cache/config-'.domain_sanitized($this['domain']).'.php';
+    }
+
+
+    /*
+     * Get the list of installed domains
+     *
+     * @return Array
+     */
+    public function domainsList() {
+
+        $domainsInConfig = config('domain.domains',[]);
+
+        $domains = [];
+
+        foreach ($domainsInConfig as $domain) {
+            $domains[$domain] = [
+                'storage_path' => $this->domainStoragePath($domain),
+                'env' => $this->environmentFileDomain($domain),
+            ];
+        }
+
+        return $domains;
+
     }
 }
