@@ -1,6 +1,7 @@
 <?php namespace Gecche\Multidomain\Foundation;
 
 use App;
+use Gecche\Multidomain\Foundation\Console\ListDomainCommand;
 use Gecche\Multidomain\Foundation\Console\RemoveDomainCommand;
 use Illuminate\Support\ServiceProvider;
 use Gecche\Multidomain\Foundation\Console\DomainCommand;
@@ -22,6 +23,7 @@ class DomainConsoleServiceProvider extends ServiceProvider {
         'AddDomain',
         'RemoveDomain',
         'UpdateEnvDomain',
+        'ListDomain',
     ];
 
 
@@ -44,7 +46,8 @@ class DomainConsoleServiceProvider extends ServiceProvider {
             "command.domain",
             "command.domain.add",
             "command.domain.remove",
-            "command.domain.update_env"
+            "command.domain.update_env",
+            "command.domain.list",
         );
 
     }
@@ -106,6 +109,19 @@ class DomainConsoleServiceProvider extends ServiceProvider {
         $this->app->singleton('command.domain.update_env', function($app)
         {
             return new UpdateEnvDomainCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerListDomainCommand()
+    {
+        $this->app->singleton('command.domain.list', function($app)
+        {
+            return new ListDomainCommand($app['files']);
         });
     }
 }
