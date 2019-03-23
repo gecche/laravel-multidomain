@@ -47,7 +47,7 @@ class DomainConsoleServiceProvider extends ServiceProvider {
             "command.domain.add",
             "command.domain.remove",
             "command.domain.update_env",
-            "command.domain.list",
+            "command.domain.list"
         );
 
     }

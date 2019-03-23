@@ -40,12 +40,12 @@ class ListDomainCommand extends Command
          * Simply returns the info for each domain found in config.
          */
         foreach ($domains as $domain) {
-            $this->line("<comment>" . $domain . "</comment>");
+            $this->line("<info>Domain: </info><comment>" . $domain . "</comment>");
 
-            $this->line("<info>Storage dir: </info><comment>" . $this->getDomainStoragePath($domain) . "</comment>");
-            $this->line("<info>Env file: </info><comment>" . $this->getDomainEnvFilePath($domain) . "</comment>");
+            $this->line("<info> - Storage dir: </info><comment>" . $this->getDomainStoragePath($domain) . "</comment>");
+            $this->line("<info> - Env file: </info><comment>" . $this->getDomainEnvFilePath($domain) . "</comment>");
 
-            $this->line();
+            $this->line("");
 
         }
 
