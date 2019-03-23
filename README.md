@@ -150,6 +150,12 @@ php artisan domain:update_env --domain_values='{"TOM_DRIVER":"TOMMY"}'
  
 adds the line `TOM_DRIVER=TOMMY` to all the found environment files.
 
+#### `domain.list` command
+The  `domain:list` command simply shows the list of the current installed domains 
+indicating also their env file and storage path dir.
+The list is maintained in the `domains` key of the `domain.php` config file.
+Such list is automatically updated at every `domain:add` and `domain:remove` commands run.
+
 #### config:cache artisan command
 The config:cache artisan command can be used with this package in the same way as any other 
 artisan command. Be careful that in our setting the config:cache command generates 
@@ -167,6 +173,20 @@ will generate the file
 #### Further information
 At run-time, the current HTTP domain is maintained in the laravel container 
 and can be accessed by its `domain()` method added by this package.
+
+Moreover a `domainList()` method is also added by this package returning an associative array 
+containing the installed domains info similarly to the `domain.list` command above.
+
+E.g.
+ ```
+ [ 
+    site1.com => [
+        'storage_path' => <LARAVEL-STORAGE-PATH>/site1_com,
+        'env' => '.env.site1.com'
+    ]
+ ] 
+ ```
+
 
 
 ## Compatibility
