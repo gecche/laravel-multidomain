@@ -110,7 +110,7 @@ In addition, within the standard `storage` folder, two new folders have been cre
 In particular, the folder structure within the new storage folders can be customized 
  in the `domain.php` config file.
  
-#### Distinguishing between HTTP domains
+#### Distinguishing between HTTP domains in web pages
 
 For each HTTP request received by the application, the specific environment file is 
  loaded and the specific storage folder is used.
@@ -119,11 +119,49 @@ For each HTTP request received by the application, the specific environment file
  The detection of the right HTTP domain is done by using the `$_SERVER['SERVER_NAME']` 
  PHP variable. 
  
- In order to distinguishing between domains use artisan commands (including queue stuff), 
- each artisan command accepts now a new option `domain`. E.g.:
+#### Using multi domains in artisan commands
+ 
+ In order to distinguishing between domains, each artisan command accepts now a new option `domain`. E.g.:
  ```
  php artisan list --domain=site1.com 
  ```
+The command will use the corresponding domain settings.
+
+#### About queues
+ 
+ As for the others artisan commands, also `queue:work` and `queue:listen` commands have been updated
+ to accept a new `domain` option.
+ ```
+ php artisan queue:work --domain=site1.com 
+ ```
+As usual the above command will use the corresponding domain settings.
+Keep in mind that if, for example, you are using the `database` driver and you have two domains, 
+namely `site1.com` and `site2.com`, sharing the same db, you should use two distinct queues if you want 
+to manage separately the jobs of each domain.
+In particular, you could 
+- put in your .env files a default queue for each domain, e.g. 
+`QUEUE_DEFAULT=default1` for site1.com and `QUEUE_DEFAULT=default2` for site2.com
+- update the `queue.php` config file by changing the default queue accordingly: 
+```
+'database' => [
+    'driver' => 'database',
+    'table' => 'jobs',
+    'queue' => env('QUEUE_DEFAULT','default'),
+    'retry_after' => 90,
+],
+```
+        
+- finally launch two distinct workers 
+```
+ php artisan queue:work --domain=site1.com --queue=default1
+ ```
+ and
+```
+ php artisan queue:work --domain=site1.com --queue=default2
+ ```
+
+Obviously, the same can be done for each other queue driver apart from the `sync` driver.
+
 
 #### `domain.remove` command
 The  `domain:remove` command simply removes the specified HTTP domain from the 
