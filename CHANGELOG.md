@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.3 - 2019-05-22
+### Changed
+- README.md improved with queue example
+
 ## 1.1.2 - 2019-03-23
 ### Added
 - Added new domain:list artisan command displaying info of installed domains
@@ -22,3 +26,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...HEAD
 [1.1.1]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...v1.1.1
 [1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
+[1.1.3]: https://github.com/gecche/laravel-multidomain/compare/v1.1.2...v1.1.3
