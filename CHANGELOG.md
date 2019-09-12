@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.4 - 2019-05-25
+### Changed
+- Better English in README.md :) Thanks to leadegroot.
+
 ## 1.1.3 - 2019-05-22
 ### Changed
 - README.md improved with queue example
