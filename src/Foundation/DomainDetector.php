@@ -34,7 +34,7 @@ class DomainDetector {
 	protected function detectWebDomain()
 	{
 		//return filter_input(INPUT_SERVER,'SERVER_NAME');
-            		return array_get($_SERVER,'SERVER_NAME');
+            		return Arr::get($_SERVER,'SERVER_NAME');
 
 	}
 
@@ -77,10 +77,10 @@ class DomainDetector {
      * Split the domain name into scheme, name and port
      */
     public function split($domain) {
-        if (starts_with($domain,'https://')) {
+        if (Str::startsWith($domain,'https://')) {
             $scheme = 'https';
             $domain = substr($domain,8);
-        } elseif (starts_with($domain,'http://')) {
+        } elseif (Str::startsWith($domain,'http://')) {
             $scheme = 'http';
             $domain = substr($domain,7);
         } else {

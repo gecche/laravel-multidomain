@@ -2,6 +2,8 @@
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Arr;
+
 
 class AddDomainCommand extends GeneratorCommand
 {
@@ -124,7 +126,7 @@ class AddDomainCommand extends GeneratorCommand
     }
 
     protected function addDomainToConfigFile($config) {
-        $domains = array_get($config, 'domains', []);
+        $domains = Arr::get($config, 'domains', []);
         if (!array_key_exists($this->domain, $domains)) {
             $domains[$this->domain] = $this->domain;
         }

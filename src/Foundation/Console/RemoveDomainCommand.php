@@ -1,6 +1,7 @@
 <?php namespace Gecche\Multidomain\Foundation\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Arr;
 use Config;
 
 class RemoveDomainCommand extends GeneratorCommand {
@@ -75,7 +76,7 @@ class RemoveDomainCommand extends GeneratorCommand {
     }
 
     protected function removeDomainToConfigFile($config) {
-        $domains = array_get($config, 'domains', []);
+        $domains = Arr::get($config, 'domains', []);
         if (array_key_exists($this->domain, $domains)) {
             unset($domains[$this->domain]);
         }

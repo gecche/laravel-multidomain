@@ -1,6 +1,7 @@
 <?php namespace Gecche\Multidomain\Foundation\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 
 class ListDomainCommand extends Command
 {
@@ -33,7 +34,7 @@ class ListDomainCommand extends Command
         /*
          * GET DOMAINS BASED ON domains KEY IN THE CONFIG FILE
          */
-        $domains = array_get($config, 'domains', []);
+        $domains = Arr::get($config, 'domains', []);
 
 
         /*
