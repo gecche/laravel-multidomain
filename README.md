@@ -1,4 +1,5 @@
 [![Laravel](https://img.shields.io/badge/Laravel-5.x-orange.svg?style=flat-square)](http://laravel.com)
+[![Laravel](https://img.shields.io/badge/Laravel-6.x-orange.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
 # laravel-multidomain
@@ -43,7 +44,7 @@ at the very top of the `bootstrap/app.php` file.
 ```php
 //$app = new Illuminate\Foundation\Application(
 $app = new Gecche\Multidomain\Foundation\Application(
-    realpath(__DIR__.'/../')
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 ```
 
@@ -241,7 +242,7 @@ Obviously, the same can be done for each other queue driver, apart from the `syn
 
 ## Compatibility
 
-v1.1 requires Laravel 5.5+
+v1.1 requires Laravel 5.5, 5.6, 5.7, 5.8 or 6.0. 
 
 v1.0 requires Laravel 5.1+ (no longer maintained and not tested versus laravel 5.4, 
 however the usage of the package is the same as for 1.1)

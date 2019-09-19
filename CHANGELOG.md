@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.5 - 2019-09-19
+### Changed
+- Compatibility with Laravel 6.0.x (note that previous version 1.1.4 is also compatible with Laravel 6.0.x including [laravel/helpers](https://github.com/laravel/helpers) in the composer.json. file of your Laravel Application)   
+
 ## 1.1.4 - 2019-05-25
 ### Changed
 - Better English in README.md :) Thanks to leadegroot.
@@ -31,3 +35,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [1.1.1]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...v1.1.1
 [1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
 [1.1.3]: https://github.com/gecche/laravel-multidomain/compare/v1.1.2...v1.1.3
+[1.1.4]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.4
+[1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.5
