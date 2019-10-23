@@ -72,8 +72,8 @@ class UpdateEnvDomainCommand extends GeneratorCommand
     protected function updateDomainEnvFiles()
     {
         $domainValues = json_decode($this->option("domain_values"), true);
-        $this->line("<info>".var_dump($this->option("domain_values"))."</info>");
-        $this->line("<info>".var_dump($domainValues)."</info>");
+//        $this->line("<info>".var_dump($this->option("domain_values"))."</info>");
+//        $this->line("<info>".var_dump($domainValues)."</info>");
 
         if (!is_array($domainValues)) {
             $domainValues = array();

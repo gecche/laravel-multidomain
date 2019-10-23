@@ -22,6 +22,7 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function detectDomain()
     {
+
         $args = isset($_SERVER['argv']) ? $_SERVER['argv'] : null;
 
         $domainDetector = new DomainDetector();

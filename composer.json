@@ -12,7 +12,17 @@
     "require": {
         "laravel/framework": ">=5.5.0"
     },
+    "require-dev": {
+        "mockery/mockery": "~1.0",
+        "phpunit/phpunit": "~6.0",
+        "codedungeon/phpunit-result-printer": "^0.4.4",
+        "orchestra/testbench": "~3.5.0",
+        "orchestra/testbench-browser-kit": "~3.5.0"
+    },
     "autoload": {
+        "classmap": [
+            "tests/database/factories"
+        ],
         "psr-4": {
             "Gecche\\Multidomain\\": "src/"
         },
@@ -20,10 +30,18 @@
             "src/Foundation/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Gecche\\Multidomain\\Tests\\": "tests/src"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "Gecche\\Multidomain\\Foundation\\DomainConsoleServiceProvider"
+                "Gecche\\Multidomain\\Foundation\\Providers\\DomainConsoleServiceProvider"
             ]
         }
     }

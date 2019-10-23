@@ -1,6 +1,8 @@
 <?php namespace Gecche\Multidomain\Foundation\Console;
 
 use Gecche\Multidomain\Console\Application as Artisan;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 
 class Kernel extends \Illuminate\Foundation\Console\Kernel {
@@ -36,6 +38,42 @@ class Kernel extends \Illuminate\Foundation\Console\Kernel {
         }
 
         return $this->artisan;
+    }
+
+
+    /**
+     * Run an Artisan console command by name.
+     *
+     * @param  string  $command
+     * @param  array  $parameters
+     * @param  \Symfony\Component\Console\Output\OutputInterface  $outputBuffer
+     * @return int
+     */
+    public function call($command, array $parameters = [], $outputBuffer = null, $forceBootstrap = false)
+    {
+        if ($forceBootstrap) {
+            $argv = isset($_SERVER['argv']) ? $_SERVER['argv'] : [];
+            $argvDomain = Arr::first($argv, function ($value) {
+                return Str::startsWith($value, '--domain');
+            });
+            echo $argvDomain . "----";
+            if (!$argvDomain) {
+                $paramDomain = Arr::get($parameters,'--domain');
+                echo $paramDomain . "++++";
+                if ($paramDomain) {
+
+                    $_SERVER['argv'][] = $paramDomain;
+                }
+            }
+            $this->app->bootstrapWith($this->bootstrappers());
+        }
+
+        print_r($this->bootstrappers);
+        echo "HERE::: " . $forceBootstrap . ":::" . $command . "::::" . $this->app->environmentFile() . "\n\n";
+
+        $this->bootstrap();
+
+        return $this->getArtisan()->call($command, $parameters, $outputBuffer);
     }
 
 }

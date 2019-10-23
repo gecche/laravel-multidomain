@@ -65,6 +65,7 @@ trait DomainCommandTrait {
         );
 
         $this->files->put($filename, $modelConfigStub);
+        Config::set($this->configFile,$finalConfig);
     }
 
     protected function getVarsArray($path)
