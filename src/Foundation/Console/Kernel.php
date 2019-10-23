@@ -68,9 +68,6 @@ class Kernel extends \Illuminate\Foundation\Console\Kernel {
             $this->app->bootstrapWith($this->bootstrappers());
         }
 
-        print_r($this->bootstrappers);
-        echo "HERE::: " . $forceBootstrap . ":::" . $command . "::::" . $this->app->environmentFile() . "\n\n";
-
         $this->bootstrap();
 
         return $this->getArtisan()->call($command, $parameters, $outputBuffer);

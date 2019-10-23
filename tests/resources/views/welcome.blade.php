@@ -32,7 +32,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">{{env("DB_DATABASE")}}</div>
+				<div class="title">{{env("APP_NAME")}}</div>
 			</div>
 		</div>
 	</body>
