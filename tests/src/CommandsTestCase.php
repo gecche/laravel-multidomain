@@ -98,6 +98,26 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
 
     /*
+         * TEST FOR DOMAIN COMMAND
+         * First we add the domain <SITE> adn we check <SITE> is in the output of the domain:list command.
+         * Then we remove the domain <SITE> adn we check <SITE> is no more in the output of the domain:list command.
+         */
+    public function testDomainCommand() {
+
+
+        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
+
+        $this->artisan('domain');
+
+        $artisanOutput = Artisan::output();
+
+        //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
+        $this->assertContains($serverName,$artisanOutput);
+
+
+    }
+    
+    /*
      * TEST FOR DOMAIN ADD COMMAND
      * It checks if the env file and storage dirs exist and if the list of domains in the config file is updated
      */
@@ -215,23 +235,5 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
     }
 
 
-    /*
-         * TEST FOR DOMAIN COMMAND
-         * First we add the domain <SITE> adn we check <SITE> is in the output of the domain:list command.
-         * Then we remove the domain <SITE> adn we check <SITE> is no more in the output of the domain:list command.
-         */
-    public function testDomainCommand() {
 
-
-        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
-
-        $this->artisan('domain');
-
-        $artisanOutput = Artisan::output();
-
-        //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
-        $this->assertContains($serverName,$artisanOutput);
-
-
-    }
 }

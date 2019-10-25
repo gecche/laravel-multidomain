@@ -15,6 +15,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Process\Process;
 
 
 /*
@@ -37,6 +38,8 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 {
 
     protected $serverName;
+    protected $laravelAppPath = null;
+
 
     protected $files = null;
 
@@ -61,30 +64,41 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
      */
     public function setUp()
     {
+        $process = new Process('php '.$this->laravelAppPath.'/artisan config:clear');
+        $process->run();
+
 
         $this->files = new Filesystem();
+        $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
+        copy($this->laravelAppPath.'/config/app.php',$this->laravelAppPath.'/config/appORIG.php');
+        copy(__DIR__ . '/../config/app.php',$this->laravelAppPath.'/config/app.php');
+        copy(__DIR__ . '/../.env.example', $this->laravelAppPath.'/.env');
+        copy(__DIR__ . '/../artisan',$this->laravelAppPath.'/artisan');
+
+        $process = new Process('php '.$this->laravelAppPath.'/artisan vendor:publish --provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"');
+        $process->run();
+
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove '.$this->site1.' --force');
+        $process->run();
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove '.$this->site2.' --force');
+        $process->run();
+
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add '.$this->site1);
+        $process->run();
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add '.$this->site2);
+        $process->run();
+
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env '.$this->site1.' --domain_values=\'{"APP_NAME":"'.
+            $this->siteAppName1.'","DB_DATABASE":"'.$this->siteDbName1.'"}\'');
+        $process->run();
+
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env '.$this->site2.' --domain_values=\'{"APP_NAME":"'.
+            $this->siteAppName2.'","DB_DATABASE":"'.$this->siteDbName2.'"}\'');
+        $process->run();
 
 
         parent::setUp();
 
-        copy(__DIR__ . '/../.env.example', base_path('.env'));
-
-        $this->artisan('vendor:publish', ['--provider' => 'Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider']);
-        $this->artisan('domain:remove', ['domain' => $this->site1, '--force' => 1]);
-        $this->artisan('domain:remove', ['domain' => $this->site2, '--force' => 1]);
-
-        $this->artisan('domain:add', ['domain' => $this->site1]);
-        $this->artisan('domain:add', ['domain' => $this->site2]);
-
-        $this->artisan('domain:update_env', [
-            'domain' => $this->site1,
-            '--domain_values' => '{"APP_NAME":"' . $this->siteAppName1 . '","DB_DATABASE":"' . $this->siteDbName1 . '"}',
-        ]);
-
-        $this->artisan('domain:update_env', [
-            'domain' => $this->site2,
-            '--domain_values' => '{"APP_NAME":"' . $this->siteAppName2 . '","DB_DATABASE":"' . $this->siteDbName2 . '"}',
-        ]);
 
     }
 
@@ -155,24 +169,24 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
      * set when the test has been launched.
      *
      */
-    public function testWelcomeCommand()
+    public function testWelcomePage()
     {
 
+
         $this->serverName = Arr::get($_SERVER,'SERVER_NAME');
-        $page = $this->visit('http://'.$this->serverName);
+        $stringToSee = 'Laravel';
         switch ($this->serverName) {
             case 'site1.test':
-                $page->see($this->siteAppName1);
+                $stringToSee = $this->siteAppName1;
                 break;
             case 'site2.test':
-                $page->see($this->siteAppName2);
+                $stringToSee = $this->siteAppName2;
                 break;
             default:
-                $page->see('Laravel');
                 break;
-
-
         }
+        $this->visit('http://'.$this->serverName)
+            ->see($stringToSee);
     }
 
 
@@ -187,7 +201,9 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
     {
 
         $this->serverName = Arr::get($_SERVER,'SERVER_NAME');
+        echo "\n\nSERVERNAME::" .$this->serverName . "\n\n";
         $dbName = DB::connection('mysql')->getDatabaseName();
+        echo "\n\nDBNAME::" .$dbName . "\n\n";
         $expectedDb = 'homestead';
         switch ($this->serverName) {
             case 'site1.test':

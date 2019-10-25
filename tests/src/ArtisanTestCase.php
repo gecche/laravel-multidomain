@@ -277,19 +277,24 @@ class ArtisanTestCase extends TestCase
         $process2->run();
 
         //Wait for a reasonable time
-        echo "Sleep ".$process->getPid()."\n";
+        //echo "Sleep ".$process->getPid()."\n";
         sleep(5);
-        echo "End sleep\n";
+        //echo "End sleep\n";
 
         $this->assertFileExists($fileToTest);
 
         $fileContent = $this->files->get($fileToTest);
-        $this->assertContains('Laravel --- default',$fileContent);
+        if ($serverName == 'site1.test') {
+            $this->assertContains('LARAVELTEST --- site1',$fileContent);
+        } else {
+            $this->assertContains('Laravel --- default',$fileContent);
+        }
+
 
         $process->stop(0);
 
         $string = 'pkill -f "' . $processName . '"';
-        echo $string . "\n";
+        //echo $string . "\n";
         exec($string);
 
         /***/
@@ -310,9 +315,9 @@ class ArtisanTestCase extends TestCase
         $process2->run();
 
         //Wait for a reasonable time
-        echo "Sleep ".$process->getPid()."\n";
+        //echo "Sleep ".$process->getPid()."\n";
         sleep(5);
-        echo "End sleep\n";
+        //echo "End sleep\n";
 
         $this->assertFileExists($fileToTest);
 
@@ -322,8 +327,14 @@ class ArtisanTestCase extends TestCase
         $process->stop(0);
 
         $string = 'pkill -f "' . $processName . '"';
-        echo $string . "\n";
+//        echo $string . "\n";
         exec($string);
+
+        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove site1.test --force');
+        $process->run();
+
+
+        $this->files->delete($fileToTest);
 
         return;
 
