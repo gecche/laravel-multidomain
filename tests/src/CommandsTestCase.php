@@ -1,0 +1,237 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: gecche
+ * Date: 01/10/2019
+ * Time: 11:15
+ */
+
+namespace Gecche\Multidomain\Tests;
+
+use Gecche\Multidomain\Foundation\Application;
+use Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider;
+use Gecche\Multidomain\Tests\Http\Kernel as HttpKernel;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
+
+class CommandsTestCase extends \Orchestra\Testbench\TestCase
+{
+
+
+    protected $files = null;
+
+    protected $site = 'site1.test';
+    protected $siteDbName = 'db_site1';
+
+    /**
+     * Setup the test environment.
+     *
+     * Tests need an .env file and the domain.php config file published.
+     * This is what we do in the setUp method
+     *
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->files = new Filesystem();
+
+        copy(__DIR__ . '/../.env.example',base_path('.env'));
+
+        $this->artisan('vendor:publish',['--provider' => 'Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider']);
+    }
+
+    /**
+     * Resolve application Console Kernel implementation.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    protected function resolveApplicationConsoleKernel($app)
+    {
+        $app->singleton('Illuminate\Contracts\Console\Kernel', ConsoleKernel::class);
+    }
+
+    protected function resolveApplicationHttpKernel($app)
+    {
+        $app->singleton('Illuminate\Contracts\Http\Kernel', HttpKernel::class);
+    }
+
+    protected function resolveApplication()
+    {
+        return tap(new Application($this->getBasePath()), function ($app) {
+            $app->bind(
+                'Illuminate\Foundation\Bootstrap\LoadConfiguration',
+                'Orchestra\Testbench\Bootstrap\LoadConfiguration'
+            );
+        });
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+
+    }
+
+    /**
+     * Get Sluggable package providers.
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            TestServiceProvider::class,
+            DomainConsoleServiceProvider::class,
+        ];
+    }
+
+
+    /*
+     * TEST FOR DOMAIN ADD COMMAND
+     * It checks if the env file and storage dirs exist and if the list of domains in the config file is updated
+     */
+    public function testDomainAddCommand() {
+        $site = $this->site;
+
+        $this->artisan('domain:add',['domain' => $site]);
+
+        $this->assertFileExists(base_path('.env.'.$site));
+
+        $this->artisan('config:clear');
+
+        $domainListed = Config::get('domain.domains');
+
+        $this->assertArrayHasKey($site,$domainListed);
+
+        $this->assertDirectoryExists(storage_path(domain_sanitized($site)));
+    }
+
+    /*
+     * TEST FOR DOMAIN REMOVE COMMAND
+     * It checks if the .env file does not exist and if the list of domains in the config file is updated without the domain.
+     * It checks also if storage dirs still exist
+     */
+    public function testDomainRemoveCommand() {
+        $site = $this->site;
+
+        $this->artisan('domain:remove',['domain' => $site]);
+
+        $this->assertFileNotExists(base_path('.env.'.$site));
+
+        $domainListed = Config::get('domain.domains');
+
+        $this->assertArrayNotHasKey($site,$domainListed);
+
+        $this->assertDirectoryExists(storage_path(domain_sanitized($site)));
+    }
+
+    /*
+     * TEST FOR DOMAIN REMOVE COMMAND (FORCE)
+     * It checks if the .env file does not exist and if the list of domains in the config file is updated without the domain.
+     * Now it checks also if storage dirs does not exist (force)
+     */
+    public function testDomainRemoveForceCommand() {
+        $site = $this->site;
+
+        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+
+        $this->assertFileNotExists(base_path('.env.'.$site));
+
+        $domainListed = Config::get('domain.domains');
+
+        $this->assertArrayNotHasKey($site,$domainListed);
+
+        $this->assertDirectoryNotExists(storage_path(domain_sanitized($site)));
+    }
+
+    /*
+     * TEST FOR DOMAIN UPDATE_ENV COMMAND
+     * First we remove and add the domain <SITE> to be sure <SITE> is fresh.
+     * Then we check the DB_DATABASE value in the corresponding .env.<SITE>.
+     * We update  the DB_DATABASE value and then we check the final value.
+     */
+    public function testDomainUpdateEnvCommand() {
+
+        $site = $this->site;
+        $dbName = $this->siteDbName;
+
+        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+        $this->artisan('domain:add',['domain' => $site]);
+
+        $fileContents = explode("\n",$this->files->get(base_path('.env.'.$site)));
+        $this->assertNotContains("DB_DATABASE=".$dbName,$fileContents);
+
+        $this->artisan('domain:update_env',[
+            'domain' => $site,
+            '--domain_values' => '{"DB_DATABASE":"'.$dbName.'"}',
+        ]);
+
+        $fileContents = explode("\n",$this->files->get(base_path('.env.'.$site)));
+        $this->assertContains("DB_DATABASE=".$dbName,$fileContents);
+
+        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+
+    }
+
+    /*
+     * TEST FOR DOMAIN LIST COMMAND
+     * First we add the domain <SITE> adn we check <SITE> is in the output of the domain:list command.
+     * Then we remove the domain <SITE> adn we check <SITE> is no more in the output of the domain:list command.
+     */
+    public function testDomainListCommand() {
+
+        $site = $this->site;
+
+        //ADD THE DOMAIN <SITE>
+        $this->artisan('domain:add',['domain' => $site]);
+
+        $this->artisan('domain:list');
+
+        $artisanOutput = Artisan::output();
+
+        //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
+        $this->assertContains($site,$artisanOutput);
+
+
+        //REMOVE THE DOMAIN <SITE>
+        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+        $this->artisan('domain:list');
+
+        $artisanOutput = Artisan::output();
+
+        //CHECK <SITE> IS NOT IN THE OUTPUT OF THE COMMAND
+        $this->assertNotContains($site,$artisanOutput);
+    }
+
+
+    /*
+         * TEST FOR DOMAIN COMMAND
+         * First we add the domain <SITE> adn we check <SITE> is in the output of the domain:list command.
+         * Then we remove the domain <SITE> adn we check <SITE> is no more in the output of the domain:list command.
+         */
+    public function testDomainCommand() {
+
+
+        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
+
+        $this->artisan('domain');
+
+        $artisanOutput = Artisan::output();
+
+        //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
+        $this->assertContains($serverName,$artisanOutput);
+
+
+    }
+}

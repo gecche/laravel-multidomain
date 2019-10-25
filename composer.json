@@ -21,7 +21,7 @@
     },
     "autoload": {
         "classmap": [
-            "tests/database/factories"
+
         ],
         "psr-4": {
             "Gecche\\Multidomain\\": "src/"

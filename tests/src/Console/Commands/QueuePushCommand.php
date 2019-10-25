@@ -1,10 +1,12 @@
 <?php namespace Gecche\Multidomain\Tests\Console\Commands;
 
+use Gecche\Multidomain\Tests\Jobs\AppNameJob;
 use Illuminate\Bus\Queueable;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Queue;
 
 
-class NameCommand extends Command
+class QueuePushCommand extends Command
 {
 
     /**
@@ -12,17 +14,17 @@ class NameCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'name';
+    protected $signature = 'queue_push';
 
 
-    protected $description = "Display the app name in the env";
+    protected $description = "Push the 'app_name' job onto the queue";
 
     /*
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */
     public function handle()
     {
-        echo env('APP_NAME');
+        AppNameJob::dispatch();
     }
 
 

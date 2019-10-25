@@ -57,6 +57,8 @@ $app->singleton(
 |
 */
 
+$app->register(\Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider::class);
+
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
 $status = $kernel->handle(
