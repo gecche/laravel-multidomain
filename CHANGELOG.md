@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
+
+## 2.0 - 2019-10-29
+### Changed
+- `composer.json` updated for Laravel 6.x (6.4 to date)  
+
+## 1.4.0 - 2019-10-29
+### Changed
+- `composer.json` updated for Laravel 5.8  
+
+## 1.3.0 - 2019-10-29
+### Changed
+- `composer.json` updated for Laravel 5.7  
+- Bugfix in `Gecche\Multidomain\Queue\Listener` due to changes in handling 
+worker commands in the parent class.
+
+## 1.2.0 - 2019-10-29
+### Changed
+- `composer.json` updated for Laravel 5.6  
+
+## 1.1.6 - 2019-10-29
 ### Added
 - Test suites
 ### Changed
@@ -44,4 +64,9 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
 [1.1.3]: https://github.com/gecche/laravel-multidomain/compare/v1.1.2...v1.1.3
 [1.1.4]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.4
-[1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.5
+[1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.4...v1.1.5
+[1.1.6]: https://github.com/gecche/laravel-multidomain/compare/v1.1.5...v1.1.6
+[1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
+[1.4.0]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.4.0
+[2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v2.0

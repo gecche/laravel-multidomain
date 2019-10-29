@@ -32,6 +32,10 @@ Moreover we created an adapted copy of the Laravel's `artisan` script in order t
 
 We perform above operations in the `setUp` sections of the suites.
 
+We provide tests under the `mysql` connection (set in `phpunit.xml`). 
+You need to create two databases, namely (`site1` and `site2`) in your DB server 
+in order to run tests correctly.
+
 ## Running tests
 As usual, we run tests from the package folder launching:
 
