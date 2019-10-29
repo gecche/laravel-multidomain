@@ -116,7 +116,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
 
     }
-    
+
     /*
      * TEST FOR DOMAIN ADD COMMAND
      * It checks if the env file and storage dirs exist and if the list of domains in the config file is updated
