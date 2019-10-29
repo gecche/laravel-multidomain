@@ -260,19 +260,3 @@ For example, you could:
  ```
 
 Obviously, the same can be done for each other queue driver, apart from the `sync` driver.
-
-#### About tests
- 
- Starting from v1.1.6 the package has some integration test suites 
- which have been done with the `Orchestra\Testbench`.
- The source code is as usual in the `tests` folder and tests can be run with:
- 
- `../../../vendor/bin/phpunit`
- 
- However, please note that, as the package 
- The artisan commands `queue:work` and `queue:listen` commands have been updated
- to accept a new `domain` option.
- ```
- php artisan queue:work --domain=site1.com 
- ```
-As usual, the above command will use the corresponding domain settings.
