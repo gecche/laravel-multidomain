@@ -316,7 +316,7 @@ class ArtisanTestCase extends TestCase
         $process2->run();
 
         //Wait for a reasonable time
-        //echo "End sleep\n";
+        sleep(5);
 
         $this->assertFileExists($fileToTest);
 
