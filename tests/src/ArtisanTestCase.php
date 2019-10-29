@@ -51,7 +51,7 @@ class ArtisanTestCase extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->files = new Filesystem();
         $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
@@ -75,7 +75,7 @@ class ArtisanTestCase extends TestCase
     }
 
 
-    protected function tearDown() {
+    protected function tearDown(): void {
 
         $this->files->delete($this->laravelAppPath.'/.env');
         copy($this->laravelAppPath.'/config/appORIG.php',$this->laravelAppPath.'/config/app.php');

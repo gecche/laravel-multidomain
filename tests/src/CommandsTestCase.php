@@ -40,7 +40,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
