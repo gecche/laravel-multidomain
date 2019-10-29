@@ -182,14 +182,14 @@ class ArtisanTestCase extends TestCase
         //CHECK QUEUE:FLUSH COMMAND: SUCCESS WITHOUT OPTIONS AND FAILURE WITH DOMAIN OPTION
         $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush');
         $process->run();
-        $this->assertContains('All failed jobs deleted successfully!',$process->getOutput());
+        $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
 
         $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush --domain=site1.test');
         $process->run();
         if ($serverName == 'site1.test') {
-            $this->assertContains('All failed jobs deleted successfully!',$process->getOutput());
+            $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
         } else {
-            $this->assertContains('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'site1.failed',$process->getOutput());
+            $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'site1.failed',$process->getOutput());
         }
 
 
@@ -208,14 +208,14 @@ class ArtisanTestCase extends TestCase
         //CHECK QUEUE:FLUSH COMMAND: SUCCESS WITH DOMAIN OPTIION AND FAILURE WITHOUT
         $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush --domain=site1.test');
         $process->run();
-        $this->assertContains('All failed jobs deleted successfully!',$process->getOutput());
+        $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
 
         $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush');
         $process->run();
         if ($serverName == 'site1.test') {
-            $this->assertContains('All failed jobs deleted successfully!',$process->getOutput());
+            $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
         } else {
-            $this->assertContains('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'homestead.failed',$process->getOutput());
+            $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'homestead.failed',$process->getOutput());
         }
 
         $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove site1.test --force');
@@ -288,9 +288,9 @@ class ArtisanTestCase extends TestCase
         //we check accordingly the contents of the file
         $fileContent = $this->files->get($fileToTest);
         if ($serverName == 'site1.test') {
-            $this->assertContains('LARAVELTEST --- site1',$fileContent);
+            $this->assertStringContainsString('LARAVELTEST --- site1',$fileContent);
         } else {
-            $this->assertContains('Laravel --- default',$fileContent);
+            $this->assertStringContainsString('Laravel --- default',$fileContent);
         }
 
 
@@ -326,7 +326,7 @@ class ArtisanTestCase extends TestCase
         $this->assertFileExists($fileToTest);
 
         $fileContent = $this->files->get($fileToTest);
-        $this->assertContains('LARAVELTEST --- site1',$fileContent);
+        $this->assertStringContainsString('LARAVELTEST --- site1',$fileContent);
 
         $process->stop(0);
 

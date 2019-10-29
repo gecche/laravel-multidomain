@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 2.0 - 2019-10-29
+### Changed
+- `composer.json` updated for Laravel 6.x (6.4 to date)  
+
 ## 1.4.0 - 2019-10-29
 ### Changed
 - `composer.json` updated for Laravel 5.8  
@@ -65,3 +69,4 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
 [1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
 [1.4.0]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.4.0
+[2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v2.0
