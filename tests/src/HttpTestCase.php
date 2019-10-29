@@ -62,7 +62,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $process = new Process('php '.$this->laravelAppPath.'/artisan config:clear');
         $process->run();
@@ -102,7 +102,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->artisan('domain:remove', ['domain' => $this->site1, '--force' => 1]);
         $this->artisan('domain:remove', ['domain' => $this->site2, '--force' => 1]);
