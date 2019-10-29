@@ -28,8 +28,9 @@ for each such customer.
 
 #### Further notes on Compatibility
 
-From v1.1.0 to v1.1.5, releases are fully compatibile with Laravel 5.5, 5.6, 5.7, 5.8 or 6.0. 
-From v1.1.6+ releases v1.1.x releases require only Laravel 5.5 in order to run tests correctly.
+Releases v1.1.x:
+- From v1.1.0 to v1.1.5, releases are fully compatibile with Laravel 5.5, 5.6, 5.7, 5.8 or 6.0. 
+- From v1.1.6+ releases v1.1.x are only compatible with Laravel 5.5 in order to run tests correctly.
 
 To date, releases v1.1.6+, v1.2.x, v1.3.x, v1.4.x and v2.x are functionally equivalent.
 Releases have been separated in order to run integration tests with the corresponding version of the 
