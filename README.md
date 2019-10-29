@@ -46,7 +46,7 @@ Add gecche/laravel-multidomain as a requirement to composer.json:
 ```javascript
 {
     "require": {
-        "gecche/laravel-multidomain": "1.1.*"
+        "gecche/laravel-multidomain": "1.3.*"
     }
 }
 ```
