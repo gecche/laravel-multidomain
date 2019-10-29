@@ -117,7 +117,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
         $artisanOutput = Artisan::output();
 
         //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
-        $this->assertContains($serverName,$artisanOutput);
+        $this->assertStringContainsString($serverName,$artisanOutput);
 
 
     }
@@ -226,7 +226,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
         $artisanOutput = Artisan::output();
 
         //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
-        $this->assertContains($site,$artisanOutput);
+        $this->assertStringContainsString($site,$artisanOutput);
 
 
         //REMOVE THE DOMAIN <SITE>
@@ -236,7 +236,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
         $artisanOutput = Artisan::output();
 
         //CHECK <SITE> IS NOT IN THE OUTPUT OF THE COMMAND
-        $this->assertNotContains($site,$artisanOutput);
+        $this->assertStringNotContainsString($site,$artisanOutput);
     }
 
 
