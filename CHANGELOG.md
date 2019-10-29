@@ -4,10 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
+### Added
+- Test suites
+### Changed
+- Namespace of `DomainConsoleServiceProvider` provider from 
+`Gecche\Multidomain\Foundation` to `Gecche\Multidomain\Foundation\Providers` 
+    in order to respect folder struture.
+- `composer.json` file for testing purposes (from now Git branches are separated for each 
+Laravel release starting from 5.5 and as pointed out in the docs)  
 
 ## 1.1.5 - 2019-09-19
 ### Changed
-- Compatibility with Laravel 6.0.x (note that previous version 1.1.4 is also compatible with Laravel 6.0.x including [laravel/helpers](https://github.com/laravel/helpers) in the composer.json. file of your Laravel Application)   
+- Compatibility with Laravel 6.x (note that previous version 1.1.4 is also compatible with Laravel 6.0.x including [laravel/helpers](https://github.com/laravel/helpers) in the composer.json. file of your Laravel Application)   
 
 ## 1.1.4 - 2019-05-25
 ### Changed
