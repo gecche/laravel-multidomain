@@ -21,6 +21,11 @@ class ArtisanTestCase extends TestCase
 
     protected $laravelAppPath = null;
 
+    /*
+     * Added for changes in artisan ouput in Laravel 5.7
+     */
+    public $mockConsoleOutput = false;
+
 
     /**
      * Setup the test environment.

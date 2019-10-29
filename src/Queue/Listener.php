@@ -21,7 +21,11 @@ class Listener extends \Illuminate\Queue\Listener{
 	 */
 	public function makeProcess($connection, $queue, ListenerOptions $options)
 	{
-        $command = $this->workerCommand;
+        $command = $this->createCommand(
+            $connection,
+            $queue,
+            $options
+        );
 
         if (isset($options->domain)) {
             $command = $this->addDomain($command, $options);
@@ -33,13 +37,6 @@ class Listener extends \Illuminate\Queue\Listener{
         if (isset($options->environment)) {
             $command = $this->addEnvironment($command, $options);
         }
-
-        // Next, we will just format out the worker commands with all of the various
-        // options available for the command. This will produce the final command
-        // line that we will pass into a Symfony process object for processing.
-        $command = $this->formatCommand(
-            $command, $connection, $queue, $options
-        );
 
         return new Process(
             $command, $this->commandPath, null, null, $options->timeout
@@ -55,7 +52,7 @@ class Listener extends \Illuminate\Queue\Listener{
      */
     protected function addDomain($command, ListenerOptions $options)
     {
-        return $command.' --domain='.ProcessUtils::escapeArgument($options->domain);
+        return array_merge($command, ["--domain={$options->domain}"]);
     }
 
 
