@@ -1,4 +1,4 @@
-<?php namespace Gecche\Multidomain\Foundation;
+<?php namespace Gecche\Multidomain\Foundation\Providers;
 
 use App;
 use Gecche\Multidomain\Foundation\Console\ListDomainCommand;
