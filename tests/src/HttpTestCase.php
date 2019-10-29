@@ -201,9 +201,9 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
     {
 
         $this->serverName = Arr::get($_SERVER,'SERVER_NAME');
-        echo "\n\nSERVERNAME::" .$this->serverName . "\n\n";
+
         $dbName = DB::connection('mysql')->getDatabaseName();
-        echo "\n\nDBNAME::" .$dbName . "\n\n";
+
         $expectedDb = 'homestead';
         switch ($this->serverName) {
             case 'site1.test':
