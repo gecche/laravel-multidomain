@@ -5,10 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.2.1 - 2019-11-12
+### Changed
+- Bugfix in `Gecche\Multidomain\Foundation\Console\DomainCommandTrait`: running the 
+`domain:add` command, sometimes some lines in the stub .env file were 
+skipped and not replicated in the new .env.<domain> file
+ 
 ## 1.2.0 - 2019-10-29
 ### Changed
 - `composer.json` updated for Laravel 5.6  
 
+## 1.1.7 - 2019-11-12
+### Changed
+- Bugfix in `Gecche\Multidomain\Foundation\Console\DomainCommandTrait`: running the 
+`domain:add` command, sometimes some lines in the stub .env file were 
+skipped and not replicated in the new .env.<domain> file
+ 
 ## 1.1.6 - 2019-10-29
 ### Added
 - Test suites
@@ -52,4 +64,6 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.1.4]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.4
 [1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.4...v1.1.5
 [1.1.6]: https://github.com/gecche/laravel-multidomain/compare/v1.1.5...v1.1.6
+[1.1.7]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.1.7
 [1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
