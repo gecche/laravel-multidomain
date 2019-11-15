@@ -2,8 +2,7 @@
 
 namespace Gecche\Multidomain\Foundation;
 
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Env;
 
 class Application extends \Illuminate\Foundation\Application
 {
@@ -112,7 +111,6 @@ class Application extends \Illuminate\Foundation\Application
         return $this->storagePath();
     }
 
-
     /**
      * Get the path to the configuration cache file.
      *
@@ -120,10 +118,63 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function getCachedConfigPath()
     {
+        return $this->normalizeCacheDomainPath('APP_CONFIG_CACHE', 'cache/config.php');
+    }
+
+    /**
+     * Get the path to the configuration cache file.
+     *
+     * @return string
+     */
+    public function getCachedRoutesPath()
+    {
+        return $this->normalizeCacheDomainPath('APP_ROUTES_CACHE', 'cache/routes.php');
+    }
+
+    /**
+     * Get the path to the events cache file.
+     *
+     * @return string
+     */
+    public function getCachedEventsPath()
+    {
+        return $this->normalizeCacheDomainPath('APP_EVENTS_CACHE', 'cache/events.php');
+    }
+
+    /**
+     * Get the path to the default cache file for config or routes.
+     *
+     * @param string
+     * @return string
+     */
+    protected function normalizeCacheDomainPath($key, $default)
+    {
+
+        if (is_null($env = Env::get($key))) {
+            $domainDefault = $this->getDomainCachedFileDefault($default);
+            return $this->bootstrapPath($domainDefault);
+        }
+
+        return Str::startsWith($env, '/')
+            ? $env
+            : $this->basePath($env);
+
+    }
+
+    /**
+     * Get a default file for cache files depending upon the loaded .env file
+     *
+     * @return string
+     */
+    protected function getDomainCachedFileDefault($default)
+    {
         $envFile = $this->environmentFile();
         if ($envFile && $envFile == '.env')
-            return $this->bootstrapPath().'/cache/config.php';
-        return $this->bootstrapPath().'/cache/config-'.domain_sanitized($this['domain']).'.php';
+            return $default;
+
+        $defaultWithoutPhpExt = substr($default,0,-4);
+
+        return $defaultWithoutPhpExt.'-'.domain_sanitized($this['domain']).'.php';
     }
 
 
