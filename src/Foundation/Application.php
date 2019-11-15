@@ -112,7 +112,6 @@ class Application extends \Illuminate\Foundation\Application
         return $this->storagePath();
     }
 
-
     /**
      * Get the path to the configuration cache file.
      *
@@ -120,12 +119,34 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function getCachedConfigPath()
     {
-        $envFile = $this->environmentFile();
-        if ($envFile && $envFile == '.env')
-            return $this->bootstrapPath().'/cache/config.php';
-        return $this->bootstrapPath().'/cache/config-'.domain_sanitized($this['domain']).'.php';
+        $domainSuffix = $this->getDomainCachedFileSuffix();
+        return $this->bootstrapPath().'/cache/config'.$domainSuffix;
     }
 
+    /**
+     * Get the path to the configuration cache file.
+     *
+     * @return string
+     */
+    public function getCachedRoutesPath()
+    {
+        $domainSuffix = $this->getDomainCachedFileSuffix();
+        return $this->bootstrapPath().'/cache/routes'.$domainSuffix;
+    }
+
+    /**
+     * Get a standard suffix for cache files depending upon the loaded .env file
+     *
+     * @return string
+     */
+    protected function getDomainCachedFileSuffix()
+    {
+        $envFile = $this->environmentFile();
+        if ($envFile && $envFile == '.env')
+            return '.php';
+        $envDomainPart = substr($envFile,5);
+        return '-'.domain_sanitized($envDomainPart).'.php';
+    }
 
     /*
      * Get the list of installed domains

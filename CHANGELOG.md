@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.8 - 2019-11-15
+### Changed
+- Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
+domain when using the `route:cache` Laravel command
+ 
 ## 1.1.7 - 2019-11-12
 ### Changed
 - Bugfix in `Gecche\Multidomain\Foundation\Console\DomainCommandTrait`: running the 
@@ -55,3 +60,4 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.4...v1.1.5
 [1.1.6]: https://github.com/gecche/laravel-multidomain/compare/v1.1.5...v1.1.6
 [1.1.7]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.1.7
+[1.1.8]: https://github.com/gecche/laravel-multidomain/compare/v1.1.7...v1.1.8
