@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.9 - 2020-01-17
+### Changed
+- README.md: added notes on `storage:link` command
+ 
 ## 1.1.8 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
@@ -61,3 +65,4 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.1.6]: https://github.com/gecche/laravel-multidomain/compare/v1.1.5...v1.1.6
 [1.1.7]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.1.7
 [1.1.8]: https://github.com/gecche/laravel-multidomain/compare/v1.1.7...v1.1.8
+[1.1.9]: https://github.com/gecche/laravel-multidomain/compare/v1.1.8...v1.1.9
