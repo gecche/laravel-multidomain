@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 2.3 - 2020-01-17
+### Changed
+- README.md: added notes on `storage:link` command
+ 
 ## 2.2 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
@@ -20,6 +24,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 6.x (6.4 to date)  
 
+## 1.4.3 - 2020-01-17
+### Changed
+- README.md: added notes on `storage:link` command
+ 
 ## 1.4.2 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
@@ -35,6 +43,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.8  
 
+## 1.3.3 - 2020-01-17
+### Changed
+- README.md: added notes on `storage:link` command
+ 
 ## 1.3.2 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
@@ -52,6 +64,10 @@ skipped and not replicated in the new .env.<domain> file
 - Bugfix in `Gecche\Multidomain\Queue\Listener` due to changes in handling 
 worker commands in the parent class.
 
+## 1.2.3 - 2020-01-17
+### Changed
+- README.md: added notes on `storage:link` command
+ 
 ## 1.2.2 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
@@ -67,6 +83,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.6  
 
+## 1.1.9 - 2020-01-17
+### Changed
+- README.md: added notes on `storage:link` command
+ 
 ## 1.1.8 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
