@@ -301,6 +301,6 @@ APP_PUBLIC_STORAGE=-site1_com
 
 Furthermore, if you are using the package in a Single Page Application (SPA) setting, you could better handling distinct 
 public resources for each domain via .htaccess or similar solutions as pointed out by [Scaenicus](https://github.com/Scaenicus) in his 
-[.htacess solution](https://github.com/gecche/laravel-multidomain/issues/11#issuecomment-559829709).
+[.htacess solution](https://github.com/gecche/laravel-multidomain/issues/11#issuecomment-559822284).
 
 
