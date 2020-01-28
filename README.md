@@ -261,3 +261,44 @@ For example, you could:
  ```
 
 Obviously, the same can be done for each other queue driver, apart from the `sync` driver.
+
+#### `storage:link` command
+ 
+If you make use of the `storage:link` command and you want a distinct symbolic link for each domain, you have to create 
+them manually because to date such command always creates a link named `storage` and that name is hard coded in the 
+command. Extending the `storage:link` command allowing to choose the name is outside the scope of this package 
+(and I hope it will be done directly in future versions of Laravel).
+
+A way to obtain multiple storage links could be the following.
+LEt us suppose to have two domains, namely `site1.com` and `site2.com` with associated storage folders 
+`storage/site1_com` and `storage/site2_com`.
+
+1. We manually create links for each domain: 
+
+```
+ln -s storage/site1_com/app/public public/storage-site1_com 
+ln -s storage/site2_com/app/public public/storage-site2_com 
+```
+
+2. In `.env.site1.com` and `.env.site2.com` we add an entry, e.g., for the first domain: 
+
+```
+APP_PUBLIC_STORAGE=-site1_com
+```
+
+3. In the `filesystems.php` config file we change as follows:
+
+```
+'public' => [
+    'driver' => 'local',
+    'root' => storage_path('app/public'),
+    'url' => env('APP_URL').'/storage'.env('APP_PUBLIC_STORAGE'),
+    'visibility' => 'public',
+],
+```
+
+Furthermore, if you are using the package in a Single Page Application (SPA) setting, you could better handling distinct 
+public resources for each domain via .htaccess or similar solutions as pointed out by [Scaenicus](https://github.com/Scaenicus) in his 
+[.htacess solution](https://github.com/gecche/laravel-multidomain/issues/11#issuecomment-559822284).
+
+
