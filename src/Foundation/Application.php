@@ -2,6 +2,7 @@
 
 namespace Gecche\Multidomain\Foundation;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Env;
 
 class Application extends \Illuminate\Foundation\Application
@@ -83,7 +84,12 @@ class Application extends \Illuminate\Foundation\Application
     public function environmentFileDomain($domain = null)
     {
         if (is_null($domain)) {
-            $domain = $this['domain'];
+            try {
+                $domain = $this['domain'];
+            } catch (BindingResolutionException $e) {
+                $this->detectDomain();
+                $domain = $this['domain'];
+            }
         }
         $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;

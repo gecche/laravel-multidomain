@@ -67,7 +67,7 @@ class ArtisanTestCase extends TestCase
             copy($file,$this->laravelAppPath.'/database/migrations/'.$relativeFile);
         }
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan vendor:publish --provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'vendor:publish', '--provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"']);
         $process->run();
 
         parent::setUp();
@@ -112,13 +112,14 @@ class ArtisanTestCase extends TestCase
         //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
         $serverName = Arr::get($_SERVER,'SERVER_NAME');
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', 'site1.test']);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env site1.test --domain_values=\'{"APP_NAME":"LARAVELTEST"}\'');
+        $domainValues = ['APP_NAME'=>'LARAVELTEST'];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', 'site1.test', '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan name');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'name']);
         $process->run();
 
         if ($serverName == 'site1.test') {
@@ -127,11 +128,15 @@ class ArtisanTestCase extends TestCase
             $this->assertEquals("Laravel",$process->getOutput());
         }
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan name --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'key:generate', '--domain=site1.test']);
         $process->run();
+
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'name', '--domain=site1.test']);
+        $process->run();
+
         $this->assertEquals("LARAVELTEST",$process->getOutput());
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove site1.test --force');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', 'site1.test', '--force']);
         $process->run();
 
 
@@ -160,31 +165,33 @@ class ArtisanTestCase extends TestCase
 
 
         //ADDING DOMAIN AND UPDATING ENV
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', 'site1.test']);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env site1.test --domain_values=\'{"DB_DATABASE":"site1"}\'');
+        $domainValues = ['DB_DATABASE'=>'site1'];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', 'site1.test', '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
 
         //RESET MIGRATIONS IN BOTH DBS
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate:reset');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate:reset']);
         $process->run();
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate:reset --domain=site1.test');
+
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate:reset', '--domain=site1.test']);
         $process->run();
 
         //MIGRATIONS WITHOUT DOMAIN OPTION
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate']);
         $process->run();
 //        $this->assertEquals("Laravel",$process->getOutput());
 
 
         //CHECK QUEUE:FLUSH COMMAND: SUCCESS WITHOUT OPTIONS AND FAILURE WITH DOMAIN OPTION
-        $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush']);
         $process->run();
         $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush', '--domain=site1.test']);
         $process->run();
         if ($serverName == 'site1.test') {
             $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
@@ -195,22 +202,22 @@ class ArtisanTestCase extends TestCase
 
 
         //RESET MIGRATIONS IN BOTH DBS
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate:reset');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate:reset']);
         $process->run();
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate:reset --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate:reset', '--domain=site1.test']);
         $process->run();
 
         //MIGRATIONS WITH DOMAIN OPTION
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate', '--domain=site1.test']);
         $process->run();
 //        $this->assertEquals("Laravel",$process->getOutput());
 
         //CHECK QUEUE:FLUSH COMMAND: SUCCESS WITH DOMAIN OPTIION AND FAILURE WITHOUT
-        $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush', '--domain=site1.test']);
         $process->run();
         $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan queue:flush');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush']);
         $process->run();
         if ($serverName == 'site1.test') {
             $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
@@ -218,7 +225,7 @@ class ArtisanTestCase extends TestCase
             $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'homestead.failed',$process->getOutput());
         }
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove site1.test --force');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', 'site1.test', '--force']);
         $process->run();
 
         return;
@@ -244,21 +251,26 @@ class ArtisanTestCase extends TestCase
 
 
         //ADDING DOMAIN AND UPDATING ENV
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', 'site1.test']);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env site1.test --domain_values=\'{"APP_NAME":"LARAVELTEST","DB_DATABASE":"site1","QUEUE_DEFAULT":"site1"}\'');
+        $domainValues = [
+            'APP_NAME' => 'LARAVELTEST',
+            'DB_DATABASE'=>'site1',
+            'QUEUE_DEFAULT' => 'site1'
+        ];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', 'site1.test', '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
 
         //RESET MIGRATIONS IN BOTH DBS
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate:reset');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate:reset']);
         $process->run();
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate:reset --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate:reset', '--domain=site1.test']);
         $process->run();
 
         //MIGRATIONS WITHOUT DOMAIN OPTION
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate']);
         $process->run();
 
 
@@ -271,11 +283,11 @@ class ArtisanTestCase extends TestCase
 
         //We start the listener
         $processName = "php ".$this->laravelAppPath. "/artisan queue:listen";
-        $process = new Process($processName);
+        $process = new Process(explode(" ",$processName));
         $process->start();
 
         //We push the Job using the queue_push command
-        $process2 = new Process('php '.$this->laravelAppPath.'/artisan queue_push');
+        $process2 = new Process(['php', $this->laravelAppPath.'/artisan', 'queue_push']);
         $process2->run();
 
         //Wait for a reasonable time (the only way we managed to simulate queue listeners)
@@ -306,7 +318,7 @@ class ArtisanTestCase extends TestCase
          */
         /***/
         //MIGRATIONS WITH DOMAIN OPTION
-        $process = new Process('php '.$this->laravelAppPath.'/artisan migrate --domain=site1.test');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'migrate', '--domain=site1.test']);
         $process->run();
 
         $this->files->delete($fileToTest);
@@ -314,10 +326,10 @@ class ArtisanTestCase extends TestCase
         $this->assertFileNotExists($fileToTest);
 
         $processName = 'php '.$this->laravelAppPath.'/artisan queue:listen --domain=site1.test';
-        $process = new Process($processName);
+        $process = new Process(explode(" ",$processName));
         $process->start();
 
-        $process2 = new Process('php '.$this->laravelAppPath.'/artisan queue_push --domain=site1.test');
+        $process2 = new Process(['php', $this->laravelAppPath.'/artisan', 'queue_push', '--domain=site1.test']);
         $process2->run();
 
         //Wait for a reasonable time
@@ -333,7 +345,7 @@ class ArtisanTestCase extends TestCase
         $string = 'pkill -f "' . $processName . '"';
         exec($string);
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove site1.test --force');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', 'site1.test', '--force']);
         $process->run();
 
 
