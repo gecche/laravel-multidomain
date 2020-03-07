@@ -2,9 +2,6 @@
 
 namespace Gecche\Multidomain\Foundation;
 
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Cookie;
-
 class Application extends \Illuminate\Foundation\Application
 {
     /**
@@ -84,7 +81,12 @@ class Application extends \Illuminate\Foundation\Application
     public function environmentFileDomain($domain = null)
     {
         if (is_null($domain)) {
-            $domain = $this['domain'];
+            try {
+                $domain = $this['domain'];
+            } catch (\Exception $e) {
+                $this->detectDomain();
+                $domain = $this['domain'];
+            }
         }
         $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;
