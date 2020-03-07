@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 2.4 - 2020-03-07
+### Changed
+- Improved robustness in `Gecche\Multidomain\Foundation\Application@environmentFileDomain` method
+- Improved tests 
+ 
 ## 2.3 - 2020-01-17
 ### Changed
 - README.md: added notes on `storage:link` command
@@ -134,24 +139,30 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...HEAD
-[1.1.1]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...v1.1.1
-[1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
-[1.1.3]: https://github.com/gecche/laravel-multidomain/compare/v1.1.2...v1.1.3
-[1.1.4]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.4
-[1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.4...v1.1.5
-[1.1.6]: https://github.com/gecche/laravel-multidomain/compare/v1.1.5...v1.1.6
-[1.1.7]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.1.7
-[1.1.8]: https://github.com/gecche/laravel-multidomain/compare/v1.1.7...v1.1.8
-[1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
-[1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
-[1.2.2]: https://github.com/gecche/laravel-multidomain/compare/v1.2.1...v1.2.2
-[1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
-[1.3.1]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.3.1
-[1.3.2]: https://github.com/gecche/laravel-multidomain/compare/v1.3.1...v1.3.2
-[1.4.0]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.4.0
-[1.4.1]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v1.4.1
-[1.4.2]: https://github.com/gecche/laravel-multidomain/compare/v1.4.1...v1.4.2
-[2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v2.0
-[2.1]: https://github.com/gecche/laravel-multidomain/compare/v2.0...v2.1
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v2.4...HEAD
+[2.4]: https://github.com/gecche/laravel-multidomain/compare/v2.3...v2.4
+[2.3]: https://github.com/gecche/laravel-multidomain/compare/v2.2...v2.3
 [2.2]: https://github.com/gecche/laravel-multidomain/compare/v2.1...v2.2
+[2.1]: https://github.com/gecche/laravel-multidomain/compare/v2.0...v2.1
+[2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v2.0
+[1.4.2]: https://github.com/gecche/laravel-multidomain/compare/v1.4.2...v1.4.3
+[1.4.2]: https://github.com/gecche/laravel-multidomain/compare/v1.4.1...v1.4.2
+[1.4.1]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v1.4.1
+[1.4.0]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.4.0
+[1.3.3]: https://github.com/gecche/laravel-multidomain/compare/v1.3.2...v1.3.3
+[1.3.2]: https://github.com/gecche/laravel-multidomain/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
+[1.2.3]: https://github.com/gecche/laravel-multidomain/compare/v1.2.2...v1.2.3
+[1.2.2]: https://github.com/gecche/laravel-multidomain/compare/v1.2.1...v1.2.2
+[1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.1.9]: https://github.com/gecche/laravel-multidomain/compare/v1.1.8...v1.1.9
+[1.1.8]: https://github.com/gecche/laravel-multidomain/compare/v1.1.7...v1.1.8
+[1.1.7]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.1.7
+[1.1.6]: https://github.com/gecche/laravel-multidomain/compare/v1.1.5...v1.1.6
+[1.1.5]: https://github.com/gecche/laravel-multidomain/compare/v1.1.4...v1.1.5
+[1.1.4]: https://github.com/gecche/laravel-multidomain/compare/v1.1.3...v1.1.4
+[1.1.3]: https://github.com/gecche/laravel-multidomain/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...v1.1.1
