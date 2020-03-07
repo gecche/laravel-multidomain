@@ -64,7 +64,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
      */
     protected function setUp(): void
     {
-        $process = new Process('php '.$this->laravelAppPath.'/artisan config:clear');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'config:clear']);
         $process->run();
 
 
@@ -75,25 +75,31 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
         copy(__DIR__ . '/../.env.example', $this->laravelAppPath.'/.env');
         copy(__DIR__ . '/../artisan',$this->laravelAppPath.'/artisan');
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan vendor:publish --provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'vendor:publish', '--provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"']);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove '.$this->site1.' --force');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', $this->site1, '--force']);
         $process->run();
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:remove '.$this->site2.' --force');
-        $process->run();
-
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add '.$this->site1);
-        $process->run();
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:add '.$this->site2);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', $this->site2, '--force']);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env '.$this->site1.' --domain_values=\'{"APP_NAME":"'.
-            $this->siteAppName1.'","DB_DATABASE":"'.$this->siteDbName1.'"}\'');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', $this->site1]);
+        $process->run();
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', $this->site2]);
         $process->run();
 
-        $process = new Process('php '.$this->laravelAppPath.'/artisan domain:update_env '.$this->site2.' --domain_values=\'{"APP_NAME":"'.
-            $this->siteAppName2.'","DB_DATABASE":"'.$this->siteDbName2.'"}\'');
+        $domainValues = [
+            'APP_NAME' => $this->siteAppName1,
+            'DB_DATABASE' => $this->siteDbName1,
+        ];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', $this->site1, '--domain_values='.json_encode($domainValues)]);
+        $process->run();
+
+        $domainValues = [
+            'APP_NAME' => $this->siteAppName2,
+            'DB_DATABASE' => $this->siteDbName2,
+        ];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', $this->site2, '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
 
