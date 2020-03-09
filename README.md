@@ -1,5 +1,6 @@
 [![Laravel](https://img.shields.io/badge/Laravel-5.x-orange.svg?style=flat-square)](http://laravel.com)
 [![Laravel](https://img.shields.io/badge/Laravel-6.x-orange.svg?style=flat-square)](http://laravel.com)
+[![Laravel](https://img.shields.io/badge/Laravel-7.x-orange.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
 # laravel-multidomain
@@ -25,6 +26,7 @@ for each such customer.
  5.7.x    | 1.3.x
  5.8.x    | 1.4.x
  6.x      | 2.x
+ 7.x      | 3.x
 
 #### Further notes on Compatibility
 
