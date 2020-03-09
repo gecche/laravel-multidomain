@@ -12,10 +12,17 @@ class Application extends \Illuminate\Foundation\Application
     protected $environmentFile = null;
 
     /**
+     * @var bool
+     *
+     * False is the domain has never been detected
+     */
+    protected $domainDetected = false;
+
+    /**
      * Detect the application's current domain.
      *
-     * @param  array|string $envs
-     * @return string
+     * @param array|string $envs
+     * @return void;
      */
     public function detectDomain()
     {
@@ -29,6 +36,22 @@ class Application extends \Illuminate\Foundation\Application
         $this['domain'] = $domain_name;
         $this['domain_scheme'] = $domain_scheme;
         $this['domain_port'] = $domain_port;
+
+        $this->domainDetected = true;
+        return;
+    }
+
+
+    /**
+     * Force the detection of the domain if it has never been detected.
+     * It should not happens in standard flow.
+     *
+     * @return void;
+     */
+    protected function checkDomainDetection()
+    {
+        if (!$this->domainDetected)
+            $this->detectDomain();
         return;
     }
 
@@ -39,6 +62,9 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function domain()
     {
+
+        $this->checkDomainDetection();
+
         if (count(func_get_args()) > 0) {
             return in_array($this['domain'], func_get_args());
         }
@@ -54,6 +80,8 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function fullDomain()
     {
+        $this->checkDomainDetection();
+
         if (count(func_get_args()) > 0) {
             return in_array($this['full_domain'], func_get_args());
         }
@@ -80,13 +108,10 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function environmentFileDomain($domain = null)
     {
+        $this->checkDomainDetection();
+
         if (is_null($domain)) {
-            try {
-                $domain = $this['domain'];
-            } catch (\Exception $e) {
-                $this->detectDomain();
-                $domain = $this['domain'];
-            }
+            $domain = $this['domain'];
         }
         $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;
@@ -104,6 +129,9 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function domainStoragePath($domain = null)
     {
+
+        $this->checkDomainDetection();
+
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
