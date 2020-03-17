@@ -35,7 +35,7 @@ use Symfony\Component\Process\Process;
  *
  */
 
-class BasicTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
+class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 {
 
     protected $serverName;
