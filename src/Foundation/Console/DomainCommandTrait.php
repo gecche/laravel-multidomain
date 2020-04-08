@@ -24,7 +24,8 @@ trait DomainCommandTrait
         if (is_null($domain)) {
             $domain = $this->domain;
         }
-        return base_path() . DIRECTORY_SEPARATOR . '.env.' . $domain;
+
+        return base_path(rtrim(app()->environmentPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.env.' . $domain);
     }
 
     /**

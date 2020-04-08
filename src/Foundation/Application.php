@@ -14,11 +14,29 @@ class Application extends \Illuminate\Foundation\Application
     protected $environmentFile = null;
 
     /**
+     * The custom environment path defined by the developer.
+     *
+     * @var string
+     */
+    protected $environmentPath = null;
+
+    /**
      * @var bool
      *
      * False is the domain has never been detected
      */
     protected $domainDetected = false;
+
+    /**
+     * Create a new application instance.
+     * @param  string|null  $basePath
+     * @param  string|null  $environmentPath
+     */
+    public function __construct($basePath = null, $environmentPath = null)
+    {
+        $this->environmentPath = $environmentPath ?? $this->environmentPath;
+        parent::__construct($basePath);
+    }
 
     /**
      * Detect the application's current domain.
@@ -115,7 +133,7 @@ class Application extends \Illuminate\Foundation\Application
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
-        $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $filePath = rtrim($this->environmentPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;
         return file_exists($filePath . $file) ? $file : '.env';
     }
