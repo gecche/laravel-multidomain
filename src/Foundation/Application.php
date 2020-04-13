@@ -3,6 +3,7 @@
 namespace Gecche\Multidomain\Foundation;
 
 use Illuminate\Support\Env;
+use Illuminate\Support\Facades\File;
 
 class Application extends \Illuminate\Foundation\Application
 {
@@ -12,13 +13,6 @@ class Application extends \Illuminate\Foundation\Application
      * @var string
      */
     protected $environmentFile = null;
-
-    /**
-     * The custom environment path defined by the developer.
-     *
-     * @var string
-     */
-    protected $environmentPath = null;
 
     /**
      * @var bool
@@ -34,8 +28,14 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function __construct($basePath = null, $environmentPath = null)
     {
-        $this->environmentPath = $environmentPath ?? $this->environmentPath;
+        $environmentPath = $environmentPath ?? $basePath;
+        $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
+//        echo " *** " . $this->environmentPath . " ***";
+
         parent::__construct($basePath);
+//        echo file_get_contents($this->environmentPath . '/.env');
+//        echo " +++ \n";
+//
     }
 
     /**
@@ -133,9 +133,8 @@ class Application extends \Illuminate\Foundation\Application
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
-        $filePath = rtrim($this->environmentPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;
-        return file_exists($filePath . $file) ? $file : '.env';
+        return file_exists(env_path($file)) ? $file : '.env';
     }
 
     /**

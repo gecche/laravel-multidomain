@@ -63,7 +63,7 @@ class AddDomainCommand extends GeneratorCommand
         if ($this->files->exists($this->getDomainEnvFilePath())) {
             return $this->getDomainEnvFilePath();
         }
-        return base_path(rtrim(app()->environmentPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . Config::get('domain.env_stub', '.env'));
+        return env_path(Config::get('domain.env_stub', '.env'));
     }
 
     protected function createDomainEnvFile()

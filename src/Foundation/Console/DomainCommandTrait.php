@@ -25,7 +25,7 @@ trait DomainCommandTrait
             $domain = $this->domain;
         }
 
-        return base_path(rtrim(app()->environmentPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.env.' . $domain);
+        return env_path('.env.' . $domain);
     }
 
     /**

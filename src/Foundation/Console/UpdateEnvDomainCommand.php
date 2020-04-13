@@ -52,7 +52,7 @@ class UpdateEnvDomainCommand extends GeneratorCommand
         }
 
         $envFiles = [
-            base_path(rtrim(app()->environmentPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.env'),
+            env_path('.env'),
         ];
         $domainList = Config::get('domain.domains',[]);
 

@@ -46,7 +46,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->files = new Filesystem();
 
-        copy(__DIR__ . '/../.env.example',base_path('.env'));
+        copy(__DIR__ . '/../.env.example',env_path('.env'));
 
         $this->artisan('vendor:publish',['--provider' => 'Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider']);
     }
@@ -131,7 +131,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->artisan('domain:add',['domain' => $site]);
 
-        $this->assertFileExists(base_path('.env.'.$site));
+        $this->assertFileExists(env_path('.env.'.$site));
 
         $this->artisan('config:clear');
 
@@ -152,7 +152,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->artisan('domain:remove',['domain' => $site]);
 
-        $this->assertFileNotExists(base_path('.env.'.$site));
+        $this->assertFileNotExists(env_path('.env.'.$site));
 
         $domainListed = Config::get('domain.domains');
 
@@ -171,7 +171,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
 
-        $this->assertFileNotExists(base_path('.env.'.$site));
+        $this->assertFileNotExists(env_path('.env.'.$site));
 
         $domainListed = Config::get('domain.domains');
 
@@ -194,7 +194,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
         $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
         $this->artisan('domain:add',['domain' => $site]);
 
-        $fileContents = explode("\n",$this->files->get(base_path('.env.'.$site)));
+        $fileContents = explode("\n",$this->files->get(env_path('.env.'.$site)));
         $this->assertNotContains("DB_DATABASE=".$dbName,$fileContents);
 
         $this->artisan('domain:update_env',[
@@ -202,7 +202,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
             '--domain_values' => '{"DB_DATABASE":"'.$dbName.'"}',
         ]);
 
-        $fileContents = explode("\n",$this->files->get(base_path('.env.'.$site)));
+        $fileContents = explode("\n",$this->files->get(env_path('.env.'.$site)));
         $this->assertContains("DB_DATABASE=".$dbName,$fileContents);
 
         $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
