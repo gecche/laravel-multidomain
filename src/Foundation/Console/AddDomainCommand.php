@@ -15,9 +15,9 @@ class AddDomainCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'domain:add 
-                            {domain : The name of the domain to add to the framework} 
-                            {--domain_values= : The optional values for the domain variables to be stored in the env file (json object)} 
+    protected $signature = 'domain:add
+                            {domain : The name of the domain to add to the framework}
+                            {--domain_values= : The optional values for the domain variables to be stored in the env file (json object)}
                             {--force : Force the creation of domain storage dirs also if they already exist}';
 
 
@@ -63,7 +63,7 @@ class AddDomainCommand extends GeneratorCommand
         if ($this->files->exists($this->getDomainEnvFilePath())) {
             return $this->getDomainEnvFilePath();
         }
-        return base_path() . DIRECTORY_SEPARATOR . Config::get('domain.env_stub', '.env');
+        return env_path(Config::get('domain.env_stub', '.env'));
     }
 
     protected function createDomainEnvFile()

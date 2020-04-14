@@ -3,6 +3,7 @@
 namespace Gecche\Multidomain\Foundation;
 
 use Illuminate\Support\Env;
+use Illuminate\Support\Facades\File;
 
 class Application extends \Illuminate\Foundation\Application
 {
@@ -19,6 +20,23 @@ class Application extends \Illuminate\Foundation\Application
      * False is the domain has never been detected
      */
     protected $domainDetected = false;
+
+    /**
+     * Create a new application instance.
+     * @param  string|null  $basePath
+     * @param  string|null  $environmentPath
+     */
+    public function __construct($basePath = null, $environmentPath = null)
+    {
+        $environmentPath = $environmentPath ?? $basePath;
+        $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
+//        echo " *** " . $this->environmentPath . " ***";
+
+        parent::__construct($basePath);
+//        echo file_get_contents($this->environmentPath . '/.env');
+//        echo " +++ \n";
+//
+    }
 
     /**
      * Detect the application's current domain.
@@ -115,9 +133,8 @@ class Application extends \Illuminate\Foundation\Application
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
-        $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;
-        return file_exists($filePath . $file) ? $file : '.env';
+        return file_exists(env_path($file)) ? $file : '.env';
     }
 
     /**

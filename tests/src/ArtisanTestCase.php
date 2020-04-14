@@ -94,6 +94,12 @@ class ArtisanTestCase extends TestCase
     protected function getEnvironmentSetUp($app)
     {
 
+        echo "HERE\n";
+
+        $refl = new \ReflectionClass($app);
+
+        echo $refl->getName() . "\n";
+
     }
 
 
