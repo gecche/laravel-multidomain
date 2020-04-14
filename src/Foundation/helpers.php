@@ -42,3 +42,17 @@ if (!function_exists('domain_root_url')) {
     }
 
 }
+
+if (! function_exists('env_path')) {
+    /**
+     * Get the path to the env files.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function env_path($path = '')
+    {
+        return app()->environmentPath().($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+
