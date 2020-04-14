@@ -21,6 +21,19 @@ class Application extends \Illuminate\Foundation\Application
     protected $domainDetected = false;
 
     /**
+     * Create a new application instance.
+     * @param  string|null  $basePath
+     * @param  string|null  $environmentPath
+     */
+    public function __construct($basePath = null, $environmentPath = null)
+    {
+        $environmentPath = $environmentPath ?? $basePath;
+        $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
+
+        parent::__construct($basePath);
+    }
+
+    /**
      * Detect the application's current domain.
      *
      * @param array|string $envs
@@ -115,9 +128,8 @@ class Application extends \Illuminate\Foundation\Application
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
-        $filePath = rtrim($this['path.base'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $file = '.env.' . $domain;
-        return file_exists($filePath . $file) ? $file : '.env';
+        return file_exists(env_path($file)) ? $file : '.env';
     }
 
     /**
