@@ -177,7 +177,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
         $stringToSee = 'Laravel';
         if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
             $stringToSee = $this->siteAppName1;
-        } elseif (in_array($this->serverName, ['site2.test'])) {
+        } elseif (in_array($this->serverName, ['site2.test']) || Str::endsWith($this->serverName, '.site2.test')) {
             $stringToSee = $this->siteAppName2;
         }
 
@@ -201,7 +201,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
         $expectedDb = 'homestead';
         if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
             $expectedDb = $this->siteDbName1;
-        } elseif (in_array($this->serverName, ['site2.test'])) {
+        } elseif (in_array($this->serverName, ['site2.test']) || Str::endsWith($this->serverName, '.site2.test')) {
             $expectedDb = $this->siteDbName2;
         }
 
@@ -224,7 +224,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
         $expectedEnvFile = '.env';
         if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
             $expectedEnvFile = '.env.site1.test';
-        } elseif (in_array($this->serverName, ['site2.test'])) {
+        } elseif (in_array($this->serverName, ['site2.test'])  || Str::endsWith($this->serverName, '.site2.test')) {
             $expectedEnvFile = '.env.site2.test';
         }
 
@@ -247,7 +247,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 
         if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
             $expectedStorageFolder = $expectedStorageFolder . DIRECTORY_SEPARATOR . domain_sanitized('site1.test');
-        } elseif (in_array($this->serverName, ['site2.test'])) {
+        } elseif (in_array($this->serverName, ['site2.test'])  || Str::endsWith($this->serverName, '.site2.test')) {
             $expectedStorageFolder = $expectedStorageFolder . DIRECTORY_SEPARATOR . domain_sanitized('site2.test');
         }
 
