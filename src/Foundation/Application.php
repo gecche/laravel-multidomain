@@ -3,7 +3,6 @@
 namespace Gecche\Multidomain\Foundation;
 
 use Illuminate\Support\Env;
-use Illuminate\Support\Facades\File;
 
 class Application extends \Illuminate\Foundation\Application
 {
@@ -30,12 +29,8 @@ class Application extends \Illuminate\Foundation\Application
     {
         $environmentPath = $environmentPath ?? $basePath;
         $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
-//        echo " *** " . $this->environmentPath . " ***";
 
         parent::__construct($basePath);
-//        echo file_get_contents($this->environmentPath . '/.env');
-//        echo " +++ \n";
-//
     }
 
     /**
