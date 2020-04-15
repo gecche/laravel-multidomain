@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.11 - 2020-04-16
+### Added
+- An optional argument to the Application constructor for handling the storage of env files in a different folder 
+than the root Laravel's app folder. With new tests.
+- The `env_path` helper to get the folder in which env files are placed. 
+### Changed
+- README.md updated
+ 
 ## 1.1.10 - 2020-03-09
 ### Changed
 - Force the detection of the domain when trying to access to domain info if the domain has never been detected
@@ -61,7 +69,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...HEAD
+[1.1.11]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/gecche/laravel-multidomain/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/gecche/laravel-multidomain/compare/v1.1.8...v1.1.9
 [1.1.8]: https://github.com/gecche/laravel-multidomain/compare/v1.1.7...v1.1.8
