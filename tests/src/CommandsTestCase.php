@@ -41,6 +41,10 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->files = new Filesystem();
 
+        if (!is_dir(env_path())) {
+            mkdir(env_path());
+        }
+
         copy(__DIR__ . '/../.env.example',env_path('.env'));
 
         $this->artisan('vendor:publish',['--provider' => 'Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider']);
