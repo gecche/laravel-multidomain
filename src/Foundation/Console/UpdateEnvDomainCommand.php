@@ -13,8 +13,8 @@ class UpdateEnvDomainCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'domain:update_env 
-                            {domain? : The name of the domain to which update the env (if empty all the env domains will be updated)} 
+    protected $signature = 'domain:update_env
+                            {domain? : The name of the domain to which update the env (if empty all the env domains will be updated)}
                             {--domain_values= : The optional values for the domain variables to be stored in the env file (json object)}';
 
 
@@ -52,7 +52,7 @@ class UpdateEnvDomainCommand extends GeneratorCommand
         }
 
         $envFiles = [
-            base_path() . DIRECTORY_SEPARATOR.'.env',
+            env_path('.env'),
         ];
         $domainList = Config::get('domain.domains',[]);
 
