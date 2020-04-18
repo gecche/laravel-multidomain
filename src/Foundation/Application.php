@@ -19,6 +19,19 @@ class Application extends \Illuminate\Foundation\Application
     protected $domainDetected = false;
 
     /**
+     * Create a new application instance.
+     * @param  string|null  $basePath
+     * @param  string|null  $environmentPath
+     */
+    public function __construct($basePath = null, $environmentPath = null)
+    {
+        $environmentPath = $environmentPath ?? $basePath;
+        $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
+
+        parent::__construct($basePath);
+    }
+
+    /**
      * Detect the application's current domain.
      *
      * @param array|string $envs
@@ -179,7 +192,7 @@ class Application extends \Illuminate\Foundation\Application
     public function getCachedConfigPath()
     {
         $domainSuffix = $this->getDomainCachedFileSuffix();
-        return $this->bootstrapPath().'/cache/config'.$domainSuffix;
+        return $this->bootstrapPath() . '/cache/config' . $domainSuffix;
     }
 
     /**
@@ -190,7 +203,7 @@ class Application extends \Illuminate\Foundation\Application
     public function getCachedRoutesPath()
     {
         $domainSuffix = $this->getDomainCachedFileSuffix();
-        return $this->bootstrapPath().'/cache/routes'.$domainSuffix;
+        return $this->bootstrapPath() . '/cache/routes' . $domainSuffix;
     }
 
     /**
@@ -203,8 +216,8 @@ class Application extends \Illuminate\Foundation\Application
         $envFile = $this->environmentFile();
         if ($envFile && $envFile == '.env')
             return '.php';
-        $envDomainPart = substr($envFile,5);
-        return '-'.domain_sanitized($envDomainPart).'.php';
+        $envDomainPart = substr($envFile, 5);
+        return '-' . domain_sanitized($envDomainPart) . '.php';
     }
 
     /*
@@ -212,9 +225,10 @@ class Application extends \Illuminate\Foundation\Application
      *
      * @return Array
      */
-    public function domainsList() {
+    public function domainsList()
+    {
 
-        $domainsInConfig = config('domain.domains',[]);
+        $domainsInConfig = config('domain.domains', []);
 
         $domains = [];
 

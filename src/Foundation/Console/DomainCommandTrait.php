@@ -24,7 +24,8 @@ trait DomainCommandTrait
         if (is_null($domain)) {
             $domain = $this->domain;
         }
-        return base_path() . DIRECTORY_SEPARATOR . '.env.' . $domain;
+
+        return env_path('.env.' . $domain);
     }
 
     /**
@@ -92,7 +93,7 @@ trait DomainCommandTrait
         );
 
         $this->files->put($filename, $modelConfigStub);
-        Config::set($this->configFile,$finalConfig);
+        Config::set($this->configFile, $finalConfig);
     }
 
     /**
@@ -106,7 +107,7 @@ trait DomainCommandTrait
     protected function getVarsArray($path)
     {
         $envFileContents = $this->files->get($path);
-        $envFileContentsArray = explode("\n",$envFileContents);
+        $envFileContentsArray = explode("\n", $envFileContents);
         $varsArray = array();
         foreach ($envFileContentsArray as $line) {
             $lineArray = explode('=', $line);
