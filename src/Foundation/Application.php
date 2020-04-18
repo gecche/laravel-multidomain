@@ -126,8 +126,22 @@ class Application extends \Illuminate\Foundation\Application
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
-        $file = '.env.' . $domain;
-        return file_exists(env_path($file)) ? $file : '.env';
+
+        $envFile = $this->searchForEnvFileDomain(explode('.',$domain));
+
+        return $envFile;
+
+    }
+
+    protected function searchForEnvFileDomain($tokens = []) {
+        if (count($tokens) == 0) {
+            return '.env';
+        }
+
+        $file = '.env.' . implode('.',$tokens);
+        return file_exists(env_path($file))
+            ? $file
+            : $this->searchForEnvFileDomain(array_splice($tokens,1));
     }
 
     /**
@@ -147,12 +161,27 @@ class Application extends \Illuminate\Foundation\Application
         if (is_null($domain)) {
             $domain = $this['domain'];
         }
-        $domainPath = domain_sanitized($domain);
-        $domainStoragePath = rtrim($this->storagePath() . DIRECTORY_SEPARATOR . $domainPath,"\/");
-        if (file_exists($domainStoragePath))
-            return $domainStoragePath;
-        return $this->storagePath();
+        $domainStoragePath = $this->searchForDomainStoragePath($this->storagePath(),explode('.',$domain));
+
+        return $domainStoragePath;
+
     }
+
+
+
+    protected function searchForDomainStoragePath($storagePath, $tokens = []) {
+        if (count($tokens) == 0) {
+            return $storagePath;
+        }
+
+        $tokensAsDomainString = implode('.',$tokens);
+
+        $domainStoragePath = rtrim($storagePath . DIRECTORY_SEPARATOR . domain_sanitized($tokensAsDomainString), "\/");
+        return file_exists($domainStoragePath)
+            ? $domainStoragePath
+            : $this->searchForDomainStoragePath($storagePath,array_splice($tokens,1));
+    }
+
 
     /**
      * Get the path to the configuration cache file.
