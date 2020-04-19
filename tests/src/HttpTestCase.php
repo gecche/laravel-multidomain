@@ -15,6 +15,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 
@@ -120,7 +121,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
     /**
      * Resolve application Console Kernel implementation.
      *
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      * @return void
      */
     protected function resolveApplicationConsoleKernel($app)
@@ -146,7 +147,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -178,20 +179,15 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
     public function testWelcomePage()
     {
 
-
-        $this->serverName = Arr::get($_SERVER,'SERVER_NAME');
+        $this->serverName = Arr::get($_SERVER, 'SERVER_NAME');
         $stringToSee = 'Laravel';
-        switch ($this->serverName) {
-            case 'site1.test':
-                $stringToSee = $this->siteAppName1;
-                break;
-            case 'site2.test':
-                $stringToSee = $this->siteAppName2;
-                break;
-            default:
-                break;
+        if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
+            $stringToSee = $this->siteAppName1;
+        } elseif (in_array($this->serverName, ['site2.test']) || Str::endsWith($this->serverName, '.site2.test')) {
+            $stringToSee = $this->siteAppName2;
         }
-        $this->visit('http://'.$this->serverName)
+
+        $this->visit('http://' . $this->serverName)
             ->see($stringToSee);
     }
 
@@ -206,20 +202,62 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
     public function testDBConnection()
     {
 
-        $this->serverName = Arr::get($_SERVER,'SERVER_NAME');
+        $this->serverName = Arr::get($_SERVER, 'SERVER_NAME');
         $dbName = DB::connection('mysql')->getDatabaseName();
         $expectedDb = 'homestead';
-        switch ($this->serverName) {
-            case 'site1.test':
-                $expectedDb = $this->siteDbName1;
-                break;
-            case 'site2.test':
-                $expectedDb = $this->siteDbName2;
-                break;
-            default:
-                break;
+        if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
+            $expectedDb = $this->siteDbName1;
+        } elseif (in_array($this->serverName, ['site2.test']) || Str::endsWith($this->serverName, '.site2.test')) {
+            $expectedDb = $this->siteDbName2;
         }
-        $this->assertEquals($expectedDb,$dbName);
+
+        $this->assertEquals($expectedDb, $dbName);
+    }
+
+
+    /**
+     * In this test we checks that the database connection is versus the right database set in the
+     * DB_DATABASE entry of the env file.
+     * The chosen env files again depends upon the $_SERVER['SERVER_NAME'] value
+     * set when the test has been launched.
+     *
+     */
+    public function testEnvFile()
+    {
+
+        $this->serverName = Arr::get($_SERVER, 'SERVER_NAME');
+        $envfileName = app()->environmentFile();
+        $expectedEnvFile = '.env';
+        if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
+            $expectedEnvFile = '.env.site1.test';
+        } elseif (in_array($this->serverName, ['site2.test'])  || Str::endsWith($this->serverName, '.site2.test')) {
+            $expectedEnvFile = '.env.site2.test';
+        }
+
+        $this->assertEquals($expectedEnvFile, $envfileName);
+    }
+
+    /**
+     * In this test we checks that the database connection is versus the right database set in the
+     * DB_DATABASE entry of the env file.
+     * The chosen env files again depends upon the $_SERVER['SERVER_NAME'] value
+     * set when the test has been launched.
+     *
+     */
+    public function testStorageFolder()
+    {
+
+        $this->serverName = Arr::get($_SERVER, 'SERVER_NAME');
+        $storageFolder = storage_path();
+        $expectedStorageFolder = base_path() . '/storage';
+
+        if (in_array($this->serverName, ['site1.test']) || Str::endsWith($this->serverName, '.site1.test')) {
+            $expectedStorageFolder = $expectedStorageFolder . DIRECTORY_SEPARATOR . domain_sanitized('site1.test');
+        } elseif (in_array($this->serverName, ['site2.test'])  || Str::endsWith($this->serverName, '.site2.test')) {
+            $expectedStorageFolder = $expectedStorageFolder . DIRECTORY_SEPARATOR . domain_sanitized('site2.test');
+        }
+
+        $this->assertEquals($expectedStorageFolder, $storageFolder);
     }
 
 
