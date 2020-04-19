@@ -66,8 +66,8 @@ class HttpSubfolderTestCase extends HttpTestCase
 
         $this->files = new Filesystem();
         $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
-        copy($this->laravelAppPath.'/config/app.php',$this->laravelAppPath.'/config/appORIG.php');
-        copy(__DIR__ . '/../config/app.php',$this->laravelAppPath.'/config/app.php');
+        copy($this->laravelAppPath . '/config/app.php', $this->laravelAppPath . '/config/appORIG.php');
+        copy(__DIR__ . '/../config/app.php', $this->laravelAppPath . '/config/app.php');
         if (!is_dir($this->laravelAppPath.'/'.$this->envPath)) {
             mkdir($this->laravelAppPath.'/'.$this->envPath);
         }
