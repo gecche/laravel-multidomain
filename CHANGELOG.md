@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 2.5 - 2020-04-19
+### Added
+- An optional argument to the Application constructor for handling the storage of env files in a different folder 
+than the root Laravel's app folder. With new tests.
+- The `env_path` helper to get the folder in which env files are placed. 
+### Changed
+- README.md updated
+ 
 ## 2.4 - 2020-03-09
 ### Changed
 - Force the detection of the domain when trying to access to domain info if the domain has never been detected
@@ -29,6 +37,14 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 6.x (6.4 to date)  
 
+## 1.4.5 - 2020-04-19
+### Added
+- An optional argument to the Application constructor for handling the storage of env files in a different folder 
+than the root Laravel's app folder. With new tests.
+- The `env_path` helper to get the folder in which env files are placed. 
+### Changed
+- README.md updated
+ 
 ## 1.4.4 - 2020-03-09
 ### Changed
 - Force the detection of the domain when trying to access to domain info if the domain has never been detected
@@ -53,6 +69,14 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.8  
 
+## 1.3.5 - 2020-04-19
+### Added
+- An optional argument to the Application constructor for handling the storage of env files in a different folder 
+than the root Laravel's app folder. With new tests.
+- The `env_path` helper to get the folder in which env files are placed. 
+### Changed
+- README.md updated
+ 
 ## 1.3.4 - 2020-03-09
 ### Changed
 - Force the detection of the domain when trying to access to domain info if the domain has never been detected
@@ -79,6 +103,14 @@ skipped and not replicated in the new .env.<domain> file
 - Bugfix in `Gecche\Multidomain\Queue\Listener` due to changes in handling 
 worker commands in the parent class.
 
+## 1.2.5 - 2020-04-19
+### Added
+- An optional argument to the Application constructor for handling the storage of env files in a different folder 
+than the root Laravel's app folder. With new tests.
+- The `env_path` helper to get the folder in which env files are placed. 
+### Changed
+- README.md updated
+ 
 ## 1.2.4 - 2020-03-09
 ### Changed
 - Force the detection of the domain when trying to access to domain info if the domain has never been detected
@@ -103,6 +135,14 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.6  
 
+## 1.1.11 - 2020-04-16
+### Added
+- An optional argument to the Application constructor for handling the storage of env files in a different folder 
+than the root Laravel's app folder. With new tests.
+- The `env_path` helper to get the folder in which env files are placed. 
+### Changed
+- README.md updated
+ 
 ## 1.1.10 - 2020-03-09
 ### Changed
 - Force the detection of the domain when trying to access to domain info if the domain has never been detected
@@ -115,8 +155,8 @@ skipped and not replicated in the new .env.<domain> file
 ## 1.1.8 - 2019-11-15
 ### Changed
 - Changed `Gecche\Multidomain\Foundation\Application` for handling separated cache files for each 
-domain when using the `route:cache` Laravel command 
-
+domain when using the `route:cache` Laravel command
+ 
 ## 1.1.7 - 2019-11-12
 ### Changed
 - Bugfix in `Gecche\Multidomain\Foundation\Console\DomainCommandTrait`: running the 
@@ -159,27 +199,32 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v2.4...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v2....HEAD
+[2.5]: https://github.com/gecche/laravel-multidomain/compare/v2.4...v2.5
 [2.4]: https://github.com/gecche/laravel-multidomain/compare/v2.3...v2.4
 [2.3]: https://github.com/gecche/laravel-multidomain/compare/v2.2...v2.3
 [2.2]: https://github.com/gecche/laravel-multidomain/compare/v2.1...v2.2
 [2.1]: https://github.com/gecche/laravel-multidomain/compare/v2.0...v2.1
 [2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v2.0
+[1.4.5]: https://github.com/gecche/laravel-multidomain/compare/v1.4.4...v1.4.5
 [1.4.4]: https://github.com/gecche/laravel-multidomain/compare/v1.4.3...v1.4.4
 [1.4.3]: https://github.com/gecche/laravel-multidomain/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/gecche/laravel-multidomain/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.4.0
+[1.3.5]: https://github.com/gecche/laravel-multidomain/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/gecche/laravel-multidomain/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/gecche/laravel-multidomain/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/gecche/laravel-multidomain/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
+[1.2.5]: https://github.com/gecche/laravel-multidomain/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/gecche/laravel-multidomain/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/gecche/laravel-multidomain/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/gecche/laravel-multidomain/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.1.11]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/gecche/laravel-multidomain/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/gecche/laravel-multidomain/compare/v1.1.8...v1.1.9
 [1.1.8]: https://github.com/gecche/laravel-multidomain/compare/v1.1.7...v1.1.8

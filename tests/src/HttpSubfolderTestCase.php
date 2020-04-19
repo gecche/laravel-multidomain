@@ -9,12 +9,7 @@
 namespace Gecche\Multidomain\Tests;
 
 use Gecche\Multidomain\Foundation\Application;
-use Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider;
-use Gecche\Multidomain\Tests\Http\Kernel as HttpKernel;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\Process\Process;
 
 
@@ -65,31 +60,31 @@ class HttpSubfolderTestCase extends HttpTestCase
      */
     protected function setUp(): void
     {
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'config:clear']);
+        $process = new Process('php ' . $this->laravelAppPath . '/artisan config:clear');
         $process->run();
 
 
         $this->files = new Filesystem();
         $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
-        copy($this->laravelAppPath.'/config/app.php',$this->laravelAppPath.'/config/appORIG.php');
-        copy(__DIR__ . '/../config/app.php',$this->laravelAppPath.'/config/app.php');
+        copy($this->laravelAppPath . '/config/app.php', $this->laravelAppPath . '/config/appORIG.php');
+        copy(__DIR__ . '/../config/app.php', $this->laravelAppPath . '/config/app.php');
         if (!is_dir($this->laravelAppPath.'/'.$this->envPath)) {
             mkdir($this->laravelAppPath.'/'.$this->envPath);
         }
         copy(__DIR__ . '/../.env.example', $this->laravelAppPath.'/'.$this->envPath.'/.env');
         copy(__DIR__ . '/../artisan',$this->laravelAppPath.'/artisan');
 
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'vendor:publish', '--provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"']);
+        $process = new Process('php ' . $this->laravelAppPath . '/artisan vendor:publish --provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"');
         $process->run();
 
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', $this->site1, '--force']);
+        $process = new Process('php ' . $this->laravelAppPath . '/artisan domain:remove ' . $this->site1 . ' --force');
         $process->run();
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', $this->site2, '--force']);
+        $process = new Process('php ' . $this->laravelAppPath . '/artisan domain:remove ' . $this->site2 . ' --force');
         $process->run();
 
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', $this->site1]);
+        $process = new Process('php ' . $this->laravelAppPath . '/artisan domain:add ' . $this->site1);
         $process->run();
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', $this->site2]);
+        $process = new Process('php ' . $this->laravelAppPath . '/artisan domain:add ' . $this->site2);
         $process->run();
 
         $domainValues = [
