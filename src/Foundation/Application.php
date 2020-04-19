@@ -3,7 +3,6 @@
 namespace Gecche\Multidomain\Foundation;
 
 use Illuminate\Support\Env;
-use Illuminate\Support\Facades\File;
 
 class Application extends \Illuminate\Foundation\Application
 {
@@ -30,12 +29,8 @@ class Application extends \Illuminate\Foundation\Application
     {
         $environmentPath = $environmentPath ?? $basePath;
         $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
-//        echo " *** " . $this->environmentPath . " ***";
 
         parent::__construct($basePath);
-//        echo file_get_contents($this->environmentPath . '/.env');
-//        echo " +++ \n";
-//
     }
 
     /**
@@ -155,7 +150,7 @@ class Application extends \Illuminate\Foundation\Application
             $domain = $this['domain'];
         }
         $domainPath = domain_sanitized($domain);
-        $domainStoragePath = $this->storagePath() . DIRECTORY_SEPARATOR . $domainPath;
+        $domainStoragePath = rtrim($this->storagePath() . DIRECTORY_SEPARATOR . $domainPath,"\/");
         if (file_exists($domainStoragePath))
             return $domainStoragePath;
         return $this->storagePath();
@@ -235,9 +230,10 @@ class Application extends \Illuminate\Foundation\Application
      *
      * @return Array
      */
-    public function domainsList() {
+    public function domainsList()
+    {
 
-        $domainsInConfig = config('domain.domains',[]);
+        $domainsInConfig = config('domain.domains', []);
 
         $domains = [];
 

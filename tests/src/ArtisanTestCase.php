@@ -10,6 +10,7 @@ namespace Gecche\Multidomain\Tests;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
@@ -20,6 +21,10 @@ class ArtisanTestCase extends TestCase
     protected $files = null;
 
     protected $laravelAppPath = null;
+
+    protected $laravelEnvPath = null;
+
+    protected $laravelArtisanFile = 'artisan';
 
     /*
      * Added for changes in artisan ouput in Laravel 5.7
@@ -54,13 +59,16 @@ class ArtisanTestCase extends TestCase
     protected function setUp(): void
     {
         $this->files = new Filesystem();
-        $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
+        $this->setPaths();
         copy($this->laravelAppPath.'/config/app.php',$this->laravelAppPath.'/config/appORIG.php');
         copy(__DIR__ . '/../config/app.php',$this->laravelAppPath.'/config/app.php');
         copy($this->laravelAppPath.'/config/queue.php',$this->laravelAppPath.'/config/queueORIG.php');
         copy(__DIR__ . '/../config/queue.php',$this->laravelAppPath.'/config/queue.php');
-        copy(__DIR__ . '/../.env.example',$this->laravelAppPath.'/.env');
-        copy(__DIR__ . '/../artisan',$this->laravelAppPath.'/artisan');
+        if (!is_dir($this->laravelEnvPath)) {
+            mkdir($this->laravelEnvPath);
+        }
+        copy(__DIR__ . '/../.env.example',$this->laravelEnvPath.'/.env');
+        copy(__DIR__ . '/../'.$this->laravelArtisanFile,$this->laravelAppPath.DIRECTORY_SEPARATOR.'artisan');
 
         foreach ($this->files->allFiles(__DIR__ . '/../database/migrations') as $file) {
             $relativeFile = substr($file,strrpos($file,'/'));
@@ -74,10 +82,14 @@ class ArtisanTestCase extends TestCase
 
     }
 
+    protected function setPaths() {
+        $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
+        $this->laravelEnvPath = $this->laravelAppPath;
+    }
 
     protected function tearDown(): void {
 
-        $this->files->delete($this->laravelAppPath.'/.env');
+        $this->files->delete($this->laravelEnvPath.'/.env');
         copy($this->laravelAppPath.'/config/appORIG.php',$this->laravelAppPath.'/config/app.php');
         $this->files->delete($this->laravelAppPath.'/config/appORIG.php');
         copy($this->laravelAppPath.'/config/queueORIG.php',$this->laravelAppPath.'/config/queue.php');
@@ -93,12 +105,6 @@ class ArtisanTestCase extends TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-
-        echo "HERE\n";
-
-        $refl = new \ReflectionClass($app);
-
-        echo $refl->getName() . "\n";
 
     }
 
@@ -128,7 +134,7 @@ class ArtisanTestCase extends TestCase
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'name']);
         $process->run();
 
-        if ($serverName == 'site1.test') {
+        if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
             $this->assertEquals("LARAVELTEST",$process->getOutput());
         } else {
             $this->assertEquals("Laravel",$process->getOutput());
@@ -139,12 +145,45 @@ class ArtisanTestCase extends TestCase
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'name', '--domain=site1.test']);
         $process->run();
-
         $this->assertEquals("LARAVELTEST",$process->getOutput());
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', 'site1.test', '--force']);
         $process->run();
 
+
+        return;
+
+    }
+
+    /*
+     * TEST FOR key:generate COMMAND
+     */
+    public function testKeyGenerateCommand() {
+
+        //Note that if the $_SERVER['SERVER_NAME'] value has been set and the --domain option has NOT been set,
+        //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
+        $serverName = Arr::get($_SERVER,'SERVER_NAME');
+
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add site1.test']);
+        $process->run();
+
+        $domainValues = ['APP_NAME'=>'LARAVELTEST'];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env site1.test --domain_values='.json_encode($domainValues)]);
+        $process->run();
+
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'key:generate']);
+        $process->run();
+        $keyGenerateOutput = substr($process->getOutput(),17);
+        $keyGenerateOutput = substr($keyGenerateOutput,0,strrpos($keyGenerateOutput,']'));
+
+
+        if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
+            $envFile = '.env.site1.test';
+        } else {
+            $envFile = '.env';
+        }
+
+        $this->assertStringContainsString('APP_KEY='.$keyGenerateOutput,$this->files->get($this->laravelEnvPath.DIRECTORY_SEPARATOR.$envFile));
 
         return;
 
@@ -199,7 +238,7 @@ class ArtisanTestCase extends TestCase
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush', '--domain=site1.test']);
         $process->run();
-        if ($serverName == 'site1.test') {
+        if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
             $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
         } else {
             $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'site1.failed',$process->getOutput());

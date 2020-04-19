@@ -9,12 +9,7 @@
 namespace Gecche\Multidomain\Tests;
 
 use Gecche\Multidomain\Foundation\Application;
-use Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider;
-use Gecche\Multidomain\Tests\Http\Kernel as HttpKernel;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\Process\Process;
 
 
@@ -71,8 +66,8 @@ class HttpSubfolderTestCase extends HttpTestCase
 
         $this->files = new Filesystem();
         $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
-        copy($this->laravelAppPath.'/config/app.php',$this->laravelAppPath.'/config/appORIG.php');
-        copy(__DIR__ . '/../config/app.php',$this->laravelAppPath.'/config/app.php');
+        copy($this->laravelAppPath . '/config/app.php', $this->laravelAppPath . '/config/appORIG.php');
+        copy(__DIR__ . '/../config/app.php', $this->laravelAppPath . '/config/app.php');
         if (!is_dir($this->laravelAppPath.'/'.$this->envPath)) {
             mkdir($this->laravelAppPath.'/'.$this->envPath);
         }
