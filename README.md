@@ -222,10 +222,12 @@ PHP variable.
  
 #### Using multi domains in artisan commands
  
- In order to distinguishing between domains, each artisan command accepts a new option: `domain`. E.g.:
- ```
- php artisan list --domain=site1.com 
- ```
+In order to distinguishing between domains, each artisan command accepts a new option: `domain`. E.g.:
+
+```
+php artisan list --domain=site1.com 
+```
+
 The command will use the corresponding domain settings.
 
 #### About queues
@@ -302,5 +304,43 @@ APP_PUBLIC_STORAGE=-site1_com
 Furthermore, if you are using the package in a Single Page Application (SPA) setting, you could better handling distinct 
 public resources for each domain via .htaccess or similar solutions as pointed out by [Scaenicus](https://github.com/Scaenicus) in his 
 [.htacess solution](https://github.com/gecche/laravel-multidomain/issues/11#issuecomment-559822284).
+
+#### Storing environment files in a custom folder
+
+Starting from version 1.1.11 a second argument has been added to the Application constructor in order to choose the 
+folder where to place the environment files: if you have tens of domains, it is not very pleasant to have environment 
+files in the root Laravel's app folder. 
+
+So, if you want to use a different folder simply add it at the very top of the `bootstrap/app.php` file. for example, 
+if you want to add environment files to the `envs` subfolder, simply do:
+
+```php
+//$app = new Illuminate\Foundation\Application(
+$app = new Gecche\Multidomain\Foundation\Application(
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__),
+    dirname(__DIR__) . DIRECTORY_SEPARATOR . 'envs'
+);
+```
+
+If you do not specify the second argument, the standard folder is assumed. Please note that if you specify a folder, 
+also the standard `.env` file has to be placed in it
+
+#### About Laravel's Scheduler, Supervisor and some limitation
+ 
+If in your setting you make use of the Laravel's Scheduler, remember that also the command `schedule:run` has to be 
+launched with the domain option. Hence, you have to launch a scheduler for each domain. 
+At firt one oculd think that one Scheduler instance should handle the commands launched for any domain, but the 
+Scheduler itself is run within a Laravel Application, so the "env" under which it is run, automatically applies to 
+each scheduled command and the `--domain` option has no effect at all.
+
+The same applies to externals tools like Supervisor: if you use Supervisor for artisan commands, e.g. the `queue:work` 
+command, please be sure to prepare a command for each domain you want to handle.
+
+Due to the above, there are some cases in which the package can't work: in those settings where you don't have the 
+possibility of changing for example the supervisor configuration rather than the `crontab` entries for the scheduler. 
+Such an example has been pointed out [here](https://github.com/gecche/laravel-multidomain/issues/21#issuecomment-600469868) 
+in which a Docker instance has been used. 
+
+
 
 
