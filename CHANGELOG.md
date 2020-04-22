@@ -148,7 +148,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 - Initial version for Laravel 5.5.
 
 [Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.3.6...HEAD
-[1.3.6]: https://github.com/gecche/laravel-multidomain/compare/v1.3.4...v1.3.6
+[1.3.6]: https://github.com/gecche/laravel-multidomain/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/gecche/laravel-multidomain/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/gecche/laravel-multidomain/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/gecche/laravel-multidomain/compare/v1.3.2...v1.3.3
