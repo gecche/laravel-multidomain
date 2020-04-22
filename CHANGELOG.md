@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.2.6 - 2020-04-23
+### Changed
+- Improved robustness in `environmentFileDomain` when no domain is given.
+ 
 ## 1.2.5 - 2020-04-19
 ### Added
 - An optional argument to the Application constructor for handling the storage of env files in a different folder 
@@ -37,6 +41,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.6  
 
+## 1.1.12 - 2020-04-23
+### Changed
+- Improved robustness in `environmentFileDomain` when no domain is given.
+ 
 ## 1.1.11 - 2020-04-16
 ### Added
 - An optional argument to the Application constructor for handling the storage of env files in a different folder 
@@ -101,13 +109,15 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.2.5...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.2.6...HEAD
+[1.2.6]: https://github.com/gecche/laravel-multidomain/compare/v1.2.4...v1.2.5
 [1.2.5]: https://github.com/gecche/laravel-multidomain/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/gecche/laravel-multidomain/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/gecche/laravel-multidomain/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/gecche/laravel-multidomain/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.1.12]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...v1.1.12
 [1.1.11]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/gecche/laravel-multidomain/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/gecche/laravel-multidomain/compare/v1.1.8...v1.1.9
