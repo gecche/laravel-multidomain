@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.12 - 2020-04-23
+### Changed
+- Improved robustness in `environmentFileDomain` when no domain is given.
+ 
 ## 1.1.11 - 2020-04-16
 ### Added
 - An optional argument to the Application constructor for handling the storage of env files in a different folder 
@@ -69,7 +73,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.12...HEAD
+[1.1.12]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...v1.1.12
 [1.1.11]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/gecche/laravel-multidomain/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/gecche/laravel-multidomain/compare/v1.1.8...v1.1.9
