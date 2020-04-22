@@ -129,7 +129,7 @@ class Application extends \Illuminate\Foundation\Application
             $domain = $this['domain'];
         }
         $file = '.env.' . $domain;
-        return file_exists(env_path($file)) ? $file : '.env';
+        return ($domain && file_exists(env_path($file))) ? $file : '.env';
     }
 
     /**
