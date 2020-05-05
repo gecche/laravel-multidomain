@@ -141,7 +141,7 @@ The command also adds an entry in the `domains` key in `config/domains.php` file
 In addition, two new folders are created, `storage/site1_com/` and `storage/site2_com/`. 
 They have the same folder structure as the main storage.
 
-Customisations to this `storage` substructure must be matched by values in the `config/domain.php` file.
+Customizations to this `storage` substructure must be matched by values in the `config/domain.php` file.
  
 #### `domain.remove` artisan command
 The  `domain:remove` command removes the specified HTTP domain from the 
@@ -329,7 +329,7 @@ also the standard `.env` file has to be placed in it
  
 If in your setting you make use of the Laravel's Scheduler, remember that also the command `schedule:run` has to be 
 launched with the domain option. Hence, you have to launch a scheduler for each domain. 
-At firt one oculd think that one Scheduler instance should handle the commands launched for any domain, but the 
+At first one could think that one Scheduler instance should handle the commands launched for any domain, but the 
 Scheduler itself is run within a Laravel Application, so the "env" under which it is run, automatically applies to 
 each scheduled command and the `--domain` option has no effect at all.
 
