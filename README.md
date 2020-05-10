@@ -83,7 +83,7 @@ At the very top of the `app/Http/Kernel.php` file , do the following change:
 use Gecche\Multidomain\Foundation\Http\Kernel as HttpKernel;
 ```
 
-Similarly in the ``app/Console/Kernel.php` file:
+Similarly in the `app/Console/Kernel.php` file:
 
 ```php
 //use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
