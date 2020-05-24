@@ -3,8 +3,10 @@
 [![Laravel](https://img.shields.io/badge/Laravel-7.x-orange.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
-# laravel-multidomain
+# Laravel Multi Domain
 An extension for using Laravel in a multi domain setting
+
+![Laravel Multi Domain](laravel-multidomain.png)
 
 ## Description
 This package allows a single Laravel installation to work with multiple HTTP domains.
@@ -83,7 +85,7 @@ At the very top of the `app/Http/Kernel.php` file , do the following change:
 use Gecche\Multidomain\Foundation\Http\Kernel as HttpKernel;
 ```
 
-Similarly in the ``app/Console/Kernel.php` file:
+Similarly in the `app/Console/Kernel.php` file:
 
 ```php
 //use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -141,7 +143,7 @@ The command also adds an entry in the `domains` key in `config/domains.php` file
 In addition, two new folders are created, `storage/site1_com/` and `storage/site2_com/`. 
 They have the same folder structure as the main storage.
 
-Customisations to this `storage` substructure must be matched by values in the `config/domain.php` file.
+Customizations to this `storage` substructure must be matched by values in the `config/domain.php` file.
  
 #### `domain.remove` artisan command
 The  `domain:remove` command removes the specified HTTP domain from the 
@@ -274,7 +276,7 @@ command. Extending the `storage:link` command allowing to choose the name is out
 (and I hope it will be done directly in future versions of Laravel).
 
 A way to obtain multiple storage links could be the following.
-LEt us suppose to have two domains, namely `site1.com` and `site2.com` with associated storage folders 
+Let us suppose to have two domains, namely `site1.com` and `site2.com` with associated storage folders 
 `storage/site1_com` and `storage/site2_com`.
 
 1. We manually create links for each domain: 
@@ -303,7 +305,7 @@ APP_PUBLIC_STORAGE=-site1_com
 
 Furthermore, if you are using the package in a Single Page Application (SPA) setting, you could better handling distinct 
 public resources for each domain via .htaccess or similar solutions as pointed out by [Scaenicus](https://github.com/Scaenicus) in his 
-[.htacess solution](https://github.com/gecche/laravel-multidomain/issues/11#issuecomment-559822284).
+[.htaccess solution](https://github.com/gecche/laravel-multidomain/issues/11#issuecomment-559822284).
 
 #### Storing environment files in a custom folder
 
@@ -325,11 +327,11 @@ $app = new Gecche\Multidomain\Foundation\Application(
 If you do not specify the second argument, the standard folder is assumed. Please note that if you specify a folder, 
 also the standard `.env` file has to be placed in it
 
-#### About Laravel's Scheduler, Supervisor and some limitations
+#### About Laravel's Scheduler, Supervisor and some limitation
  
 If in your setting you make use of the Laravel's Scheduler, remember that also the command `schedule:run` has to be 
 launched with the domain option. Hence, you have to launch a scheduler for each domain. 
-At firt one oculd think that one Scheduler instance should handle the commands launched for any domain, but the 
+At first one could think that one Scheduler instance should handle the commands launched for any domain, but the 
 Scheduler itself is run within a Laravel Application, so the "env" under which it is run, automatically applies to 
 each scheduled command and the `--domain` option has no effect at all.
 
