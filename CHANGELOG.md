@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 3.3 - 2020-05-24
+### Changed
+- README.md updated with some minor correction and frontend image.
+ 
 ## 3.2 - 2020-04-23
 ### Changed
 - Improved robustness in `environmentFileDomain` when no domain is given.
@@ -21,6 +25,10 @@ than the root Laravel's app folder. With new tests.
 ### Changed
 - `composer.json` updated for Laravel 7.x  
 
+## 2.7 - 2020-05-24
+### Changed
+- README.md updated with some minor correction and frontend image.
+ 
 ## 2.6 - 2020-04-23
 ### Changed
 - Improved robustness in `environmentFileDomain` when no domain is given.
@@ -57,6 +65,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 6.x  
 
+## 1.4.7 - 2020-05-24
+### Changed
+- README.md updated with some minor correction and frontend image.
+ 
 ## 1.4.6 - 2020-04-23
 ### Changed
 - Improved robustness in `environmentFileDomain` when no domain is given.
@@ -93,6 +105,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.8  
 
+## 1.3.7 - 2020-05-24
+### Changed
+- README.md updated with some minor correction and frontend image.
+ 
 ## 1.3.6 - 2020-04-23
 ### Changed
 - Improved robustness in `environmentFileDomain` when no domain is given.
@@ -131,6 +147,10 @@ skipped and not replicated in the new .env.<domain> file
 - Bugfix in `Gecche\Multidomain\Queue\Listener` due to changes in handling 
 worker commands in the parent class.
 
+## 1.2.7 - 2020-05-24
+### Changed
+- README.md updated with some minor correction and frontend image.
+ 
 ## 1.2.6 - 2020-04-23
 ### Changed
 - Improved robustness in `environmentFileDomain` when no domain is given.
@@ -167,6 +187,10 @@ skipped and not replicated in the new .env.<domain> file
 ### Changed
 - `composer.json` updated for Laravel 5.6  
 
+## 1.1.13 - 2020-05-24
+### Changed
+- README.md updated with some minor correction and frontend image.
+ 
 ## 1.1.12 - 2020-04-23
 ### Changed
 - Improved robustness in `environmentFileDomain` when no domain is given.
@@ -235,10 +259,12 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v3.2...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v3.3...HEAD
+[3.3]: https://github.com/gecche/laravel-multidomain/compare/v3.2...v3.3
 [3.2]: https://github.com/gecche/laravel-multidomain/compare/v3.1...v3.2
 [3.1]: https://github.com/gecche/laravel-multidomain/compare/v3.0...v3.1
 [3.0]: https://github.com/gecche/laravel-multidomain/compare/v2.4...v3.0
+[2.7]: https://github.com/gecche/laravel-multidomain/compare/v2.6...v2.7
 [2.6]: https://github.com/gecche/laravel-multidomain/compare/v2.5...v2.6
 [2.5]: https://github.com/gecche/laravel-multidomain/compare/v2.4...v2.5
 [2.4]: https://github.com/gecche/laravel-multidomain/compare/v2.3...v2.4
@@ -246,6 +272,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [2.2]: https://github.com/gecche/laravel-multidomain/compare/v2.1...v2.2
 [2.1]: https://github.com/gecche/laravel-multidomain/compare/v2.0...v2.1
 [2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v2.0
+[1.4.7]: https://github.com/gecche/laravel-multidomain/compare/v1.4.6...v1.4.7
 [1.4.6]: https://github.com/gecche/laravel-multidomain/compare/v1.4.5...v1.4.6
 [1.4.5]: https://github.com/gecche/laravel-multidomain/compare/v1.4.4...v1.4.5
 [1.4.4]: https://github.com/gecche/laravel-multidomain/compare/v1.4.3...v1.4.4
@@ -253,6 +280,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.4.2]: https://github.com/gecche/laravel-multidomain/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/gecche/laravel-multidomain/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.4.0
+[1.3.7]: https://github.com/gecche/laravel-multidomain/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/gecche/laravel-multidomain/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/gecche/laravel-multidomain/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/gecche/laravel-multidomain/compare/v1.3.3...v1.3.4
@@ -260,6 +288,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.3.2]: https://github.com/gecche/laravel-multidomain/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
+[1.2.7]: https://github.com/gecche/laravel-multidomain/compare/v1.2.6...v1.2.7
 [1.2.6]: https://github.com/gecche/laravel-multidomain/compare/v1.2.5...v1.2.6
 [1.2.5]: https://github.com/gecche/laravel-multidomain/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/gecche/laravel-multidomain/compare/v1.2.3...v1.2.4
@@ -267,6 +296,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.2.2]: https://github.com/gecche/laravel-multidomain/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.1.13]: https://github.com/gecche/laravel-multidomain/compare/v1.1.12...v1.1.13
 [1.1.12]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...v1.1.12
 [1.1.11]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/gecche/laravel-multidomain/compare/v1.1.9...v1.1.10
