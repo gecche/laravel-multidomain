@@ -3,8 +3,10 @@
 [![Laravel](https://img.shields.io/badge/Laravel-7.x-orange.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
-# laravel-multidomain
+# Laravel Multi Domain
 An extension for using Laravel in a multi domain setting
+
+![Laravel Multi Domain](laravel-multidomain.png)
 
 ## Description
 This package allows a single Laravel installation to work with multiple HTTP domains.
