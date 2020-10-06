@@ -18,6 +18,8 @@ class ListDomainCommand extends Command
 
     protected $description = "Lists domains installed in the application.";
 
+    protected $domain;
+
     /*
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */

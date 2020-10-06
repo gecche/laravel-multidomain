@@ -26,6 +26,13 @@ class ArtisanTestCase extends TestCase
 
     protected $laravelArtisanFile = 'artisan';
 
+    protected $site1 = 'site1.test';
+    protected $site2 = 'site2.test';
+    protected $subSite1 = 'sub1.site1.test';
+
+    protected $siteAppName1 = 'APPSite1';
+    protected $siteAppName2 = 'APPSite2';
+    protected $subSiteAppName1 = 'APPSubSite1';
     /**
      * Setup the test environment.
      *
