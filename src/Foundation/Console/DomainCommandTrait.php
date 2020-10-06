@@ -25,7 +25,7 @@ trait DomainCommandTrait
             $domain = $this->domain;
         }
 
-        return env_path('.env.' . $domain);
+        return rtrim(env_path('.env.' . $domain),'.');
     }
 
     /**
@@ -35,11 +35,8 @@ trait DomainCommandTrait
      */
     protected function getDomainStoragePath($domain = null)
     {
-        if ($domain == null) {
-            $domain = $this->domain;
-        }
-
-        return storage_path() . DIRECTORY_SEPARATOR . domain_sanitized($domain);
+        $path = app()->exactDomainStoragePath($domain);
+        return $path;
     }
 
     /**

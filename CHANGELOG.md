@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.14 - 2020-10-06
+### Changed
+- New logic for default environment files and storage folders
+- Tests improved and updated
+- README.md updated
+ 
 ## 1.1.13 - 2020-05-24
 ### Changed
 - README.md updated with some minor correction and frontend image.
@@ -77,7 +83,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.13...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.14...HEAD
+[1.1.14]: https://github.com/gecche/laravel-multidomain/compare/v1.1.13...v1.1.14
 [1.1.13]: https://github.com/gecche/laravel-multidomain/compare/v1.1.12...v1.1.13
 [1.1.12]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...v1.1.12
 [1.1.11]: https://github.com/gecche/laravel-multidomain/compare/v1.1.10...v1.1.11

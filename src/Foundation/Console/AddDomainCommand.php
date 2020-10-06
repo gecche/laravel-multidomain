@@ -93,6 +93,7 @@ class AddDomainCommand extends GeneratorCommand
         $storageDirs = Config::get('domain.storage_dirs', array());
         $path = $this->getDomainStoragePath($this->domain);
         $rootPath = storage_path();
+
         if ($this->files->exists($path) && !$this->option('force')) {
             return;
         }

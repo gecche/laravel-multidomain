@@ -24,6 +24,7 @@ class RemoveDomainCommand extends GeneratorCommand {
      * Se il file di ambiente esiste già viene semplicemente sovrascirtto con i nuovi valori passati dal comando (update)
      */
     public function handle() {
+
         $this->domain = $this->argument('domain');
 
         /*
