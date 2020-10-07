@@ -42,7 +42,7 @@ To date, releases v1.1.6+, v1.2.x, v1.3.x, v1.4.x, v2.x and v3.x are functionall
 Releases have been separated in order to run integration tests with the corresponding version of the 
 Laravel framework.
 
-However, with the release of Laravel 8, releases v1.1.14, v1.2.8, v1.3.8, v1.4.8 are the last releases 
+However, with the release of Laravel 8, releases v1.1.14, v1.2.8, v1.3.8 and v1.4.8 are the last releases 
 including new features for the corresponding Laravel 5.x versions (bugfix support is still active for that versions).
   
 v1.0 requires Laravel 5.1, 5.2, 5.3 and 5.4 (no longer maintained and not tested versus laravel 5.4, 
