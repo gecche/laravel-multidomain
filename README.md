@@ -327,6 +327,21 @@ $app = new Gecche\Multidomain\Foundation\Application(
 If you do not specify the second argument, the standard folder is assumed. Please note that if you specify a folder, 
 also the standard `.env` file has to be placed in it
 
+#### Default environment files and storage folders
+
+If you try to run a web page or an shell command under a certain domain, e.g. `sub1.site1.com` and there is no specific 
+environment file for that domain, i.e. the file `.env.sub1.site1.com` does not exist, the package will use the first 
+available environment file by splitting the domain name with dots. In this example, the package searches for the 
+the first environment file among the followings:
+
+```
+.env.site1.com
+.env.com
+.env
+```
+
+The same logic applies to the storage folder as well.
+
 #### About Laravel's Scheduler, Supervisor and some limitation
  
 If in your setting you make use of the Laravel's Scheduler, remember that also the command `schedule:run` has to be 
