@@ -26,6 +26,14 @@ class ArtisanTestCase extends TestCase
 
     protected $laravelArtisanFile = 'artisan';
 
+    protected $site1 = 'site1.test';
+    protected $site2 = 'site2.test';
+    protected $subSite1 = 'sub1.site1.test';
+
+    protected $siteAppName1 = 'APPSite1';
+    protected $siteAppName2 = 'APPSite2';
+    protected $subSiteAppName1 = 'APPSubSite1';
+
     /*
      * Added for changes in artisan ouput in Laravel 5.7
      */
@@ -164,11 +172,11 @@ class ArtisanTestCase extends TestCase
         //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
         $serverName = Arr::get($_SERVER,'SERVER_NAME');
 
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add site1.test']);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', 'site1.test']);
         $process->run();
 
         $domainValues = ['APP_NAME'=>'LARAVELTEST'];
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env site1.test --domain_values='.json_encode($domainValues)]);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', 'site1.test', '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'key:generate']);
@@ -264,7 +272,7 @@ class ArtisanTestCase extends TestCase
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush']);
         $process->run();
-        if ($serverName == 'site1.test') {
+        if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
             $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
         } else {
             $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'homestead.failed',$process->getOutput());
@@ -344,7 +352,7 @@ class ArtisanTestCase extends TestCase
         //Depending upon the domain option (or the SERVER_NAME value)
         //we check accordingly the contents of the file
         $fileContent = $this->files->get($fileToTest);
-        if ($serverName == 'site1.test') {
+        if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
             $this->assertStringContainsString('LARAVELTEST --- site1',$fileContent);
         } else {
             $this->assertStringContainsString('Laravel --- default',$fileContent);

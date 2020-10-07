@@ -17,10 +17,12 @@ class CommandsSubfolderTestCase extends CommandsTestCase
 
     protected $files = null;
 
-    protected $site = 'site1.test';
     protected $siteDbName = 'db_site1';
 
-
+    protected function setPaths() {
+        $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
+        $this->laravelEnvPath = $this->laravelAppPath . DIRECTORY_SEPARATOR . 'envs';
+    }
 
     protected function resolveApplication()
     {
