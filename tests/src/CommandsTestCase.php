@@ -23,7 +23,6 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
     protected $files = null;
 
-    protected $site = 'site1.test';
     protected $siteDbName = 'db_site1';
 
     /*
@@ -131,9 +130,16 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
      * It checks if the env file and storage dirs exist and if the list of domains in the config file is updated
      */
     public function testDomainAddCommand() {
-        $site = $this->site;
+        $site = Arr::get($_SERVER, 'SERVER_NAME');
 
-        $this->artisan('domain:add',['domain' => $site]);
+        if (!$site) {
+            $this->assertTrue(true);
+            return;
+        }
+
+        $argDomain = $site ? ['domain' => $site] : [];
+
+        $this->artisan('domain:add',$argDomain);
 
         $this->assertFileExists(env_path('.env.'.$site));
 
@@ -143,7 +149,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->assertArrayHasKey($site,$domainListed);
 
-        $this->assertDirectoryExists(storage_path(domain_sanitized($site)));
+        $this->assertDirectoryExists(app()->exactDomainStoragePath());
     }
 
     /*
@@ -152,9 +158,14 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
      * It checks also if storage dirs still exist
      */
     public function testDomainRemoveCommand() {
-        $site = $this->site;
+        $site = Arr::get($_SERVER, 'SERVER_NAME');
+        if (!$site) {
+            $this->assertTrue(true);
+            return;
+        }
+        $argDomain = $site ? ['domain' => $site] : [];
 
-        $this->artisan('domain:remove',['domain' => $site]);
+        $this->artisan('domain:remove',$argDomain);
 
         $this->assertFileNotExists(env_path('.env.'.$site));
 
@@ -162,7 +173,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->assertArrayNotHasKey($site,$domainListed);
 
-        $this->assertDirectoryExists(storage_path(domain_sanitized($site)));
+        $this->assertDirectoryExists(app()->exactDomainStoragePath());
     }
 
     /*
@@ -171,9 +182,14 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
      * Now it checks also if storage dirs does not exist (force)
      */
     public function testDomainRemoveForceCommand() {
-        $site = $this->site;
+        $site = Arr::get($_SERVER, 'SERVER_NAME');
+        if (!$site) {
+            $this->assertTrue(true);
+            return;
+        }
+        $argDomain = $site ? ['domain' => $site,'--force' => 1] : ['--force' => 1];
 
-        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+        $this->artisan('domain:remove',$argDomain);
 
         $this->assertFileNotExists(env_path('.env.'.$site));
 
@@ -181,7 +197,8 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->assertArrayNotHasKey($site,$domainListed);
 
-        $this->assertDirectoryNotExists(storage_path(domain_sanitized($site)));
+        //$this->assertDirectoryNotExists(storage_path(domain_sanitized($site)));
+        $this->assertDirectoryNotExists(app()->exactDomainStoragePath());
     }
 
     /*
@@ -192,24 +209,28 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
      */
     public function testDomainUpdateEnvCommand() {
 
-        $site = $this->site;
         $dbName = $this->siteDbName;
+        $site = Arr::get($_SERVER, 'SERVER_NAME');
+        if (!$site) {
+            $this->assertTrue(true);
+            return;
+        }
+        $argDomain = $site ? ['domain' => $site] : [];
 
-        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
-        $this->artisan('domain:add',['domain' => $site]);
+        $this->artisan('domain:remove',array_merge($argDomain,['--force' => 1]));
+        $this->artisan('domain:add',$argDomain);
 
         $fileContents = explode("\n",$this->files->get(env_path('.env.'.$site)));
         $this->assertNotContains("DB_DATABASE=".$dbName,$fileContents);
 
-        $this->artisan('domain:update_env',[
-            'domain' => $site,
+        $this->artisan('domain:update_env',array_merge($argDomain,[
             '--domain_values' => '{"DB_DATABASE":"'.$dbName.'"}',
-        ]);
+        ]));
 
         $fileContents = explode("\n",$this->files->get(env_path('.env.'.$site)));
         $this->assertContains("DB_DATABASE=".$dbName,$fileContents);
 
-        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+        $this->artisan('domain:remove',array_merge($argDomain,['--force' => 1]));
 
     }
 
@@ -220,27 +241,40 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
      */
     public function testDomainListCommand() {
 
-        $site = $this->site;
+        $site = Arr::get($_SERVER, 'SERVER_NAME');
+        $argDomain = $site ? ['domain' => $site] : [];
 
         //ADD THE DOMAIN <SITE>
-        $this->artisan('domain:add',['domain' => $site]);
+        if ($site) {
+            $this->artisan('domain:add',$argDomain);
+        }
 
         $this->artisan('domain:list');
 
         $artisanOutput = Artisan::output();
 
         //CHECK <SITE> IS IN THE OUTPUT OF THE COMMAND
+        if ($site) {
         $this->assertContains($site,$artisanOutput);
+        } else {
+            $this->assertEquals($site,$artisanOutput);
+        }
 
 
         //REMOVE THE DOMAIN <SITE>
-        $this->artisan('domain:remove',['domain' => $site,'--force' => 1]);
+        if ($site) {
+            $this->artisan('domain:remove',array_merge($argDomain,['--force' => 1]));
+        }
         $this->artisan('domain:list');
 
         $artisanOutput = Artisan::output();
 
         //CHECK <SITE> IS NOT IN THE OUTPUT OF THE COMMAND
+        if ($site) {
         $this->assertNotContains($site,$artisanOutput);
+        } else {
+            $this->assertEquals($site,$artisanOutput);
+        }
     }
 
 

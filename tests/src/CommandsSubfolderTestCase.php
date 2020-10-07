@@ -17,7 +17,6 @@ class CommandsSubfolderTestCase extends CommandsTestCase
 
     protected $files = null;
 
-    protected $site = 'site1.test';
     protected $siteDbName = 'db_site1';
 
 
