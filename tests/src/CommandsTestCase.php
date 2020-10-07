@@ -182,7 +182,7 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->artisan('domain:remove', $argDomain);
 
-        $this->assertFileNotExists(env_path('.env.'.$site));
+        $this->assertFileDoesNotExist(env_path('.env.'.$site));
 
         $domainListed = Config::get('domain.domains');
 
@@ -207,14 +207,14 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         $this->artisan('domain:remove', $argDomain);
 
-        $this->assertFileNotExists(env_path('.env.'.$site));
+        $this->assertFileDoesNotExist(env_path('.env.'.$site));
 
         $domainListed = Config::get('domain.domains');
 
         $this->assertArrayNotHasKey($site,$domainListed);
 
-        //$this->assertDirectoryNotExists(storage_path(domain_sanitized($site)));
-        $this->assertDirectoryNotExists(app()->exactDomainStoragePath());
+        //$this->assertDirectoryDoesNotExist(storage_path(domain_sanitized($site)));
+        $this->assertDirectoryDoesNotExist(app()->exactDomainStoragePath());
     }
 
     /*
@@ -244,8 +244,8 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
 
         foreach ($sites as $currSite) {
             if ($site == $currSite) {
-                $this->assertFileNotExists(env_path('.env.'.$currSite));
-                $this->assertDirectoryNotExists($mainStoragePath . DIRECTORY_SEPARATOR . domain_sanitized($currSite));
+                $this->assertFileDoesNotExist(env_path('.env.'.$currSite));
+                $this->assertDirectoryDoesNotExist($mainStoragePath . DIRECTORY_SEPARATOR . domain_sanitized($currSite));
             } else {
                 $this->assertFileExists(env_path('.env.'.$currSite));
                 $this->assertDirectoryExists($mainStoragePath . DIRECTORY_SEPARATOR . domain_sanitized($currSite));
@@ -255,8 +255,8 @@ class CommandsTestCase extends \Orchestra\Testbench\TestCase
         foreach ($sites as $currSite) {
             if ($site != $currSite) {
                 $this->artisan('domain:remove', ['domain' => $currSite,'--force' => 1]);
-                $this->assertFileNotExists(env_path('.env.'.$currSite));
-                $this->assertDirectoryNotExists($mainStoragePath . DIRECTORY_SEPARATOR . domain_sanitized($currSite));
+                $this->assertFileDoesNotExist(env_path('.env.'.$currSite));
+                $this->assertDirectoryDoesNotExist($mainStoragePath . DIRECTORY_SEPARATOR . domain_sanitized($currSite));
             }
         }
 
