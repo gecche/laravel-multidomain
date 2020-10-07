@@ -300,9 +300,10 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v3.4...HEAD
-[3.4]: https://github.com/gecche/laravel-multidomain/compare/v3.3...v3.4
-[3.3]: https://github.com/gecche/laravel-multidomain/compare/v3.2...v3.3
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v4.0...HEAD
+[4.0]: https://github.com/gecche/laravel-multidomain/compare/v3.8...v4.0
+[3.8]: https://github.com/gecche/laravel-multidomain/compare/v3.7...v3.8
+[3.7]: https://github.com/gecche/laravel-multidomain/compare/v3.2...v3.7
 [3.2]: https://github.com/gecche/laravel-multidomain/compare/v3.1...v3.2
 [3.1]: https://github.com/gecche/laravel-multidomain/compare/v3.0...v3.1
 [3.0]: https://github.com/gecche/laravel-multidomain/compare/v2.4...v3.0
