@@ -332,7 +332,7 @@ class ArtisanTestCase extends TestCase
 
         $this->files->delete($fileToTest);
 
-        $this->assertFileNotExists($fileToTest);
+        $this->assertFileDoesNotExist($fileToTest);
 
         //We start the listener
         $processName = "php ".$this->laravelAppPath. "/artisan queue:listen";
@@ -376,7 +376,7 @@ class ArtisanTestCase extends TestCase
 
         $this->files->delete($fileToTest);
 
-        $this->assertFileNotExists($fileToTest);
+        $this->assertFileDoesNotExist($fileToTest);
 
         $processName = 'php '.$this->laravelAppPath.'/artisan queue:listen --domain=site1.test';
         $process = new Process(explode(" ",$processName));
