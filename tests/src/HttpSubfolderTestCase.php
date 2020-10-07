@@ -10,6 +10,7 @@ namespace Gecche\Multidomain\Tests;
 
 use Gecche\Multidomain\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Orchestra\Testbench\BrowserKit\TestCase;
 use Symfony\Component\Process\Process;
 
 
@@ -41,10 +42,14 @@ class HttpSubfolderTestCase extends HttpTestCase
 
     protected $site1 = 'site1.test';
     protected $site2 = 'site2.test';
+    protected $subSite1 = 'sub1.site1.test';
+    protected $subSite2 = 'sub2.site2.test';
     protected $siteDbName1 = 'site1';
     protected $siteDbName2 = 'site2';
+    protected $subSiteDbName1 = 'subsite1';
     protected $siteAppName1 = 'APPSite1';
     protected $siteAppName2 = 'APPSite2';
+    protected $subSiteAppName1 = 'APPSubSite1';
 
     protected $initialServerGlobal = [];
     protected $initialEnvGlobal = [];
@@ -60,49 +65,59 @@ class HttpSubfolderTestCase extends HttpTestCase
      */
     protected function setUp(): void
     {
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'config:clear']);
+        $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
+        copy(__DIR__ . '/../artisan_sub',$this->laravelAppPath.'/artisan_sub');
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'config:clear']);
         $process->run();
 
 
         $this->files = new Filesystem();
-        $this->laravelAppPath = __DIR__ . '/../../vendor/orchestra/testbench-core/laravel';
         copy($this->laravelAppPath . '/config/app.php', $this->laravelAppPath . '/config/appORIG.php');
         copy(__DIR__ . '/../config/app.php', $this->laravelAppPath . '/config/app.php');
         if (!is_dir($this->laravelAppPath.'/'.$this->envPath)) {
             mkdir($this->laravelAppPath.'/'.$this->envPath);
         }
         copy(__DIR__ . '/../.env.example', $this->laravelAppPath.'/'.$this->envPath.'/.env');
-        copy(__DIR__ . '/../artisan',$this->laravelAppPath.'/artisan');
 
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'vendor:publish', '--provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"']);
-        $process->run();
-
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', $this->site1, '--force']);
-        $process->run();
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:remove', $this->site2, '--force']);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'vendor:publish', '--provider="Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider"']);
         $process->run();
 
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', $this->site1]);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:remove', $this->site1, '--force']);
         $process->run();
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', $this->site2]);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:remove', $this->site2, '--force']);
+        $process->run();
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:remove', $this->subSite1, '--force']);
+        $process->run();
+
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:add', $this->site1]);
+        $process->run();
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:add', $this->site2]);
+        $process->run();
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:add', $this->subSite1]);
         $process->run();
 
         $domainValues = [
             'APP_NAME' => $this->siteAppName1,
             'DB_DATABASE' => $this->siteDbName1,
         ];
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', $this->site1, '--domain_values='.json_encode($domainValues)]);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:update_env', $this->site1, '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
         $domainValues = [
             'APP_NAME' => $this->siteAppName2,
             'DB_DATABASE' => $this->siteDbName2,
         ];
-        $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:update_env', $this->site2, '--domain_values='.json_encode($domainValues)]);
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:update_env', $this->site2, '--domain_values='.json_encode($domainValues)]);
         $process->run();
 
+        $domainValues = [
+            'APP_NAME' => $this->subSiteAppName1,
+            'DB_DATABASE' => $this->subSiteDbName1,
+        ];
+        $process = new Process(['php', $this->laravelAppPath.'/artisan_sub', 'domain:update_env', $this->subSite1, '--domain_values='.json_encode($domainValues)]);
+        $process->run();
 
-        parent::setUp();
+        TestCase::setUp();
 
 
     }
