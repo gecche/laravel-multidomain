@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 4.0 - 2020-10-07
+### Changed
+- `composer.json` updated for Laravel 8.x  
+
 ## 3.8 - 2020-10-07
 ### Changed
 - New logic for default environment files and storage folders
@@ -14,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## 3.7 - 2020-05-24
 ### Changed
 - README.md updated with some minor correction and frontend image. (I've done a mistake with tag names: 
-from 3.2 to 3.7 isntead of 3.3 :) )
+from 3.2 to 3.7 instead of 3.3 :) )
  
 ## 3.2 - 2020-04-23
 ### Changed
