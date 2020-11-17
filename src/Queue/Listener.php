@@ -1,25 +1,25 @@
 <?php namespace Gecche\Multidomain\Queue;
 
-use Illuminate\Queue\ListenerOptions;
+use Illuminate\Queue\ListenerOptions as BaseListenerOptions;
+use Illuminate\Queue\Listener as BaseListener;
 use Illuminate\Support\ProcessUtils;
 use Symfony\Component\Process\Process;
 
-class Listener extends \Illuminate\Queue\Listener{
-
-
-
-
+/**
+ * Class Listener
+ *
+ * @package Gecche\Multidomain\Queue
+ */
+class Listener extends BaseListener
+{
 	/**
 	 * Create a new Symfony process for the worker.
 	 *
 	 * @param  string  $connection
 	 * @param  string  $queue
-	 * @param  int     $delay
-	 * @param  int     $memory
-	 * @param  int     $timeout
-	 * @return \Symfony\Component\Process\Process
+     * @return Process
 	 */
-	public function makeProcess($connection, $queue, ListenerOptions $options)
+    public function makeProcess($connection, $queue, BaseListenerOptions $options)
 	{
         $command = $this->createCommand(
             $connection,
@@ -27,7 +27,7 @@ class Listener extends \Illuminate\Queue\Listener{
             $options
         );
 
-        if (isset($options->domain)) {
+        if ($options instanceof ListenerOptions && $options->domain !== null) {
             $command = $this->addDomain($command, $options);
         }
 
@@ -46,11 +46,11 @@ class Listener extends \Illuminate\Queue\Listener{
     /**
      * Add the domain option to the given command.
      *
-     * @param  string  $command
-     * @param  \Gecche\Multidomain\Queue\ListenerOptions  $options
-     * @return string
+     * @param  array  $command
+     * @param  ListenerOptions  $options
+     * @return array
      */
-    protected function addDomain($command, ListenerOptions $options)
+    protected function addDomain(array $command, ListenerOptions $options) : array
     {
         return array_merge($command, ["--domain={$options->domain}"]);
     }

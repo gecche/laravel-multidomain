@@ -1,10 +1,15 @@
 <?php namespace Gecche\Multidomain\Queue;
 
 use Gecche\Multidomain\Queue\Console\ListenCommand as QueueListenCommand;
+use Illuminate\Queue\QueueServiceProvider as BaseQueueServiceProvider;
 
-class QueueServiceProvider extends \Illuminate\Queue\QueueServiceProvider {
-
-
+/**
+ * Class QueueServiceProvider
+ *
+ * @package Gecche\Multidomain\Queue
+ */
+class QueueServiceProvider extends BaseQueueServiceProvider
+{
 	/**
 	 * Register the queue listener.
 	 *
