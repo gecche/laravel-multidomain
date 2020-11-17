@@ -30,7 +30,7 @@ class ListenCommand extends BaseListenCommand
             $this->option('sleep'),
             $this->option('tries'),
             $this->option('force'),
-            $this->option('domain'),
+            $this->option('domain')
         );
     }
 
