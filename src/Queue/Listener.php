@@ -1,4 +1,5 @@
-<?php namespace Gecche\Multidomain\Queue;
+<?php
+namespace Gecche\Multidomain\Queue;
 
 use Illuminate\Queue\ListenerOptions as BaseListenerOptions;
 use Illuminate\Queue\Listener as BaseListener;
@@ -12,15 +13,15 @@ use Symfony\Component\Process\Process;
  */
 class Listener extends BaseListener
 {
-	/**
-	 * Create a new Symfony process for the worker.
-	 *
-	 * @param  string  $connection
-	 * @param  string  $queue
+    /**
+     * Create a new Symfony process for the worker.
+     *
+     * @param  string  $connection
+     * @param  string  $queue
      * @return Process
-	 */
+     */
     public function makeProcess($connection, $queue, BaseListenerOptions $options)
-	{
+    {
         $command = $this->createCommand(
             $connection,
             $queue,
@@ -41,7 +42,7 @@ class Listener extends BaseListener
         return new Process(
             $command, $this->commandPath, null, null, $options->timeout
         );
-	}
+    }
 
     /**
      * Add the domain option to the given command.
@@ -54,7 +55,4 @@ class Listener extends BaseListener
     {
         return array_merge($command, ["--domain={$options->domain}"]);
     }
-
-
-
 }
