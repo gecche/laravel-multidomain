@@ -34,7 +34,7 @@ class DomainDetector {
 	protected function detectWebDomain()
 	{
 		//return filter_input(INPUT_SERVER,'SERVER_NAME');
-            		return Arr::get($_SERVER,'SERVER_NAME');
+            		return Arr::get($_SERVER,'HTTP_HOST');
 
 	}
 
