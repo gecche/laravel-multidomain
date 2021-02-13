@@ -43,7 +43,9 @@ Releases have been separated in order to run integration tests with the correspo
 Laravel framework.
 
 However, with the release of Laravel 8, releases v1.1.14, v1.2.8, v1.3.8 and v1.4.8 are the last releases 
-including new features for the corresponding Laravel 5.x versions (bugfix support is still active for that versions).
+including new features for the corresponding Laravel 5.x versions (bugfix support is still active for that versions). 
+**2021-02-13 UPDATE**: some last features for v1.1+ releases are still ongoing :)
+
   
 v1.0 requires Laravel 5.1, 5.2, 5.3 and 5.4 (no longer maintained and not tested versus laravel 5.4, 
 however the usage of the package is the same as for 1.1)
@@ -227,6 +229,27 @@ If no specific environment file and/or storage folder is found, the standard one
 The detection of the right HTTP domain is done by using the `$_SERVER['SERVER_NAME']` 
 PHP variable. 
  
+#### Customizing the detection of HTTP domains
+
+Starting from release 1.1.15, the detection of HTTP domains can be customized passing a `Closure` 
+as the `domain_detection_function_web` entry of the new `domainParams` argument of `Application`'s 
+constructor. In the following example, the HTTP domain detection relies upon `$_SERVER['HTTP_HOST']` 
+instead of `$_SERVER['SERVER_NAME']`.
+
+```php
+$domainParams = [
+    'domain_detection_function_web' => function() {
+        return \Illuminate\Support\Arr::get($_SERVER,'HTTP_HOST');
+    }
+];
+
+//$app = new Illuminate\Foundation\Application(
+$app = new Gecche\Multidomain\Foundation\Application(
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__), null, $domainParams
+);
+```
+
+
 #### Using multi domains in artisan commands
  
 In order to distinguishing between domains, each artisan command accepts a new option: `domain`. E.g.:
