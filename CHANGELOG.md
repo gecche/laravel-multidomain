@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.1.15 - 2021-02-13
+### Added
+- New `Application`'s constructor param `domainParams` for storing miscellaneous params used for handling domains: 
+  the first one is the `domain_detection_function_web` param which accept a `Closure` for customizing
+  the doamin detection function instead of relying upon `$_SERVER['SERVER_NAME']` value
+### Changed
+- README.md updated
+
 ## 1.1.14 - 2020-10-06
 ### Changed
 - New logic for default environment files and storage folders
@@ -83,7 +91,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.14...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.1.15...HEAD
+[1.1.15]: https://github.com/gecche/laravel-multidomain/compare/v1.1.14...v1.1.15
 [1.1.14]: https://github.com/gecche/laravel-multidomain/compare/v1.1.13...v1.1.14
 [1.1.13]: https://github.com/gecche/laravel-multidomain/compare/v1.1.12...v1.1.13
 [1.1.12]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...v1.1.12
