@@ -3,6 +3,7 @@
 namespace Gecche\Multidomain\Foundation;
 
 use Illuminate\Support\Env;
+use Illuminate\Support\Arr;
 
 class Application extends \Illuminate\Foundation\Application
 {
@@ -29,12 +30,25 @@ class Application extends \Illuminate\Foundation\Application
     protected $domainDetected = false;
 
     /**
+     * @var array
+     *
+     * Miscellaneous params for handling domains (e.g. domain detection function)
+     *
+     * To date the following params are supported:
+     * -    domain_detection_function_web : null|Closure
+     */
+    protected $domainParams = [];
+
+
+    /**
      * Create a new application instance.
      * @param  string|null  $basePath
      * @param  string|null  $environmentPath
+     * @param  array        $domainParams
      */
-    public function __construct($basePath = null, $environmentPath = null)
+    public function __construct($basePath = null, $environmentPath = null, $domainParams = [])
     {
+        $this->domainParams = $domainParams;
         $environmentPath = $environmentPath ?? $basePath;
         $this->useEnvironmentPath(rtrim($environmentPath,'\/'));
 
@@ -52,7 +66,8 @@ class Application extends \Illuminate\Foundation\Application
 
         $args = isset($_SERVER['argv']) ? $_SERVER['argv'] : null;
 
-        $domainDetector = new DomainDetector();
+        $domainDetectionFunctionWeb = Arr::get($this->domainParams,'domain_detection_function_web');
+        $domainDetector = new DomainDetector($domainDetectionFunctionWeb);
         $fullDomain = $domainDetector->detect($args);
         list($domain_scheme, $domain_name, $domain_port) = $domainDetector->split($fullDomain);
         $this['full_domain'] = $fullDomain;
