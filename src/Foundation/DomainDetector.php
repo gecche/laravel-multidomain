@@ -6,6 +6,25 @@ use Illuminate\Support\Str;
 
 class DomainDetector {
 
+    /**
+     * @var Closure|null
+     *
+     * Function for customizing the domain detection process in the web scenario
+     */
+    protected $domainDetectionFunctionWeb = false;
+
+
+    /**
+     * DomainDetector constructor.
+     */
+    public function __construct($domainDetectionFunctionWeb = null)
+    {
+
+        $this->domainDetectionFunctionWeb = $domainDetectionFunctionWeb;
+
+    }
+
+
 	/**
 	 * Detect the application's current environment.
 	 *
@@ -33,6 +52,9 @@ class DomainDetector {
 	 */
 	protected function detectWebDomain()
 	{
+	    if ($this->domainDetectionFunctionWeb instanceof Closure) {
+	        return ($this->domainDetectionFunctionWeb)();
+        }
 		//return filter_input(INPUT_SERVER,'SERVER_NAME');
             		return Arr::get($_SERVER,'SERVER_NAME');
 
