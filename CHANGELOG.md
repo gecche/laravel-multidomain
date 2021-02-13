@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 1.3.9 - 2021-02-13
+### Added
+- New `Application`'s constructor param `domainParams` for storing miscellaneous params used for handling domains:
+  the first one is the `domain_detection_function_web` param which accept a `Closure` for customizing
+  the doamin detection function instead of relying upon `$_SERVER['SERVER_NAME']` value
+### Changed
+- README.md updated
+
 ## 1.3.8 - 2020-10-07
 ### Changed
 - New logic for default environment files and storage folders
@@ -53,6 +61,14 @@ skipped and not replicated in the new .env.<domain> file
 - Bugfix in `Gecche\Multidomain\Queue\Listener` due to changes in handling 
 worker commands in the parent class.
 
+## 1.2.9 - 2021-02-13
+### Added
+- New `Application`'s constructor param `domainParams` for storing miscellaneous params used for handling domains:
+  the first one is the `domain_detection_function_web` param which accept a `Closure` for customizing
+  the doamin detection function instead of relying upon `$_SERVER['SERVER_NAME']` value
+### Changed
+- README.md updated
+
 ## 1.2.8 - 2020-10-06
 ### Changed
 - New logic for default environment files and storage folders
@@ -98,6 +114,14 @@ skipped and not replicated in the new .env.<domain> file
 ## 1.2.0 - 2019-10-29
 ### Changed
 - `composer.json` updated for Laravel 5.6  
+
+## 1.1.15 - 2021-02-13
+### Added
+- New `Application`'s constructor param `domainParams` for storing miscellaneous params used for handling domains:
+  the first one is the `domain_detection_function_web` param which accept a `Closure` for customizing
+  the doamin detection function instead of relying upon `$_SERVER['SERVER_NAME']` value
+### Changed
+- README.md updated
 
 ## 1.1.14 - 2020-10-06
 ### Changed
@@ -177,7 +201,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.3.8...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v1.3.9...HEAD
+[1.3.9]: https://github.com/gecche/laravel-multidomain/compare/v1.3.8...v1.3.9
 [1.3.8]: https://github.com/gecche/laravel-multidomain/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/gecche/laravel-multidomain/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/gecche/laravel-multidomain/compare/v1.3.5...v1.3.6
@@ -187,6 +212,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.3.2]: https://github.com/gecche/laravel-multidomain/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/gecche/laravel-multidomain/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.3.0
+[1.2.9]: https://github.com/gecche/laravel-multidomain/compare/v1.2.8...v1.2.9
 [1.2.8]: https://github.com/gecche/laravel-multidomain/compare/v1.2.7...v1.2.8
 [1.2.7]: https://github.com/gecche/laravel-multidomain/compare/v1.2.6...v1.2.7
 [1.2.6]: https://github.com/gecche/laravel-multidomain/compare/v1.2.5...v1.2.6
@@ -196,6 +222,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.2.2]: https://github.com/gecche/laravel-multidomain/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/gecche/laravel-multidomain/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/gecche/laravel-multidomain/compare/v1.1.6...v1.2.0
+[1.1.15]: https://github.com/gecche/laravel-multidomain/compare/v1.1.14...v1.1.15
 [1.1.14]: https://github.com/gecche/laravel-multidomain/compare/v1.1.13...v1.1.14
 [1.1.13]: https://github.com/gecche/laravel-multidomain/compare/v1.1.12...v1.1.13
 [1.1.12]: https://github.com/gecche/laravel-multidomain/compare/v1.1.11...v1.1.12

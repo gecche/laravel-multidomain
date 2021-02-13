@@ -222,6 +222,27 @@ If no specific environment file and/or storage folder is found, the standard one
 The detection of the right HTTP domain is done by using the `$_SERVER['SERVER_NAME']` 
 PHP variable. 
  
+#### Customizing the detection of HTTP domains
+
+Starting from release 1.1.15, the detection of HTTP domains can be customized passing a `Closure` 
+as the `domain_detection_function_web` entry of the new `domainParams` argument of `Application`'s 
+constructor. In the following example, the HTTP domain detection relies upon `$_SERVER['HTTP_HOST']` 
+instead of `$_SERVER['SERVER_NAME']`.
+
+```php
+$domainParams = [
+    'domain_detection_function_web' => function() {
+        return \Illuminate\Support\Arr::get($_SERVER,'HTTP_HOST');
+    }
+];
+
+//$app = new Illuminate\Foundation\Application(
+$app = new Gecche\Multidomain\Foundation\Application(
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__), null, $domainParams
+);
+```
+
+
 #### Using multi domains in artisan commands
  
 In order to distinguishing between domains, each artisan command accepts a new option: `domain`. E.g.:
