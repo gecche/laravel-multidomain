@@ -56,7 +56,7 @@ class DomainDetector {
 	        return ($this->domainDetectionFunctionWeb)();
         }
 		//return filter_input(INPUT_SERVER,'SERVER_NAME');
-            		return Arr::get($_SERVER,'SERVER_NAME');
+            		return Arr::get($_SERVER,config('domain.web_domain_var'));
 
 	}
 
