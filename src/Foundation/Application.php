@@ -148,9 +148,7 @@ class Application extends \Illuminate\Foundation\Application
     {
         $this->checkDomainDetection();
 
-        if (is_null($domain)) {
-            $domain = $this['domain'];
-        }
+        $domain ??= $this['domain'] ?? '';
 
         $envFile = $this->searchForEnvFileDomain(explode('.',$domain));
 

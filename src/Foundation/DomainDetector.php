@@ -99,6 +99,8 @@ class DomainDetector {
      * Split the domain name into scheme, name and port
      */
     public function split($domain) {
+        $domain ??= '';
+
         if (Str::startsWith($domain,'https://')) {
             $scheme = 'https';
             $domain = substr($domain,8);
