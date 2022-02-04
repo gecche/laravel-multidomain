@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
+### Changed
+- `composer.json` updated for Laravel 9.x
 
 ## 4.2.1 - 2022-02-04
 ### Changed
@@ -366,7 +368,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v4.2...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v4.2.1...HEAD
+[4.2.1]: https://github.com/gecche/laravel-multidomain/compare/v4.2...v4.2.1
 [4.2]: https://github.com/gecche/laravel-multidomain/compare/v4.1...v4.2
 [4.1]: https://github.com/gecche/laravel-multidomain/compare/v4.0...v4.1
 [4.0]: https://github.com/gecche/laravel-multidomain/compare/v3.8...v4.0
