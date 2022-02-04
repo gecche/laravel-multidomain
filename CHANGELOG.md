@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 4.2.1 - 2022-02-04
+### Changed
+- Improved PHP 8.1 compatibility, see [PR #68](https://github.com/gecche/laravel-multidomain/pull/68) 
+- README.md updated for misleading `update_env` command's instructions
+
 ## 4.2 - 2021-02-13
 ### Added
 - New `Application`'s constructor param `domainParams` for storing miscellaneous params used for handling domains:
@@ -426,3 +431,7 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.1.3]: https://github.com/gecche/laravel-multidomain/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...v1.1.1
+
+[reference]: https://keepachangelog.com/en/1.0.0/)[PR
+
+[]: https://github.com/gecche/laravel-multidomain/pull/68

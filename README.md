@@ -167,9 +167,9 @@ The command also removes the appropriate entry from, the `domains` key in `confi
 The  `domain:update_env` command passes a json encoded array of data to update one or all of the environment files. 
 These values will be added at the end of the appropriate .env.
 
-Update a single domain environment file by adding the `domain` option. 
+Update a single domain environment file by adding the `domain` argument. 
 
-When the `domain` option is absent, the command updates all the environment files, including the standard `.env` one.
+When the `domain` argument is absent, the command updates all the environment files, including the standard `.env` one.
 
 The list of domains to be updated is maintained in the `domain.php` config file. 
 
