@@ -1,5 +1,6 @@
 <?php namespace Gecche\Multidomain\Console;
 
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
 class Application extends \Illuminate\Console\Application {
@@ -9,7 +10,7 @@ class Application extends \Illuminate\Console\Application {
 	 *
 	 * @return \Symfony\Component\Console\Input\InputDefinition
 	 */
-	protected function getDefaultInputDefinition()
+	protected function getDefaultInputDefinition(): InputDefinition
 	{
 		$definition = parent::getDefaultInputDefinition();
 
@@ -30,5 +31,5 @@ class Application extends \Illuminate\Console\Application {
 		return new InputOption('--domain', null, InputOption::VALUE_OPTIONAL, $message);
 	}
 
-       
+
 }
