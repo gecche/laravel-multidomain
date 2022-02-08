@@ -31,6 +31,7 @@ for each such customer.
  6.x      | 2.x
  7.x      | 3.x
  8.x      | 4.x
+ 9.x      | 5.x
 
 #### Further notes on Compatibility
 
@@ -58,7 +59,7 @@ Add gecche/laravel-multidomain as a requirement to composer.json:
 ```javascript
 {
     "require": {
-        "gecche/laravel-multidomain": "4.*"
+        "gecche/laravel-multidomain": "5.*"
     }
 }
 ```
