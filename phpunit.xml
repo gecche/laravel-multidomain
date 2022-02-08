@@ -13,11 +13,6 @@
   <testsuites>
     <testsuite name="Laravel Multidomain Test Suite">
       <directory suffix=".php">./tests/src/</directory>
-      <exclude>./tests/src/CommandsTestCase.php</exclude>
-      <exclude>./tests/src/HttpTestCase.php</exclude>
-      <exclude>./tests/src/ArtisanSubfolderTestCase.php</exclude>
-      <exclude>./tests/src/CommandsSubfolderTestCase.php</exclude>
-      <exclude>./tests/src/HttpSubfolderTestCase.php</exclude>
     </testsuite>
   </testsuites>
   <logging>

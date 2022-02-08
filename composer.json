@@ -10,15 +10,14 @@
         }
     ],
     "require": {
-        "laravel/framework": "9.x-dev"
+        "laravel/framework": "^9.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.4.4",
         "phpunit/phpunit": "^9.5.8",
         "limedeck/phpunit-detailed-printer": "^6.0",
-        "orchestra/testbench-core": "7.x-dev",
         "orchestra/testbench": "7.x-dev",
-        "laravel/browser-kit-testing": "6.x-dev"
+        "orchestra/testbench-browser-kit": "^7.0"
     },
     "autoload": {
         "classmap": [

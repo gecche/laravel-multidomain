@@ -76,6 +76,9 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 
 
         $this->files = new Filesystem();
+        if (!file_exists($this->laravelAppPath.'/config/domain.php')) {
+            file_put_contents($this->laravelAppPath.'/config/domain.php','<?php return [];');
+        }
         copy($this->laravelAppPath.'/config/app.php',$this->laravelAppPath.'/config/appORIG.php');
         copy(__DIR__ . '/../config/app.php',$this->laravelAppPath.'/config/app.php');
         copy(__DIR__ . '/../.env.example', $this->laravelAppPath.'/.env');
