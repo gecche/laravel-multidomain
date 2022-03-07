@@ -13,8 +13,8 @@ class ListDomainCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'domain:list';
-
+    protected $signature = 'domain:list
+                            {--output=txt : the output type json or text (text as default)}';
 
     protected $description = "Lists domains installed in the application.";
 
@@ -28,7 +28,6 @@ class ListDomainCommand extends Command
         /*
          * GET CONFIG FILE
          */
-
         $filename = base_path('config/' . $this->configFile . '.php');
 
         $config = include $filename;
@@ -42,17 +41,44 @@ class ListDomainCommand extends Command
         /*
          * Simply returns the info for each domain found in config.
          */
-        foreach ($domains as $domain) {
-            $this->line("<info>Domain: </info><comment>" . $domain . "</comment>");
-
-            $this->line("<info> - Storage dir: </info><comment>" . $this->getDomainStoragePath($domain) . "</comment>");
-            $this->line("<info> - Env file: </info><comment>" . $this->getDomainEnvFilePath($domain) . "</comment>");
-
-            $this->line("");
-
-        }
-
-
+	    $outputType = $this->option('output');
+	    $domains = $this->buildResult($domains);
+	    switch (strtolower(trim($outputType ?? 'txt')))
+	    {
+		    default:
+		    case 'text':
+			    $this->outputAsText($domains);
+			    break;
+		    case 'table':
+			    $this->outputAsTable($domains);
+			    break;
+		    case 'json':
+			    $this->outputAsJson($domains);
+			    break;
+	    }
     }
 
+	protected function outputAsJson(array $domains)
+	{
+		$this->output->writeln(json_encode($domains));
+	}
+
+	protected function outputAsTable(array $domains)
+	{
+		$this->output->table(array_keys(head($domains)), $domains);
+	}
+
+	protected function buildResult(array $domains): array
+	{
+		$result = [];
+		foreach ($domains as $domain) {
+			$result []= [
+				'domain' => $domain,
+				'storage_dir' => $this->getDomainStoragePath($domain),
+				'env_file' => $this->getDomainEnvFilePath($domain),
+			];
+		}
+
+		return $result;
+	}
 }
