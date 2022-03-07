@@ -20,7 +20,7 @@ class UpdateEnvDomainCommand extends GeneratorCommand
 
 
 
-    protected $description = "Adds a domain to the framework.";
+    protected $description = "Update one or all of the environment files for the domains from a json";
     protected $domain;
     protected $envFiles = [];
 
