@@ -14,7 +14,7 @@ class ListDomainCommand extends Command
      * @var string
      */
     protected $signature = 'domain:list
-                            {--output=txt : the output type json or text (text as default)}';
+                            {--output=txt : the output type json or txt (txt as default)}';
 
     protected $description = "Lists domains installed in the application.";
 
@@ -46,7 +46,7 @@ class ListDomainCommand extends Command
 	    switch (strtolower(trim($outputType ?? 'txt')))
 	    {
 		    default:
-		    case 'text':
+		    case 'txt':
 			    $this->outputAsText($domains);
 			    break;
 		    case 'table':
