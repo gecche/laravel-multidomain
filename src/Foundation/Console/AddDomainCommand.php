@@ -18,7 +18,8 @@ class AddDomainCommand extends GeneratorCommand
     protected $signature = 'domain:add
                             {domain : The name of the domain to add to the framework}
                             {--domain_values= : The optional values for the domain variables to be stored in the env file (json object)}
-                            {--force : Force the creation of domain storage dirs also if they already exist}';
+                            {--force : Force the creation of domain storage dirs also if they already exist}
+                            {--dev : Setting up to use a domain for local development }';
 
 
     protected $description = "Adds a domain to the framework by creating the specific .env file and storage dirs.";
@@ -46,10 +47,16 @@ class AddDomainCommand extends GeneratorCommand
         /*
          * Update config file
          */
-
         $this->updateConfigFile();
 
-        $this->line("<info>Added</info> <comment>" . $this->domain . "</comment> <info>to the application.</info>");
+        /**
+         * Configuring .gitignore file according local requirements
+         */
+        if ($this->option('dev')) {
+            $this->setupGitIgnore();
+        }
+
+        $this->line("<info>Added</info> <comment>" . $this->domain . "</comment> <info>to the application.</info>" . ($this->option('dev') ? ' (In dev mode)' : ''));
     }
 
 
@@ -137,8 +144,34 @@ class AddDomainCommand extends GeneratorCommand
         return $config;
     }
 
+    protected function setupGitIgnore()
+    {
+        $toplevelDomain = array_reverse(explode('.', $this->domain))[0];
 
+        $finds = [
+            'domains' => Config::get('domain.env_stub', '.env') . ".*.{$toplevelDomain}",
+            'storage' => DIRECTORY_SEPARATOR . "storage" . DIRECTORY_SEPARATOR . "*_{$toplevelDomain}",
+        ];
 
+        foreach(file(base_path('.gitignore'), FILE_SKIP_EMPTY_LINES) as $line) {
+            foreach ($finds as $key => $value) {
+                if (strpos($line, $value) === 0) {
+                    $finds[$key] = null;
+                }
+            }
+        }
 
+        $contents = implode("\n", $finds);
 
+        if (empty(trim($contents))) {
+            return;
+        }
+
+        $fh = fopen(base_path('.gitignore'), 'a');
+
+        fwrite($fh, "\n# Files and directories for local development\n");
+        fwrite($fh, $contents);
+
+        fclose($fh);
+    }
 }
