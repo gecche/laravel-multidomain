@@ -33,6 +33,7 @@ for each such customer.
  7.x      | 3.x
  8.x      | 4.x
  9.x      | 5.x
+ 10.x     | 10.x
 
 #### Further notes on Compatibility
 
@@ -48,10 +49,10 @@ However, with the release of Laravel 8, releases v1.1.14, v1.2.8, v1.3.8 and v1.
 including new features for the corresponding Laravel 5.x versions (bugfix support is still active for that versions). 
 **2021-02-13 UPDATE**: some last features for v1.1+ releases are still ongoing :)
 
-  
 v1.0 requires Laravel 5.1, 5.2, 5.3 and 5.4 (no longer maintained and not tested versus laravel 5.4, 
 however the usage of the package is the same as for 1.1)
 
+**2023-02-20 UPDATE**: From Laravel 10.x up, the package versions follow the same numbering.
 
 ### Installation
 
@@ -60,7 +61,7 @@ Add gecche/laravel-multidomain as a requirement to composer.json:
 ```javascript
 {
     "require": {
-        "gecche/laravel-multidomain": "5.*"
+        "gecche/laravel-multidomain": "10.*"
     }
 }
 ```
@@ -68,7 +69,7 @@ Add gecche/laravel-multidomain as a requirement to composer.json:
 Update your packages with composer update or install with composer install.
 
 You can also add the package using `composer require gecche/laravel-multidomain` and later 
-specify the version you want (for now, dev-v1.1.* is your best bet).
+specify the version you want.
 
 This package needs to override the detection of the HTTP domain in a minimal set of Laravel core functions 
 at the very start of the bootstrap process in order to get the specific environment file. So this package 

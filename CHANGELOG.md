@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 10.0 - 2023-02-20
+### Changed
+- Integrated [PR #72](https://github.com/gecche/laravel-multidomain/pull/72) for adding more output options to the
+`domain:list` command
+- Integrated [PR #88](https://github.com/gecche/laravel-multidomain/pull/88) for better handling git files in local 
+development
+- Version numbering following Laravel versions from 10.x
+- Updated some methods to adapt to Laravel 10.x
+- `composer.json` updated for Laravel 10.x
+
 ## 5.0 - 2022-02-08
 ### Changed
 - Updated some core methods to adapt to Laravel 9.x changes
@@ -371,7 +381,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v5.0...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v10.0...HEAD
+[10.0]: https://github.com/gecche/laravel-multidomain/compare/v5.0...v10.0
 [5.0]: https://github.com/gecche/laravel-multidomain/compare/v4.2.1...v5.0
 [4.2.1]: https://github.com/gecche/laravel-multidomain/compare/v4.2...v4.2.1
 [4.2]: https://github.com/gecche/laravel-multidomain/compare/v4.1...v4.2
@@ -439,6 +450,4 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 [1.1.2]: https://github.com/gecche/laravel-multidomain/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/gecche/laravel-multidomain/compare/v1.1.0...v1.1.1
 
-[reference]: https://keepachangelog.com/en/1.0.0/)[PR
-
-[]: https://github.com/gecche/laravel-multidomain/pull/68
+[reference]: https://keepachangelog.com/en/1.0.0/
