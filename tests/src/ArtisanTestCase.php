@@ -130,7 +130,7 @@ class ArtisanTestCase extends TestCase
 
         //Note that if the $_SERVER['SERVER_NAME'] value has been set and the --domain option has NOT been set,
         //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
-        $serverName = Arr::get($_SERVER,'SERVER_NAME');
+        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', 'site1.test']);
         $process->run();
@@ -170,7 +170,7 @@ class ArtisanTestCase extends TestCase
 
         //Note that if the $_SERVER['SERVER_NAME'] value has been set and the --domain option has NOT been set,
         //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
-        $serverName = Arr::get($_SERVER,'SERVER_NAME');
+        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'domain:add', 'site1.test']);
         $process->run();
@@ -214,7 +214,7 @@ class ArtisanTestCase extends TestCase
         //Note that if the $_SERVER['SERVER_NAME'] value has been set and the --domain option has NOT been set,
         //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
         // So all the artisan commands run as if the option were instantiated.
-        $serverName = Arr::get($_SERVER,'SERVER_NAME');
+        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
 
 
         //ADDING DOMAIN AND UPDATING ENV
@@ -242,12 +242,12 @@ class ArtisanTestCase extends TestCase
         //CHECK QUEUE:FLUSH COMMAND: SUCCESS WITHOUT OPTIONS AND FAILURE WITH DOMAIN OPTION
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush']);
         $process->run();
-        $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
+        $this->assertStringContainsString('All failed jobs deleted successfully.',$process->getOutput());
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush', '--domain=site1.test']);
         $process->run();
         if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
-            $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
+            $this->assertStringContainsString('All failed jobs deleted successfully.',$process->getOutput());
         } else {
             $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'site1.failed',$process->getOutput());
         }
@@ -268,12 +268,12 @@ class ArtisanTestCase extends TestCase
         //CHECK QUEUE:FLUSH COMMAND: SUCCESS WITH DOMAIN OPTIION AND FAILURE WITHOUT
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush', '--domain=site1.test']);
         $process->run();
-        $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
+        $this->assertStringContainsString('All failed jobs deleted successfully.',$process->getOutput());
 
         $process = new Process(['php', $this->laravelAppPath.'/artisan', 'queue:flush']);
         $process->run();
         if (in_array($serverName, ['site1.test']) || Str::endsWith($serverName,'.site1.test')) {
-            $this->assertStringContainsString('All failed jobs deleted successfully!',$process->getOutput());
+            $this->assertStringContainsString('All failed jobs deleted successfully.',$process->getOutput());
         } else {
             $this->assertStringContainsString('SQLSTATE[42S02]: Base table or view not found: 1146 Table \'homestead.failed',$process->getOutput());
         }
@@ -300,7 +300,7 @@ class ArtisanTestCase extends TestCase
         //Note that if the $_SERVER['SERVER_NAME'] value has been set and the --domain option has NOT been set,
         //the $_SERVER['SERVER_NAME'] value acts as the --domain option value.
         // So all the artisan commands run as if the option were instantiated.
-        $serverName = Arr::get($_SERVER,'SERVER_NAME');
+        $serverName = Arr::get($_SERVER,'SERVER_NAME','');
 
 
         //ADDING DOMAIN AND UPDATING ENV
