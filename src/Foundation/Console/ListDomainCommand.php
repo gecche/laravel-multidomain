@@ -41,44 +41,56 @@ class ListDomainCommand extends Command
         /*
          * Simply returns the info for each domain found in config.
          */
-	    $outputType = $this->option('output');
-	    $domains = $this->buildResult($domains);
-	    switch (strtolower(trim($outputType ?? 'txt')))
-	    {
-		    default:
-		    case 'txt':
-			    $this->outputAsText($domains);
-			    break;
-		    case 'table':
-			    $this->outputAsTable($domains);
-			    break;
-		    case 'json':
-			    $this->outputAsJson($domains);
-			    break;
-	    }
+        $outputType = $this->option('output');
+        $domains = $this->buildResult($domains);
+        switch (strtolower(trim($outputType ?? 'txt'))) {
+            default:
+            case 'txt':
+                $this->outputAsText($domains);
+                break;
+            case 'table':
+                $this->outputAsTable($domains);
+                break;
+            case 'json':
+                $this->outputAsJson($domains);
+                break;
+        }
     }
 
-	protected function outputAsJson(array $domains)
-	{
-		$this->output->writeln(json_encode($domains));
-	}
+    protected function outputAsText(array $domains)
+    {
+        foreach ($domains as $domain) {
+            $this->line("<info>Domain: </info><comment>" . Arr::get($domain,'domain') . "</comment>");
 
-	protected function outputAsTable(array $domains)
-	{
-		$this->output->table(array_keys(head($domains)), $domains);
-	}
+            $this->line("<info> - Storage dir: </info><comment>" . Arr::get($domain,'storage_dir') . "</comment>");
+            $this->line("<info> - Env file: </info><comment>" . Arr::get($domain,'env_file') . "</comment>");
 
-	protected function buildResult(array $domains): array
-	{
-		$result = [];
-		foreach ($domains as $domain) {
-			$result []= [
-				'domain' => $domain,
-				'storage_dir' => $this->getDomainStoragePath($domain),
-				'env_file' => $this->getDomainEnvFilePath($domain),
-			];
-		}
+            $this->line("");
 
-		return $result;
-	}
+        }
+    }
+
+    protected function outputAsJson(array $domains)
+    {
+        $this->output->writeln(json_encode($domains));
+    }
+
+    protected function outputAsTable(array $domains)
+    {
+        $this->output->table(array_keys(head($domains)), $domains);
+    }
+
+    protected function buildResult(array $domains): array
+    {
+        $result = [];
+        foreach ($domains as $domain) {
+            $result [] = [
+                'domain' => $domain,
+                'storage_dir' => $this->getDomainStoragePath($domain),
+                'env_file' => $this->getDomainEnvFilePath($domain),
+            ];
+        }
+
+        return $result;
+    }
 }
