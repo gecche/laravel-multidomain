@@ -33,9 +33,13 @@ class Kernel extends \Illuminate\Foundation\Console\Kernel {
     {
         if (is_null($this->artisan))
         {
-            return $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
+            $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
                 ->resolveCommands($this->commands)
                 ->setContainerCommandLoader();
+
+            if ($this->symfonyDispatcher instanceof EventDispatcher) {
+                $this->artisan->setDispatcher($this->symfonyDispatcher);
+            }
         }
 
         return $this->artisan;
