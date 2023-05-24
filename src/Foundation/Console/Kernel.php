@@ -3,6 +3,7 @@
 use Gecche\Multidomain\Console\Application as Artisan;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 
 class Kernel extends \Illuminate\Foundation\Console\Kernel {
