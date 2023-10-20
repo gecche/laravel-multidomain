@@ -122,6 +122,19 @@ php artisan vendor:publish
 Following the above steps, your application will be aware of the HTTP domain
 in which is running, both for HTTP and CLI requests, including queue support.
 
+#### Laravel Horizon installation: 
+
+The package is compatible with Horizon, thatnks to community contributions. If you need to use 
+this package together with Horizon you have to follow other two installation steps:
+
+1. Install Laravel Horizon as usual
+
+2. Replace the Laravel Horizon import at the very top of the app/Providers/HorizonServiceProvider.php file.
+
+```php
+//use Laravel\Horizon\HorizonApplicationServiceProvider;
+use Gecche\Multidomain\Horizon\HorizonApplicationServiceProvider;
+```
 
 ### Usage
 
@@ -232,6 +245,10 @@ If no specific environment file and/or storage folder is found, the standard one
 
 The detection of the right HTTP domain is done by using the `$_SERVER['SERVER_NAME']` 
 PHP variable. 
+
+IMPORTANT NOTE: in some execution environments $_SERVER['SERVER_NAME'] is not instantiated, so 
+this package does not work properly until you customize the detection of HTTP domains 
+as described below.
  
 #### Customizing the detection of HTTP domains
 
@@ -390,6 +407,7 @@ possibility of changing for example the supervisor configuration rather than the
 Such an example has been pointed out [here](https://github.com/gecche/laravel-multidomain/issues/21#issuecomment-600469868) 
 in which a Docker instance has been used. 
 
-
-
+Lastly, be aware that some Laravel commands call other Artisan commands from the inside, 
+obviously without the `--domain` option. The above situation does not work properly because the subcommand will work with 
+the standard environment file. An example is the `migrate` command when using the `--seed` option.
 
