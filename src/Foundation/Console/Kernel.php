@@ -3,6 +3,7 @@
 use Gecche\Multidomain\Console\Application as Artisan;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 
 class Kernel extends \Illuminate\Foundation\Console\Kernel {
@@ -33,9 +34,13 @@ class Kernel extends \Illuminate\Foundation\Console\Kernel {
     {
         if (is_null($this->artisan))
         {
-            return $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
+            $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
                 ->resolveCommands($this->commands)
                 ->setContainerCommandLoader();
+
+            if ($this->symfonyDispatcher instanceof EventDispatcher) {
+                $this->artisan->setDispatcher($this->symfonyDispatcher);
+            }
         }
 
         return $this->artisan;
