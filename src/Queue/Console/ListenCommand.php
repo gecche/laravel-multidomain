@@ -22,15 +22,16 @@ class ListenCommand extends BaseListenCommand
         $backoff = (($this->hasOption('backoff')) ? $this->option('backoff') : $this->option('delay'));
 
         return new ListenerOptions(
-            $this->option('name'),
-            $this->option('env'),
-            $backoff,
-            $this->option('memory'),
-            $this->option('timeout'),
-            $this->option('sleep'),
-            $this->option('tries'),
-            $this->option('force'),
-            $this->option('domain')
+            name: $this->option('name'),
+            environment: $this->option('env'),
+            backoff: $backoff,
+            memory: $this->option('memory'),
+            timeout: $this->option('timeout'),
+            sleep: $this->option('sleep'),
+            rest: $this->option('rest'),
+            maxTries: $this->option('tries'),
+            force: $this->option('force'),
+            domain: $this->option('domain')
         );
     }
 
