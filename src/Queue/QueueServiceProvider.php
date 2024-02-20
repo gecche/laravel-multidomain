@@ -2,6 +2,7 @@
 namespace Gecche\Multidomain\Queue;
 
 use Gecche\Multidomain\Queue\Console\ListenCommand as QueueListenCommand;
+use Illuminate\Queue\Console\ListenCommand;
 use Illuminate\Queue\QueueServiceProvider as BaseQueueServiceProvider;
 
 /**
@@ -32,7 +33,7 @@ class QueueServiceProvider extends BaseQueueServiceProvider
     {
         parent::register();
 
-        $this->app->extend('command.queue.listen', function ($command, $app) {
+        $this->app->extend(ListenCommand::class, function ($command, $app) {
             return new QueueListenCommand($app['queue.listener']);
         });
     }
