@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 11.0 - 2024-03-19
+### Changed
+- `composer.json` updated for Laravel 11.x
+- Updated README.md for new streamlined installation instructions
+
 ## 10.2 - 2024-02-22
 ### Changed
 - Refixed a problem in the `queue:listen` command :)
@@ -389,7 +394,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v10.2...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v11.0...HEAD
+[11.0]: https://github.com/gecche/laravel-multidomain/compare/v11.0...v10.2
 [10.2]: https://github.com/gecche/laravel-multidomain/compare/v10.1...v10.2
 [10.1]: https://github.com/gecche/laravel-multidomain/compare/v10.0...v10.1
 [10.0]: https://github.com/gecche/laravel-multidomain/compare/v5.0...v10.0
