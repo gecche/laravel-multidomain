@@ -10,14 +10,14 @@
         }
     ],
     "require": {
-        "laravel/framework": "^10.0"
+        "laravel/framework": "^11.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1.5.1",
-        "phpunit/phpunit": "^9.6.0 || ^10.0.7",
-        "orchestra/testbench": "^8.0",
-        "orchestra/testbench-browser-kit": "^8.0",
-        "diablomedia/phpunit-pretty-printer": "^5.0"
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^10.5",
+        "orchestra/testbench": "^9.0",
+        "orchestra/testbench-browser-kit": "^9.0",
+        "codedungeon/phpunit-result-printer": "^0.1.0"
     },
     "autoload": {
         "classmap": [
@@ -49,5 +49,7 @@
         "allow-plugins": {
             "kylekatarnls/update-helper": true
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable" : true
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="true"
+         bootstrap="vendor/autoload.php" colors="true" processIsolation="true"
+         stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+         backupStaticAttributes="false"
+         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+    <report>
+      <clover outputFile="build/clover.xml"/>
+      <html outputDirectory="build/coverage"/>
+      <text outputFile="build/coverage.txt"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Laravel Multidomain Test Suite">
+      <directory suffix=".php">./tests/src/</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <junit outputFile="build/report.junit.xml"/>
+  </logging>
+  <php>
+    <env name="APP_KEY" value="base64:BTJyFYeDfLauAbFziT1uwpskmFoLKk2eT2Kii5w3ksg="/>
+    <env name="DB_CONNECTION" value="mysql"/>
+  </php>
+</phpunit>

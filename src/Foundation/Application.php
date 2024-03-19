@@ -56,6 +56,25 @@ class Application extends \Illuminate\Foundation\Application
     }
 
     /**
+     * Begin configuring a new Laravel application instance.
+     *
+     * @param  string|null  $basePath
+     * @return \Gecche\Multidomain\Foundation\Configuration\ApplicationBuilder
+     */
+    public static function configure(string $basePath = null)
+    {
+        $basePath = match (true) {
+            is_string($basePath) => $basePath,
+            default => static::inferBasePath(),
+        };
+
+        return (new Configuration\ApplicationBuilder(new static($basePath)))
+            ->withKernels()
+            ->withEvents()
+            ->withCommands()
+            ->withProviders();
+    }
+    /**
      * Detect the application's current domain.
      *
      * @param array|string $envs

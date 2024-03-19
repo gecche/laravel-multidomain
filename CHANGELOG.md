@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 10.2 - 2024-02-22
+### Changed
+- Refixed a problem in the `queue:listen` command :)
+
+## 10.1 - 2024-02-18
+### Changed
+- Fixed a problem in the `queue:listen` command
+
 ## 10.0 - 2023-02-20
 ### Changed
 - Integrated [PR #72](https://github.com/gecche/laravel-multidomain/pull/72) for adding more output options to the
@@ -381,7 +389,9 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v10.0...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v10.2...HEAD
+[10.2]: https://github.com/gecche/laravel-multidomain/compare/v10.1...v10.2
+[10.1]: https://github.com/gecche/laravel-multidomain/compare/v10.0...v10.1
 [10.0]: https://github.com/gecche/laravel-multidomain/compare/v5.0...v10.0
 [5.0]: https://github.com/gecche/laravel-multidomain/compare/v4.2.1...v5.0
 [4.2.1]: https://github.com/gecche/laravel-multidomain/compare/v4.2...v4.2.1

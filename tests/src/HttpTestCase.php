@@ -9,6 +9,7 @@
 namespace Gecche\Multidomain\Tests;
 
 use Gecche\Multidomain\Foundation\Application;
+use Gecche\Multidomain\Foundation\Configuration\ApplicationBuilder;
 use Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider;
 use Gecche\Multidomain\Tests\Http\Kernel as HttpKernel;
 use Illuminate\Filesystem\Filesystem;
@@ -17,6 +18,10 @@ use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
+
+use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
+use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
+
 
 
 /*
@@ -144,22 +149,36 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
      */
     protected function resolveApplicationConsoleKernel($app)
     {
-        $app->singleton('Illuminate\Contracts\Console\Kernel', ConsoleKernel::class);
+        $app->singleton(ConsoleKernelContract::class, ConsoleKernel::class);
     }
 
     protected function resolveApplicationHttpKernel($app)
     {
-        $app->singleton('Illuminate\Contracts\Http\Kernel', HttpKernel::class);
+        $app->singleton(HttpKernelContract::class, HttpKernel::class);
     }
 
     protected function resolveApplication()
     {
-        return tap(new Application($this->getBasePath()), function ($app) {
-            $app->bind(
-                'Illuminate\Foundation\Bootstrap\LoadConfiguration',
-                'Orchestra\Testbench\Bootstrap\LoadConfiguration'
-            );
-        });
+        static::$cacheApplicationBootstrapFile ??= $this->getApplicationBootstrapFile('app.php');
+
+        if (\is_string(static::$cacheApplicationBootstrapFile)) {
+            $APP_BASE_PATH = $this->getBasePath();
+
+            return require static::$cacheApplicationBootstrapFile;
+        }
+
+        return $this->resolveGeccheApplication();
+    }
+
+    final protected function resolveGeccheApplication()
+    {
+        return (new ApplicationBuilder(new Application($this->getBasePath())))
+            ->withProviders()
+            ->withMiddleware(static function ($middleware) {
+                //
+            })
+            ->withCommands()
+            ->create();
     }
 
     /**

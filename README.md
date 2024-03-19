@@ -1,4 +1,5 @@
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-orange.svg?style=flat-square)](http://laravel.com)
 [![Laravel](https://img.shields.io/badge/Laravel-10.x-orange.svg?style=flat-square)](http://laravel.com)
 [![Laravel](https://img.shields.io/badge/Laravel-9.x-orange.svg?style=flat-square)](http://laravel.com)
 [![Laravel](https://img.shields.io/badge/Laravel-8.x-orange.svg?style=flat-square)](http://laravel.com)
@@ -35,6 +36,7 @@ for each such customer.
  8.x      | 4.x
  9.x      | 5.x
  10.x     | 10.x
+ 11.x     | 11.x
 
 #### Further notes on Compatibility
 
@@ -62,7 +64,7 @@ Add gecche/laravel-multidomain as a requirement to composer.json:
 ```javascript
 {
     "require": {
-        "gecche/laravel-multidomain": "10.*"
+        "gecche/laravel-multidomain": "11.*"
     }
 }
 ```
@@ -81,29 +83,11 @@ Installation steps:
 at the very top of the `bootstrap/app.php` file.
 
 ```php
-//$app = new Illuminate\Foundation\Application(
-$app = new Gecche\Multidomain\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
+//use Illuminate\Foundation\Application
+use Gecche\Multidomain\Foundation\Application
 ```
 
-2. update the two application Kernels (HTTP and CLI).
-
-At the very top of the `app/Http/Kernel.php` file , do the following change:
-
-```php
-//use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Gecche\Multidomain\Foundation\Http\Kernel as HttpKernel;
-```
-
-Similarly in the `app/Console/Kernel.php` file:
-
-```php
-//use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Gecche\Multidomain\Foundation\Console\Kernel as ConsoleKernel;
-```
-
-3. Override the `QueueServiceProvider` with the extended 
+2. Override the `QueueServiceProvider` with the extended 
 one in the `$providers` array in the `config/app.php` file:
 
 ```php
@@ -111,7 +95,7 @@ one in the `$providers` array in the `config/app.php` file:
         Gecche\Multidomain\Queue\QueueServiceProvider::class,
 ```
         
-4. publish the config file.
+3. Publish the config file.
 
 ```
 php artisan vendor:publish 
@@ -121,6 +105,9 @@ php artisan vendor:publish
 
 Following the above steps, your application will be aware of the HTTP domain
 in which is running, both for HTTP and CLI requests, including queue support.
+
+NOTE: in Laravel 11 the installation is simpler than before: if you use a 
+previous version of Laravel, please check in the documentation the installation steps.
 
 #### Laravel Horizon installation: 
 
