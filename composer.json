@@ -15,7 +15,9 @@
     "require-dev": {
         "mockery/mockery": "^1.6",
         "phpunit/phpunit": "^10.5",
-        "orchestra/testbench": "9.x-dev"
+        "orchestra/testbench": "^9.0",
+        "orchestra/testbench-browser-kit": "^9.0",
+        "codedungeon/phpunit-result-printer": "^0.1.0"
     },
     "autoload": {
         "classmap": [
