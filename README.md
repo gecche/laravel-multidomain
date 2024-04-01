@@ -88,11 +88,16 @@ use Gecche\Multidomain\Foundation\Application
 ```
 
 2. Override the `QueueServiceProvider` with the extended 
-one in the `$providers` array in the `config/app.php` file:
+one in the `config/app.php` file (please note that if you already changed the default providers, the only important line is the one which replaces the `QueueServiceProvider`):
 
 ```php
-        //Illuminate\Queue\QueueServiceProvider::class,
-        Gecche\Multidomain\Queue\QueueServiceProvider::class,
+    'providers' => \Illuminate\Support\ServiceProvider::defaultProviders()->merge([
+        // Package Service Providers...
+    ])->replace([
+      \Illuminate\Queue\QueueServiceProvider::class => \Gecche\Multidomain\Queue\QueueServiceProvider::class,
+    ])->merge([
+        // Added Service Providers (Do not remove this line)...
+    ])->toArray(),
 ```
         
 3. Publish the config file.
