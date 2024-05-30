@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 11.1 - 2024-05-30
+### Changed
+- Bugfix for discovering commands
+- Bugfix for passing environmentPath and domainParams to the application constructor
+- Updated README.md
+
 ## 11.0 - 2024-03-19
 ### Changed
 - `composer.json` updated for Laravel 11.x
@@ -394,8 +400,9 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v11.0...HEAD
-[11.0]: https://github.com/gecche/laravel-multidomain/compare/v11.0...v10.2
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v11.1...HEAD
+[11.1]: https://github.com/gecche/laravel-multidomain/compare/v11.0...v11.1
+[11.0]: https://github.com/gecche/laravel-multidomain/compare/v10.2...v11.0
 [10.2]: https://github.com/gecche/laravel-multidomain/compare/v10.1...v10.2
 [10.1]: https://github.com/gecche/laravel-multidomain/compare/v10.0...v10.1
 [10.0]: https://github.com/gecche/laravel-multidomain/compare/v5.0...v10.0
