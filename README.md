@@ -25,18 +25,18 @@ for each such customer.
 
 ### Version Compatibility
 
- Laravel  | Multidomain
-:---------|:----------
- 5.5.x    | 1.1.x
- 5.6.x    | 1.2.x
- 5.7.x    | 1.3.x
- 5.8.x    | 1.4.x
- 6.x      | 2.x
- 7.x      | 3.x
- 8.x      | 4.x
- 9.x      | 5.x
- 10.x     | 10.x
- 11.x     | 11.x
+ Laravel   | Multidomain
+:----------|:-----------
+ 11.x      | 11.x
+ 10.x      | 10.x
+  9.x      |  5.x
+  8.x      |  4.x
+  7.x      |  3.x
+  6.x      |  2.x
+  5.8.x    |  1.4.x
+  5.7.x    |  1.3.x
+  5.6.x    |  1.2.x
+  5.5.x    |  1.1.x
 
 #### Further notes on Compatibility
 
@@ -88,12 +88,20 @@ use Gecche\Multidomain\Foundation\Application
 ```
 
 2. Override the `QueueServiceProvider` with the extended 
-one in the `$providers` array in the `config/app.php` file:
+one in the `config/app.php` file as follows:
 
 ```php
-        //Illuminate\Queue\QueueServiceProvider::class,
-        Gecche\Multidomain\Queue\QueueServiceProvider::class,
+    'providers' => \Illuminate\Support\ServiceProvider::defaultProviders()->merge([
+        // Package Service Providers...
+    ])->replace([
+      \Illuminate\Queue\QueueServiceProvider::class => \Gecche\Multidomain\Queue\QueueServiceProvider::class,
+    ])->merge([
+        // Added Service Providers (Do not remove this line)...
+    ])->toArray(),
 ```
+
+Please note that if you changed the `config/app.php` file due to other reasons, probably there is already 
+the above `providers` entry in that file and the only important line is the one which replaces the `QueueServiceProvider`.
         
 3. Publish the config file.
 
@@ -245,16 +253,33 @@ constructor. In the following example, the HTTP domain detection relies upon `$_
 instead of `$_SERVER['SERVER_NAME']`.
 
 ```php
+//use Illuminate\Foundation\Application;
+use Gecche\Multidomain\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+$environmentPath = null;
+
 $domainParams = [
     'domain_detection_function_web' => function() {
         return \Illuminate\Support\Arr::get($_SERVER,'HTTP_HOST');
     }
 ];
 
-//$app = new Illuminate\Foundation\Application(
-$app = new Gecche\Multidomain\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__), null, $domainParams
-);
+return Application::configure(basePath: dirname(__DIR__),
+    environmentPath: $environmentPath,
+    domainParams: $domainParams)
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
 ```
 
 
@@ -353,11 +378,29 @@ So, if you want to use a different folder simply add it at the very top of the `
 if you want to add environment files to the `envs` subfolder, simply do:
 
 ```php
-//$app = new Illuminate\Foundation\Application(
-$app = new Gecche\Multidomain\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__),
-    dirname(__DIR__) . DIRECTORY_SEPARATOR . 'envs'
-);
+//use Illuminate\Foundation\Application;
+use Gecche\Multidomain\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+$environmentPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'envs';
+
+$domainParams = [];
+
+return Application::configure(basePath: dirname(__DIR__),
+    environmentPath: $environmentPath,
+    domainParams: $domainParams)
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
 ```
 
 If you do not specify the second argument, the standard folder is assumed. Please note that if you specify a folder, 
