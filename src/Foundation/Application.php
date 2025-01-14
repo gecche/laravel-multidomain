@@ -63,7 +63,7 @@ class Application extends \Illuminate\Foundation\Application
      * @param  array        $domainParams
      * @return \Gecche\Multidomain\Foundation\Configuration\ApplicationBuilder
      */
-    public static function configure(string $basePath = null, string $environmentPath = NULL, array $domainParams = [])
+    public static function configure(?string $basePath = null, ?string $environmentPath = null, array $domainParams = [])
     {
         $basePath = match (true) {
             is_string($basePath) => $basePath,
