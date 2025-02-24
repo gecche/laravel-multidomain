@@ -1,7 +1,13 @@
 {
     "name": "gecche/laravel-multidomain",
     "description": "Laravel App on a subdomains, multi-tenancy setting",
-    "keywords": ["laravel", "subdomains", "multitenancy", "multi-tenants", "multidomain"],
+    "keywords": [
+        "laravel",
+        "subdomains",
+        "multitenancy",
+        "multi-tenants",
+        "multidomain"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -10,19 +16,17 @@
         }
     ],
     "require": {
-        "laravel/framework": "^11.0"
+        "laravel/framework": "^11.0|^12.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^10.5",
-        "orchestra/testbench": "^9.0",
-        "orchestra/testbench-browser-kit": "^9.0",
+        "phpunit/phpunit": "^10.5|^11.5.3",
+        "orchestra/testbench": "^9.0|^10.0",
+        "orchestra/testbench-browser-kit": "^9.0|^10.0",
         "codedungeon/phpunit-result-printer": "^0.1.0"
     },
     "autoload": {
-        "classmap": [
-
-        ],
+        "classmap": [],
         "psr-4": {
             "Gecche\\Multidomain\\": "src/"
         },
@@ -51,5 +55,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable" : true
+    "prefer-stable": true
 }
