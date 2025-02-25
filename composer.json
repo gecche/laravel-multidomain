@@ -10,13 +10,13 @@
         }
     ],
     "require": {
-        "laravel/framework": "^11.0"
+        "laravel/framework": "^12.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^10.5",
-        "orchestra/testbench": "^9.0",
-        "orchestra/testbench-browser-kit": "^9.0",
+        "phpunit/phpunit": "^11.5",
+        "orchestra/testbench": "^10.0",
+        "orchestra/testbench-browser-kit": "^10.0",
         "codedungeon/phpunit-result-printer": "^0.1.0"
     },
     "autoload": {
@@ -32,7 +32,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Gecche\\Multidomain\\Tests\\": "tests/src"
+            "Gecche\\Multidomain\\Tests\\": "tests/src",
+            "Gecche\\Multidomain\\Tests\\App\\": "tests/app"
         }
     },
     "scripts": {

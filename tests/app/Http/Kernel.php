@@ -1,12 +1,12 @@
 <?php
 
-namespace Gecche\Multidomain\Tests\Http;
+namespace Gecche\Multidomain\Tests\App\Http;
 
+use app\Http\Middleware\EncryptCookies;
+use app\Http\Middleware\RedirectIfAuthenticated;
+use app\Http\Middleware\TrimStrings;
+use app\Http\Middleware\VerifyCsrfToken;
 use Gecche\Multidomain\Foundation\Http\Kernel as HttpKernel;
-use Gecche\Multidomain\Tests\Http\Middleware\EncryptCookies;
-use Gecche\Multidomain\Tests\Http\Middleware\RedirectIfAuthenticated;
-use Gecche\Multidomain\Tests\Http\Middleware\TrimStrings;
-use Gecche\Multidomain\Tests\Http\Middleware\VerifyCsrfToken;
 
 //use Illuminate\Foundation\Http\Kernel as HttpKernel;
 

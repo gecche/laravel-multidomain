@@ -11,6 +11,7 @@ namespace Gecche\Multidomain\Tests;
 use Gecche\Multidomain\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Orchestra\Testbench\BrowserKit\TestCase;
+use Orchestra\Testbench\Concerns\CreatesApplication;
 use Symfony\Component\Process\Process;
 
 
@@ -125,7 +126,7 @@ class HttpSubfolderTestCase extends HttpTestCase
 
     protected function resolveApplication()
     {
-        return tap(new Application($this->getBasePath(), $this->getBasePath().'/'.$this->envPath), function ($app) {
+        return tap(new Application($_ENV['APP_BASE_PATH'], $_ENV['APP_BASE_PATH'].'/'.$this->envPath), function ($app) {
             $app->bind(
                 'Illuminate\Foundation\Bootstrap\LoadConfiguration',
                 'Orchestra\Testbench\Bootstrap\LoadConfiguration'
