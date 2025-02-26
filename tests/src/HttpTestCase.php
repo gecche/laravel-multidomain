@@ -8,20 +8,20 @@
 
 namespace Gecche\Multidomain\Tests;
 
+use Gecche\Multidomain\Tests\App\Console\Kernel as ConsoleKernel;
+use Gecche\Multidomain\Tests\App\Http\Kernel as HttpKernel;
 use Gecche\Multidomain\Foundation\Application;
 use Gecche\Multidomain\Foundation\Configuration\ApplicationBuilder;
 use Gecche\Multidomain\Foundation\Providers\DomainConsoleServiceProvider;
-use Gecche\Multidomain\Tests\Http\Kernel as HttpKernel;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Gecche\Multidomain\Tests\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Symfony\Component\Process\Process;
-
+use Gecche\Multidomain\Tests\App\TestServiceProvider;
 use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
-
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Orchestra\Testbench\Concerns\CreatesApplication;
+use Symfony\Component\Process\Process;
 
 
 /*
@@ -162,7 +162,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
         static::$cacheApplicationBootstrapFile ??= $this->getApplicationBootstrapFile('app.php');
 
         if (\is_string(static::$cacheApplicationBootstrapFile)) {
-            $APP_BASE_PATH = $this->getBasePath();
+            $APP_BASE_PATH = $_ENV['APP_BASE_PATH'];
 
             return require static::$cacheApplicationBootstrapFile;
         }
@@ -172,7 +172,7 @@ class HttpTestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 
     final protected function resolveGeccheApplication()
     {
-        return (new ApplicationBuilder(new Application($this->getBasePath())))
+        return (new ApplicationBuilder(new Application($_ENV['APP_BASE_PATH'])))
             ->withProviders()
             ->withMiddleware(static function ($middleware) {
                 //

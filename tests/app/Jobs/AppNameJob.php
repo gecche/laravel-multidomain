@@ -1,11 +1,11 @@
-<?php namespace Gecche\Multidomain\Tests\Jobs;
+<?php namespace Gecche\Multidomain\Tests\App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class AppNameJob implements ShouldQueue
 {

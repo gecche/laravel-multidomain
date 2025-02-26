@@ -9,6 +9,7 @@
 namespace Gecche\Multidomain\Tests;
 
 use Gecche\Multidomain\Foundation\Application;
+use Orchestra\Testbench\Concerns\CreatesApplication;
 
 class CommandsSubfolderTestCase extends CommandsTestCase
 {
@@ -26,7 +27,7 @@ class CommandsSubfolderTestCase extends CommandsTestCase
 
     protected function resolveApplication()
     {
-        return tap(new Application($this->getBasePath(),$this->getBasePath().'/'.$this->envPath), function ($app) {
+        return tap(new Application($_ENV['APP_BASE_PATH'],$_ENV['APP_BASE_PATH'].'/'.$this->envPath), function ($app) {
             $app->bind(
                 'Illuminate\Foundation\Bootstrap\LoadConfiguration',
                 'Orchestra\Testbench\Bootstrap\LoadConfiguration'

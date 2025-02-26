@@ -1,9 +1,9 @@
 <?php
 
-namespace Gecche\Multidomain\Tests\Http\Middleware;
+namespace Gecche\Multidomain\Tests\App\Http\Middleware;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Closure;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated

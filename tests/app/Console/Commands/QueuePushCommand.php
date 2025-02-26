@@ -1,9 +1,7 @@
-<?php namespace Gecche\Multidomain\Tests\Console\Commands;
+<?php namespace Gecche\Multidomain\Tests\App\Console\Commands;
 
-use Gecche\Multidomain\Tests\Jobs\AppNameJob;
-use Illuminate\Bus\Queueable;
+use app\Jobs\AppNameJob;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Queue;
 
 
 class QueuePushCommand extends Command

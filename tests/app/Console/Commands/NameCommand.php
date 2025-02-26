@@ -1,7 +1,6 @@
 <?php
-namespace Gecche\Multidomain\Tests\Console\Commands;
+namespace Gecche\Multidomain\Tests\App\Console\Commands;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Console\Command;
 
 

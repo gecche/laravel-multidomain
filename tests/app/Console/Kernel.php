@@ -1,11 +1,11 @@
 <?php
 
-namespace Gecche\Multidomain\Tests\Console;
+namespace Gecche\Multidomain\Tests\App\Console;
 
-use Gecche\Multidomain\Tests\Console\Commands\NameCommand;
-use Gecche\Multidomain\Tests\Console\Commands\QueuePushCommand;
-use Illuminate\Console\Scheduling\Schedule;
+use Gecche\Multidomain\Tests\App\Console\Commands\NameCommand;
+use Gecche\Multidomain\Tests\App\Console\Commands\QueuePushCommand;
 use Gecche\Multidomain\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Console\Scheduling\Schedule;
 
 class Kernel extends ConsoleKernel
 {
