@@ -3,7 +3,7 @@
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Config;
+use Illuminate\Support\Facades\Config;
 
 trait DomainCommandTrait
 {
