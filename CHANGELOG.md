@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## 11.2 - 2025-04-15
+### Changed
+- Bugfix (cache correctly included in trait)
+
 ## 11.1 - 2024-05-30
 ### Changed
 - Bugfix for discovering commands
@@ -400,7 +404,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v11.1...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v11.2...HEAD
+[11.2]: https://github.com/gecche/laravel-multidomain/compare/v11.1...v11.2
 [11.1]: https://github.com/gecche/laravel-multidomain/compare/v11.0...v11.1
 [11.0]: https://github.com/gecche/laravel-multidomain/compare/v10.2...v11.0
 [10.2]: https://github.com/gecche/laravel-multidomain/compare/v10.1...v10.2
