@@ -178,6 +178,7 @@ class Application extends \Illuminate\Foundation\Application
     }
 
     protected function searchForEnvFileDomain($tokens = []) {
+        $tokens = array_filter($tokens);
         if (count($tokens) == 0) {
             return '.env';
         }
