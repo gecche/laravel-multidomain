@@ -3,11 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [Unreleased]
+## 13.1 - 2026-11-12
 ### Added
 - Domain-specific configuration files loaded from `config/domains/{sanitized_domain}.php`
 - `LoadDomainConfiguration` bootstrapper merged after the standard Laravel configuration bootstrap
 ### Changed
+- Fixed `getArtisan` method in `Gecche\Multidomain\Foundation\Console\Kernel` for Laravel 13.40+
 - Fixed missing `Illuminate\Support\Str` import in `Gecche\Multidomain\Foundation\Application`
 
 ## 13.0 - 2026-03-26
@@ -427,7 +428,8 @@ Laravel release starting from 5.5 and as pointed out in the docs)
 ### Added
 - Initial version for Laravel 5.5.
 
-[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v13.0...HEAD
+[Unreleased]: https://github.com/gecche/laravel-multidomain/compare/v13.1...HEAD
+[13.1]: https://github.com/gecche/laravel-multidomain/compare/v13.1...v13.0
 [13.0]: https://github.com/gecche/laravel-multidomain/compare/v13.0...v12.2
 [12.2]: https://github.com/gecche/laravel-multidomain/compare/v12.2...v12.1
 [12.1]: https://github.com/gecche/laravel-multidomain/compare/v12.1...v12.0

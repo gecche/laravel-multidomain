@@ -33,14 +33,16 @@ class Kernel extends \Illuminate\Foundation\Console\Kernel {
      */
     protected function getArtisan()
     {
-        if (is_null($this->artisan))
-        {
+        if (is_null($this->artisan)) {
             $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
-                ->resolveCommands($this->commands)
+                ->resolveCommands([...$this->kernelCommands, ...$this->commands])
                 ->setContainerCommandLoader();
 
             if ($this->symfonyDispatcher instanceof EventDispatcher) {
                 $this->artisan->setDispatcher($this->symfonyDispatcher);
+                if (method_exists($this->artisan, 'setSignalsToDispatchEvent')) {
+                    $this->artisan->setSignalsToDispatchEvent();
+                }
             }
         }
 
