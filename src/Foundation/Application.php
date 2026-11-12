@@ -4,6 +4,7 @@ namespace Gecche\Multidomain\Foundation;
 
 use Illuminate\Support\Env;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class Application extends \Illuminate\Foundation\Application
 {

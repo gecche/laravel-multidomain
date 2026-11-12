@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
+### Added
+- Domain-specific configuration files loaded from `config/domains/{sanitized_domain}.php`
+- `LoadDomainConfiguration` bootstrapper merged after the standard Laravel configuration bootstrap
+### Changed
+- Fixed missing `Illuminate\Support\Str` import in `Gecche\Multidomain\Foundation\Application`
 
 ## 13.0 - 2026-03-26
 ### Changed

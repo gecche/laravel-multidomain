@@ -218,6 +218,39 @@ will generate the file
  config-site2_com.php 
  ```
 
+#### Domain-specific configuration files
+
+In addition to per-domain `.env` files, you can provide domain-specific configuration
+files under the `config/domains/` folder. The file name must use the sanitized domain
+name (dots replaced with underscores), e.g. for `site1.com` create:
+
+```
+config/domains/site1_com.php
+```
+
+Example file:
+
+```php
+<?php
+
+return [
+    'app' => [
+        'name' => 'Site 1 Application',
+    ],
+];
+```
+
+These values are merged recursively into the standard Laravel configuration after
+`config/*.php` files are loaded. If no domain-specific file exists, the application
+behaves as before.
+
+When running `config:cache` with the `--domain` option, the cached file for that
+domain includes the merged configuration as well:
+
+```
+php artisan config:cache --domain=site1.com
+```
+
 ### Further information
 At run-time, the current HTTP domain is maintained in the laravel container 
 and can be accessed by its `domain()` method added by this package.
